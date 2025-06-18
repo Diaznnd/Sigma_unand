@@ -1,0 +1,42 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6 text-indigo-800">Tambah Berita Baru</h1>
+
+    <form action="/adminukm/berita/tambah" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-xl shadow space-y-4 border border-gray-200">
+      
+      <!-- Judul -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Judul Berita</label>
+        <input type="text" name="judul" required class="w-full p-2 border rounded mt-1" placeholder="Judul menarik untuk berita UKM" />
+      </div>
+
+      <!-- Isi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Isi Berita</label>
+        <textarea name="isi" rows="6" required class="w-full p-2 border rounded mt-1" placeholder="Tulis isi lengkap berita di sini..."></textarea>
+      </div>
+
+      <!-- Tanggal -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Tanggal</label>
+        <input type="date" name="tanggal" required class="w-full p-2 border rounded mt-1" />
+      </div>
+
+      <!-- Gambar -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Gambar (opsional)</label>
+        <input type="file" name="gambar" accept="image/*" class="w-full p-2 border rounded mt-1" />
+      </div>
+
+      <!-- Tombol Submit -->
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+          Simpan Berita
+        </button>
+        <a href="/adminukm/berita" class="ml-4 text-gray-600 hover:text-gray-800 text-sm">Batal</a>
+      </div>
+    </form>
+  </div>
+</main>

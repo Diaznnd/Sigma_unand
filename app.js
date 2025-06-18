@@ -1,0 +1,61 @@
+const express = require('express');
+const session = require('express-session');
+const expressLayouts = require('express-ejs-layouts'); 
+const authRoutes = require('./routes/authRoutes');
+const path = require('path');
+const app = express();
+const superAdminRoutes = require('./routes/superAdminRoutes');
+const adminUkmRoutes = require('./routes/adminUkmRoutes');
+const adminBeritaRoutes = require('./routes/adminBeritaRoutes');
+
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressLayouts);
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(session({ secret: 'sigma_unand_rahasia', resave: false, saveUninitialized: true }));
+
+// Routes
+app.use('/auth', authRoutes);
+app.use('/superadmin', superAdminRoutes);
+app.use('/adminukm', adminUkmRoutes);
+app.use('/adminukm/berita', adminBeritaRoutes);
+
+app.get('/', (req, res) => {
+  res.redirect('/auth/login');
+});
+
+app.set('layout', 'layouts/layout');
+
+const { isAuthenticated, isSuperAdmin, isAdminUKM, isPenggunaUmum } = require('./middleware/auth');
+
+app.get('/dashboard', isAuthenticated, (req, res) => {
+  const role = req.session.user.role;
+  if (role === 'super_admin') return res.redirect('/superadmin');
+  if (role === 'admin_ukm') return res.redirect('/adminukm');
+  return res.redirect('/pengguna');
+});
+
+app.get('/superadmin', isAuthenticated, isSuperAdmin, (req, res) => {
+  res.render('superadmin/dashboard', { user: req.session.user });
+});
+
+app.get('/adminukm', isAuthenticated, isAdminUKM, (req, res) => {
+  res.render('adminukm/dashboard', { user: req.session.user });
+});
+
+app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
+  res.send('Panel Pengguna Umum');
+});
+
+// DB
+// DB
+const db = require('./models');
+const sequelize = db.sequelize;
+
+sequelize.sync().then(() => {
+  app.listen(3000, () => console.log('Server running di http://localhost:3000'));
+});

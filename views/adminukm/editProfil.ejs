@@ -1,0 +1,88 @@
+<%- include('partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-slate-50 to-indigo-100">
+  <div class="p-8 max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6 text-indigo-800">Edit Profil UKM</h1>
+
+    <!-- Profil Preview -->
+    <div class="bg-white p-6 rounded-xl shadow border border-gray-200 mb-8">
+      <% if (ukm.logo) { %>
+        <img src="<%= ukm.logo %>" alt="Logo UKM" class="w-20 h-20 object-cover rounded-full mb-3">
+      <% } %>
+
+      <p class="text-xl font-semibold text-indigo-700"><%= ukm.namaOrg %></p>
+      <p class="text-sm text-gray-600 mb-2"><%= ukm.deskripsi %></p>
+
+      <% if (ukm.instagram) { %>
+        <p class="text-sm">
+          <a href="<%= ukm.instagram %>" target="_blank" class="text-blue-600 hover:underline">Instagram</a>
+        </p>
+      <% } %>
+
+      <% if (ukm.website) { %>
+        <p class="text-sm">
+          <a href="<%= ukm.website %>" target="_blank" class="text-blue-600 hover:underline">Website</a>
+        </p>
+      <% } %>
+    </div>
+
+    <!-- Form Edit -->
+    <form action="/adminukm/profil/edit" method="POST" enctype="multipart/form-data" class="space-y-6 bg-white p-6 rounded-xl shadow border border-gray-200">
+      <div>
+        <label class="block text-sm font-medium">Nama UKM</label>
+        <input name="namaOrg" value="<%= ukm.namaOrg %>" required class="w-full p-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Deskripsi</label>
+        <textarea name="deskripsi" rows="4" class="w-full p-2 border rounded"><%= ukm.deskripsi %></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Tanggal Berdiri</label>
+        <input type="date" name="tanggalBerdiri" value="<%= ukm.tanggalBerdiri ? ukm.tanggalBerdiri.toISOString().split('T')[0] : '' %>" class="w-full p-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Instagram</label>
+        <input name="instagram" value="<%= ukm.instagram %>" class="w-full p-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Website</label>
+        <input name="website" value="<%= ukm.website %>" class="w-full p-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Visi</label>
+        <textarea name="visi" rows="2" class="w-full p-2 border rounded"><%= ukm.visi %></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Misi</label>
+        <textarea name="misi" rows="3" class="w-full p-2 border rounded"><%= ukm.misi %></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Alamat</label>
+        <input name="alamat" value="<%= ukm.alamat %>" class="w-full p-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Kontak</label>
+        <input name="kontak" value="<%= ukm.kontak %>" class="w-full p-2 border rounded" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Logo Baru (opsional)</label>
+        <input type="file" name="logo" class="w-full border p-2 rounded" />
+      </div>
+
+      <div class="pt-4">
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">
+          Simpan Perubahan
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

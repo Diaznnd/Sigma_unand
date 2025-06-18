@@ -1,0 +1,37 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-indigo-800">Daftar Berita UKM</h1>
+    <a href="/adminukm/berita/tambah" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+      + Tambah Berita
+    </a>
+  </div>
+
+  <% if (beritaList.length === 0) { %>
+    <div class="bg-white p-6 rounded shadow text-gray-600 text-center">
+      Belum ada berita yang ditambahkan.
+    </div>
+  <% } else { %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% beritaList.forEach(berita => { %>
+        <div class="bg-white shadow rounded-xl overflow-hidden border border-gray-200">
+          <% if (berita.gambar) { %>
+            <img src="<%= berita.gambar %>" alt="Gambar Berita" class="w-full h-48 object-cover">
+          <% } %>
+          <div class="p-4">
+            <h2 class="text-lg font-semibold text-gray-800 mb-2"><%= berita.judul %></h2>
+            <p class="text-sm text-gray-600 mb-3"><%= berita.tanggal.toLocaleDateString('id-ID') %></p>
+            <p class="text-gray-700 text-sm line-clamp-3"><%= berita.isi.substring(0, 150) %>...</p>
+            <div class="mt-4 flex gap-2">
+              <a href="/adminukm/berita/edit/<%= berita.id %>" class="text-indigo-600 text-sm hover:underline">Edit</a>
+              <form action="/adminukm/berita/hapus/<%= berita.id %>" method="POST" onsubmit="return confirm('Yakin ingin menghapus berita ini?')" class="inline">
+                <button type="submit" class="text-red-600 text-sm hover:underline">Hapus</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>

@@ -1,0 +1,75 @@
+<%- include('partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50">
+  <div class="p-8 max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6 text-indigo-800">Lengkapi Profil UKM Anda</h1>
+
+    <form action="/adminukm/profil" method="POST" enctype="multipart/form-data" class="space-y-6 bg-white p-6 rounded-xl shadow border border-gray-200">
+      <!-- Nama UKM -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Nama UKM</label>
+        <input type="text" name="namaOrg" required class="w-full p-2 border rounded mt-1" placeholder="Contoh: UKM Seni Budaya" />
+      </div>
+
+      <!-- Deskripsi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+        <textarea name="deskripsi" rows="4" required class="w-full p-2 border rounded mt-1" placeholder="Deskripsikan kegiatan, tujuan, dan bidang UKM..."></textarea>
+      </div>
+
+      <!-- Tanggal Berdiri -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Tanggal Berdiri</label>
+        <input type="date" name="tanggalBerdiri" required class="w-full p-2 border rounded mt-1" />
+      </div>
+
+      <!-- Instagram -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Instagram</label>
+        <input type="text" name="instagram" class="w-full p-2 border rounded mt-1" placeholder="contoh: instagram.com/ukmku" />
+      </div>
+
+      <!-- Website -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Website</label>
+        <input type="text" name="website" class="w-full p-2 border rounded mt-1" placeholder="contoh: ukmku.or.id" />
+      </div>
+
+      <!-- Visi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Visi</label>
+        <textarea name="visi" rows="2" class="w-full p-2 border rounded mt-1" placeholder="Visi UKM..."></textarea>
+      </div>
+
+      <!-- Misi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Misi</label>
+        <textarea name="misi" rows="3" class="w-full p-2 border rounded mt-1" placeholder="Misi UKM..."></textarea>
+      </div>
+
+      <!-- Alamat -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Alamat</label>
+        <input type="text" name="alamat" class="w-full p-2 border rounded mt-1" placeholder="Lokasi sekretariat, gedung, atau kampus..." />
+      </div>
+
+      <!-- Kontak -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Kontak</label>
+        <input type="text" name="kontak" class="w-full p-2 border rounded mt-1" placeholder="contoh: 0822xxxxxx" />
+      </div>
+
+      <!-- Logo -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Upload Logo</label>
+        <input type="file" name="logo" class="w-full border p-2 rounded mt-1" />
+      </div>
+
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+          Simpan Profil
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

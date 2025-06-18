@@ -1,0 +1,12 @@
+
+<h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+
+<p>Selamat datang, <%= user.role %>!</p>
+
+<% if (user.role === 'super_admin') { %>
+  <a href="/superadmin">Ke Panel Super Admin</a>
+<% } else if (user.role === 'admin_ukm') { %>
+  <a href="/adminukm">Ke Panel Admin UKM</a>
+<% } else { %>
+  <a href="/pengguna">Ke Panel Pengguna Umum</a>
+<% } %>

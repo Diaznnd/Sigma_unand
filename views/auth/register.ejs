@@ -1,0 +1,82 @@
+<!-- Main Container -->
+<div class="w-full max-w-md mx-auto mt-10">
+
+  <!-- Header Container -->
+  <div class="bg-green-600/90 backdrop-blur-md p-8 rounded-t-2xl shadow-lg text-center">
+    <div class="text-5xl text-white mb-2">
+      <i class="fas fa-user-plus"></i>
+    </div>
+    <h1 class="text-2xl font-bold text-white">Buat Akun Baru</h1>
+    <p class="text-sm text-green-100">Lengkapi formulir untuk mendaftar</p>
+  </div>
+
+  <!-- Form Container -->
+  <div class="bg-white/20 backdrop-blur-md p-8 rounded-b-2xl shadow-lg">
+
+    <form action="/auth/register" method="POST" class="space-y-4">
+
+      <!-- First Name -->
+      <div class="relative flex items-center bg-white/70 rounded-xl px-4 py-2 border border-gray-300">
+        <i class="fas fa-user text-gray-500 mr-3"></i>
+        <input name="first_name" type="text" placeholder="Nama Depan" required
+          class="bg-transparent w-full outline-none text-sm text-gray-800 placeholder-gray-500" />
+      </div>
+
+      <!-- Last Name -->
+      <div class="relative flex items-center bg-white/70 rounded-xl px-4 py-2 border border-gray-300">
+        <i class="fas fa-user text-gray-500 mr-3"></i>
+        <input name="last_name" type="text" placeholder="Nama Belakang" required
+          class="bg-transparent w-full outline-none text-sm text-gray-800 placeholder-gray-500" />
+      </div>
+
+      <!-- Email -->
+      <div class="relative flex items-center bg-white/70 rounded-xl px-4 py-2 border border-gray-300">
+        <i class="fas fa-envelope text-gray-500 mr-3"></i>
+        <input name="email" type="email" placeholder="Email" required
+          class="bg-transparent w-full outline-none text-sm text-gray-800 placeholder-gray-500" />
+      </div>
+
+      <!-- NIM -->
+      <div class="relative flex items-center bg-white/70 rounded-xl px-4 py-2 border border-gray-300">
+        <i class="fas fa-id-card text-gray-500 mr-3"></i>
+        <input name="nim" type="text" placeholder="NIM" required
+          class="bg-transparent w-full outline-none text-sm text-gray-800 placeholder-gray-500" />
+      </div>
+
+      <!-- Major -->
+      <div class="relative flex items-center bg-white/70 rounded-xl px-4 py-2 border border-gray-300">
+        <i class="fas fa-graduation-cap text-gray-500 mr-3"></i>
+        <input name="major" type="text" placeholder="Jurusan" required
+          class="bg-transparent w-full outline-none text-sm text-gray-800 placeholder-gray-500" />
+      </div>
+
+      <!-- Password -->
+      <div class="relative flex items-center bg-white/70 rounded-xl px-4 py-2 border border-gray-300">
+        <i class="fas fa-lock text-gray-500 mr-3"></i>
+        <input name="password" type="password" placeholder="Password" id="password"
+          class="bg-transparent w-full outline-none text-sm text-gray-800 placeholder-gray-500" required />
+        <button type="button" id="togglePassword" class="absolute right-3 text-gray-500">
+          <i class="fas fa-eye" id="toggleIcon"></i>
+        </button>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+        <i class="fas fa-user-plus"></i> Daftar
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="mt-6 text-sm text-center">
+      <span class="text-gray-700">Sudah punya akun?</span>
+      <a href="/auth/login" class="text-green-700 hover:text-green-800 hover:underline font-medium ml-1 transition-colors">Masuk di sini</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-8 text-sm text-white/90 text-center">
+  © 2024 Your Company. All rights reserved.
+</footer>
+
