@@ -7,6 +7,7 @@ const app = express();
 const superAdminRoutes = require('./routes/superAdminRoutes');
 const adminUkmRoutes = require('./routes/adminUkmRoutes');
 const adminBeritaRoutes = require('./routes/adminBeritaRoutes');
+const adminKegiatanRoutes = require('./routes/adminKegiatanRoutes');
 const setUKM = require('./middleware/setUKM');
 
 
@@ -27,6 +28,7 @@ app.use('/auth', authRoutes);
 app.use('/superadmin', superAdminRoutes);
 app.use('/adminukm', adminUkmRoutes);
 app.use('/adminukm/berita', adminBeritaRoutes);
+app.use('/adminukm/kegiatan', adminKegiatanRoutes);
 
 app.get('/', (req, res) => {
   res.redirect('/auth/login');
