@@ -56,7 +56,7 @@ router.get("/profil", isAuthenticated, isAdminUKM, async (req, res) => {
 });
 
 router.post("/profil", isAuthenticated, isAdminUKM, upload.single("logo"), async (req, res) => {
-  const { namaOrg, deskripsi, tanggalBerdiri, visi, misi, alamat, kontak } = req.body;
+  const { namaOrg, deskripsi, tanggalBerdiri, visi, misi, alamat, kontak, jenis } = req.body;
   const instagram = sanitizeURL(req.body.instagram);
   const website = sanitizeURL(req.body.website);
   const logo = req.file ? `/uploads/${req.file.filename}` : null;
@@ -74,6 +74,7 @@ router.post("/profil", isAuthenticated, isAdminUKM, upload.single("logo"), async
       misi,
       alamat,
       kontak,
+      jenis,
       userId: req.session.user.id
     });
 
@@ -133,7 +134,7 @@ router.get("/profil/edit", isAuthenticated, isAdminUKM, async (req, res) => {
 });
 
 router.post("/profil/edit", isAuthenticated, isAdminUKM, upload.single("logo"), async (req, res) => {
-  const { namaOrg, deskripsi, tanggalBerdiri, visi, misi, alamat, kontak } = req.body;
+  const { namaOrg, deskripsi, tanggalBerdiri, visi, misi, alamat, kontak, jenis } = req.body;
   const instagram = sanitizeURL(req.body.instagram);
   const website = sanitizeURL(req.body.website);
   const logo = req.file ? `/uploads/${req.file.filename}` : null;
@@ -153,6 +154,7 @@ router.post("/profil/edit", isAuthenticated, isAdminUKM, upload.single("logo"), 
       kontak,
       instagram,
       website,
+      jenis,
       logo: logo || ukm.logo
     });
 

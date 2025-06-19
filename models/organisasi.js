@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     misi: DataTypes.TEXT,        // ditambahkan
     alamat: DataTypes.STRING,    // ditambahkan
     kontak: DataTypes.STRING,    // ditambahkan
+    jenis: DataTypes.STRING, // Jenis UKM seperti: Olahraga, Seni, Akademik, dll
     userId: DataTypes.INTEGER
   }, {});
 
