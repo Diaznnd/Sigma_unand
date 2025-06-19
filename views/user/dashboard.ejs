@@ -1,0 +1,420 @@
+<!-- Header -->
+
+<div class="bg-emerald-50 shadow-lg sticky top-0 z-50 container-fluid w-screen">
+    <div class="container mx-auto px-2">
+        <div class="flex items-center justify-between py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-university text-emerald-700 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-emerald-700 text-xl font-bold">Sigma Unand</h1>
+                    <p class="text-emerald-700 text-sm">Universitas Andalas</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="/auth/dashboard" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Beranda</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">UKM</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Kegiatan</a>
+                <a href="/user/berita" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Berita</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">FAQ</a>
+
+            </nav>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- Mobile Menu -->
+        <div class="w-screen px-0"> 
+        <div id="mobileMenu" class="hidden md:hidden bg-emerald-800">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Beranda</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">UKM</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kegiatan</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Berita</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kontak</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di Sigma Unand</h2>
+            <p class="text-xl mb-8 text-emerald-100">Platform terpadu untuk mengelola dan mengembangkan Unit Kegiatan Mahasiswa di Universitas Andalas</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            
+                <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-emerald-700 transition duration-300">
+                    Pelajari Lebih Lanjut
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Tentang Sigma Unand</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Sigma Unand adalah platform digital yang memudahkan pengelolaan organisasi kemahasiswaan. 
+                    Dengan fitur yang lengkap, mahasiswa dapat dengan mudah bergabung, mengelola kegiatan, dan mengembangkan potensi diri 
+                    melalui berbagai Unit Kegiatan Mahasiswa yang tersedia.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-lg bg-emerald-50 hover:shadow-lg transition duration-300">
+                    <div class="w-16 h-16 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                 
+                    <a href="/auth/profil">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Profil UKM</h4>
+                    <p class="text-gray-600">Kelola keanggotaan UKM dengan sistem yang terorganisir dan mudah digunakan</p>
+                    </a>
+                    
+                </div>
+                <div class="text-center p-6 rounded-lg bg-emerald-50 hover:shadow-lg transition duration-300">
+                    <div class="w-16 h-16 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                    </div>
+
+
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Pendaftaran UKM</h4>
+                    <p class="text-gray-600">Atur dan pantau jadwal kegiatan UKM dengan kalender yang terintegrasi</p>
+                </div>
+                <div class="text-center p-6 rounded-lg bg-emerald-50 hover:shadow-lg transition duration-300">
+                    <div class="w-16 h-16 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+
+                     <a href="/auth/diskusi">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Forum Diskusi</h4>
+                    <p class="text-gray-600">Ruang diskusi terbuka untuk berbagi ide dan pengalaman antar UKM</p>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-800">Berita Terbaru</h3>
+                <a href="#" class="text-emerald-700 hover:text-emerald-800 font-semibold">Lihat Semua</a>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-emerald-200 flex items-center justify-center">
+                        <i class="fas fa-image text-emerald-600 text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-emerald-700 text-sm font-semibold mb-2">15 Juni 2025</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">Pendaftaran UKM Semester Ganjil 2025/2026 Dibuka</h4>
+                        <p class="text-gray-600 mb-4">Universitas Andalas membuka pendaftaran untuk seluruh UKM pada semester ganjil tahun akademik 2025/2026...</p>
+                        <a href="#" class="text-emerald-700 font-semibold hover:text-emerald-800">Baca Selengkapnya →</a>
+                    </div>
+                </article>
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-emerald-200 flex items-center justify-center">
+                        <i class="fas fa-image text-emerald-600 text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-emerald-700 text-sm font-semibold mb-2">12 Juni 2025</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">Workshop Manajemen Organisasi untuk Pengurus UKM</h4>
+                        <p class="text-gray-600 mb-4">Kemahasiswaan Unand mengadakan workshop manajemen organisasi untuk meningkatkan kapasitas pengurus UKM...</p>
+                        <a href="#" class="text-emerald-700 font-semibold hover:text-emerald-800">Baca Selengkapnya →</a>
+                    </div>
+                </article>
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-emerald-200 flex items-center justify-center">
+                        <i class="fas fa-image text-emerald-600 text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-emerald-700 text-sm font-semibold mb-2">10 Juni 2025</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">Prestasi Gemilang UKM Olahraga di Kompetisi Regional</h4>
+                        <p class="text-gray-600 mb-4">Tim futsal dan basket UKM Olahraga Unand berhasil meraih juara dalam kompetisi antar universitas...</p>
+                        <a href="#" class="text-emerald-700 font-semibold hover:text-emerald-800">Baca Selengkapnya →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar & Activities Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Calendar -->
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">Kalender Kegiatan</h3>
+                    <div class="bg-emerald-50 rounded-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xl font-semibold text-emerald-700">Juni 2025</h4>
+                            <div class="flex space-x-2">
+                                <button class="p-2 text-emerald-700 hover:bg-emerald-200 rounded">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="p-2 text-emerald-700 hover:bg-emerald-200 rounded">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 mb-4">
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Min</div>
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Sen</div>
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Sel</div>
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Rab</div>
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Kam</div>
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Jum</div>
+                            <div class="text-center text-sm font-semibold text-gray-600 py-2">Sab</div>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1">
+                            <div class="text-center py-2 text-gray-400">1</div>
+                            <div class="text-center py-2">2</div>
+                            <div class="text-center py-2">3</div>
+                            <div class="text-center py-2">4</div>
+                            <div class="text-center py-2">5</div>
+                            <div class="text-center py-2">6</div>
+                            <div class="text-center py-2">7</div>
+                            <div class="text-center py-2">8</div>
+                            <div class="text-center py-2">9</div>
+                            <div class="text-center py-2">10</div>
+                            <div class="text-center py-2">11</div>
+                            <div class="text-center py-2">12</div>
+                            <div class="text-center py-2">13</div>
+                            <div class="text-center py-2">14</div>
+                            <div class="bg-emerald-700 text-white rounded-full text-center py-2 font-semibold">15</div>
+                            <div class="text-center py-2">16</div>
+                            <div class="text-center py-2">17</div>
+                            <div class="bg-emerald-200 text-emerald-800 rounded-full text-center py-2">18</div>
+                            <div class="text-center py-2">19</div>
+                            <div class="bg-emerald-200 text-emerald-800 rounded-full text-center py-2">20</div>
+                            <div class="text-center py-2">21</div>
+                            <div class="text-center py-2">22</div>
+                            <div class="text-center py-2">23</div>
+                            <div class="text-center py-2">24</div>
+                            <div class="text-center py-2">25</div>
+                            <div class="text-center py-2">26</div>
+                            <div class="text-center py-2">27</div>
+                            <div class="text-center py-2">28</div>
+                            <div class="text-center py-2">29</div>
+                            <div class="text-center py-2">30</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">Kegiatan Mendatang</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white border border-emerald-200 rounded-lg p-4 hover:shadow-md transition duration-300">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-emerald-700 text-white rounded-lg p-3 text-center min-w-16">
+                                    <div class="text-lg font-bold">18</div>
+                                    <div class="text-sm">JUN</div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Rapat Koordinasi UKM</h4>
+                                    <p class="text-gray-600 text-sm mb-2">Gedung Rektorat, Ruang Seminar</p>
+                                    <div class="flex items-center text-emerald-700 text-sm">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>09:00 - 12:00 WIB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border border-emerald-200 rounded-lg p-4 hover:shadow-md transition duration-300">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-emerald-700 text-white rounded-lg p-3 text-center min-w-16">
+                                    <div class="text-lg font-bold">20</div>
+                                    <div class="text-sm">JUN</div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Festival Seni dan Budaya</h4>
+                                    <p class="text-gray-600 text-sm mb-2">Lapangan Terbuka Unand</p>
+                                    <div class="flex items-center text-emerald-700 text-sm">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>16:00 - 21:00 WIB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border border-emerald-200 rounded-lg p-4 hover:shadow-md transition duration-300">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-emerald-700 text-white rounded-lg p-3 text-center min-w-16">
+                                    <div class="text-lg font-bold">25</div>
+                                    <div class="text-sm">JUN</div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Pelatihan Kepemimpinan</h4>
+                                    <p class="text-gray-600 text-sm mb-2">Aula Fakultas Teknik</p>
+                                    <div class="flex items-center text-emerald-700 text-sm">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>08:00 - 17:00 WIB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Galeri Kegiatan</h3>
+                <p class="text-gray-600">Dokumentasi kegiatan-kegiatan menarik dari berbagai UKM</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-emerald-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold mb-4">Sigma Unand dalam Angka</h3>
+                <p class="text-emerald-100">Capaian dan perkembangan UKM di Universitas Andalas</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold mb-2">45+</div>
+                    <div class="text-emerald-100">UKM Aktif</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">2,500+</div>
+                    <div class="text-emerald-100">Anggota Aktif</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">150+</div>
+                    <div class="text-emerald-100">Kegiatan/Tahun</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">25+</div>
+                    <div class="text-emerald-100">Prestasi Nasional</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Akses Cepat</h3>
+                <p class="text-gray-600">Fitur-fitur yang sering digunakan dalam pengelolaan UKM</p>
+            </div>
+            <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="text-center p-6 bg-emerald-50 rounded-lg hover:shadow-md transition duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-user-plus text-white"></i>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800">Daftar UKM</div>
+                </div>
+                <div class="text-center p-6 bg-emerald-50 rounded-lg hover:shadow-md transition duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800">Laporan</div>
+                </div>
+                <div class="text-center p-6 bg-emerald-50 rounded-lg hover:shadow-md transition duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-calendar-check text-white"></i>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800">Jadwal</div>
+                </div>
+                <div class="text-center p-6 bg-emerald-50 rounded-lg hover:shadow-md transition duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-money-bill text-white"></i>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800">Keuangan</div>
+                </div>
+                <div class="text-center p-6 bg-emerald-50 rounded-lg hover:shadow-md transition duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-trophy text-white"></i>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800">Prestasi</div>
+                </div>
+                <div class="text-center p-6 bg-emerald-50 rounded-lg hover:shadow-md transition duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-cog text-white"></i>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800">Pengaturan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center">
+                            <i class="fas fa-university text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold">Sigma Unand</h4>
+                            <p class="text-gray-400 text-sm">Universitas Andalas</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Platform terpadu untuk pengelolaan Unit Kegiatan Mahasiswa di Universitas Andalas.</p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="https://www.instagram.com/bemkmunand" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Menu Utama</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Beranda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Daftar UKM</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Kegiatan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Berita</a></li>
+                      
+                
