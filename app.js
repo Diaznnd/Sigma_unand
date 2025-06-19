@@ -57,6 +57,10 @@ app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
   res.send('Panel Pengguna Umum');
 });
 
+const penggunaRoutes = require('./routes/penggunaRoutes');
+app.use('/pengguna', penggunaRoutes);
+
+
 // DB
 // DB
 const db = require('./models');
