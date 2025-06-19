@@ -9,6 +9,7 @@ const adminUkmRoutes = require('./routes/adminUkmRoutes');
 const adminBeritaRoutes = require('./routes/adminBeritaRoutes');
 const adminKegiatanRoutes = require('./routes/adminKegiatanRoutes');
 const setUKM = require('./middleware/setUKM');
+const penggunaRoutes = require('./routes/userdashboard');
 
 
 
@@ -29,6 +30,7 @@ app.use('/superadmin', superAdminRoutes);
 app.use('/adminukm', adminUkmRoutes);
 app.use('/adminukm/berita', adminBeritaRoutes);
 app.use('/adminukm/kegiatan', adminKegiatanRoutes);
+app.use('/pengguna', penggunaRoutes);
 
 app.get('/', (req, res) => {
   res.redirect('/auth/login');
@@ -54,11 +56,12 @@ app.get('/adminukm', isAuthenticated, isAdminUKM, (req, res) => {
 });
 
 app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
-  res.send('Panel Pengguna Umum');
+  res.render('user/dashboard', {user: req.session.user});
 });
 
-const penggunaRoutes = require('./routes/penggunaRoutes');
-app.use('/pengguna', penggunaRoutes);
+const userberita = require('./routes/userberita');
+app.use('/user', userberita); // misalnya kamu akses via /pengguna/berita
+app.use('/uploads', express.static('uploads'));
 
 
 // DB
