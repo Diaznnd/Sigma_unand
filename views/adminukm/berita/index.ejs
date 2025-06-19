@@ -13,20 +13,26 @@
       Belum ada berita yang ditambahkan.
     </div>
   <% } else { %>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <% beritaList.forEach(berita => { %>
-        <div class="bg-white shadow rounded-xl overflow-hidden border border-gray-200">
+        <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-lg transition">
           <% if (berita.gambar) { %>
-            <img src="<%= berita.gambar %>" alt="Gambar Berita" class="w-full h-48 object-cover">
+            <img src="<%= berita.gambar %>" alt="Gambar Berita" class="w-full h-44 object-cover rounded-t-xl">
+          <% } else { %>
+            <div class="w-full h-44 bg-gray-100 flex items-center justify-center text-gray-400 italic">
+              Tidak ada gambar
+            </div>
           <% } %>
+
           <div class="p-4">
-            <h2 class="text-lg font-semibold text-gray-800 mb-2"><%= berita.judul %></h2>
-            <p class="text-sm text-gray-600 mb-3"><%= berita.tanggal.toLocaleDateString('id-ID') %></p>
-            <p class="text-gray-700 text-sm line-clamp-3"><%= berita.isi.substring(0, 150) %>...</p>
-            <div class="mt-4 flex gap-2">
-              <a href="/adminukm/berita/edit/<%= berita.id %>" class="text-indigo-600 text-sm hover:underline">Edit</a>
-              <form action="/adminukm/berita/hapus/<%= berita.id %>" method="POST" onsubmit="return confirm('Yakin ingin menghapus berita ini?')" class="inline">
-                <button type="submit" class="text-red-600 text-sm hover:underline">Hapus</button>
+            <h2 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-2"><%= berita.judul %></h2>
+            <p class="text-xs text-gray-500 mb-2"><%= berita.tanggal.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+            <p class="text-sm text-gray-600 line-clamp-3 mb-4"><%= berita.isi.length > 150 ? berita.isi.substring(0, 150) + '...' : berita.isi %></p>
+
+            <div class="flex justify-between items-center">
+              <a href="/adminukm/berita/edit/<%= berita.id %>" class="text-sm text-indigo-600 hover:underline">Edit</a>
+              <form action="/adminukm/berita/hapus/<%= berita.id %>" method="POST" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
+                <button type="submit" class="text-sm text-red-600 hover:underline">Hapus</button>
               </form>
             </div>
           </div>

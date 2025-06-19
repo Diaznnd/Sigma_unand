@@ -33,6 +33,20 @@
         <input name="namaOrg" value="<%= ukm.namaOrg %>" required class="w-full p-2 border rounded" />
       </div>
 
+      <!-- Jenis UKM -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Jenis UKM</label>
+        <select name="jenis" required class="w-full p-2 border rounded mt-1">
+          <option value="">-- Pilih Jenis UKM --</option>
+          <option value="Akademik" <%= ukm.jenis === 'Akademik' ? 'selected' : '' %>>Akademik</option>
+          <option value="Seni" <%= ukm.jenis === 'Seni' ? 'selected' : '' %>>Seni</option>
+          <option value="Olahraga" <%= ukm.jenis === 'Olahraga' ? 'selected' : '' %>>Olahraga</option>
+          <option value="Kepemudaan" <%= ukm.jenis === 'Kepemudaan' ? 'selected' : '' %>>Kepemudaan</option>
+          <option value="Kesehatan" <%= ukm.jenis === 'Kesehatan' ? 'selected' : '' %>>Kesehatan</option>
+          <option value="Lainnya" <%= ukm.jenis === 'Lainnya' ? 'selected' : '' %>>Lainnya</option>
+        </select>
+      </div>
+
       <div>
         <label class="block text-sm font-medium">Deskripsi</label>
         <textarea name="deskripsi" rows="4" class="w-full p-2 border rounded"><%= ukm.deskripsi %></textarea>
