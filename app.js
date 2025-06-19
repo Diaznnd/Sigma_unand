@@ -7,6 +7,7 @@ const app = express();
 const superAdminRoutes = require('./routes/superAdminRoutes');
 const adminUkmRoutes = require('./routes/adminUkmRoutes');
 const adminBeritaRoutes = require('./routes/adminBeritaRoutes');
+const setUKM = require('./middleware/setUKM');
 
 
 
@@ -17,6 +18,9 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(session({ secret: 'sigma_unand_rahasia', resave: false, saveUninitialized: true }));
+// Middleware yang inject ukm ke semua view EJS
+app.use(setUKM);
+             
 
 // Routes
 app.use('/auth', authRoutes);

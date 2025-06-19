@@ -4,13 +4,12 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Kegiatan extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // Relasi ke model Organisasi (UKM)
+      Kegiatan.belongsTo(models.Organisasi, {
+        foreignKey: 'ukm_id',
+        as: 'organisasi'
+      });
     }
   }
   Kegiatan.init({
