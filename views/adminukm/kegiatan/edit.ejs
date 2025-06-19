@@ -1,36 +1,40 @@
 <%- include('../partials/sidebar') %>
 
 <main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
-  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow p-6 border border-gray-200">
-    <h1 class="text-2xl font-bold text-emerald-700 mb-6">Edit Kegiatan</h1>
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow border border-gray-200">
+    <h1 class="text-2xl font-bold text-indigo-800 mb-6">Edit Kegiatan</h1>
 
     <form action="/adminukm/kegiatan/edit/<%= kegiatan.id %>" method="POST" class="space-y-5">
-      <!-- judul Kegiatan -->
+      
+      <!-- Judul -->
       <div>
-        <label class="block text-sm font-medium text-gray-700">Nama Kegiatan</label>
-        <input type="text" name="judul" value="<%= kegiatan.judul %>" required 
-               class="mt-1 w-full p-2 border rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+        <label class="block text-sm font-medium text-gray-700">Judul Kegiatan</label>
+        <input type="text" name="judul" value="<%= kegiatan.judul %>" required class="w-full mt-1 p-2 border rounded" />
       </div>
 
       <!-- Deskripsi -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
-        <textarea name="deskripsi" rows="4" required 
-                  class="mt-1 w-full p-2 border rounded-md focus:ring-emerald-500 focus:border-emerald-500"><%= kegiatan.deskripsi %></textarea>
+        <textarea name="deskripsi" rows="5" required class="w-full mt-1 p-2 border rounded"><%= kegiatan.deskripsi %></textarea>
       </div>
 
       <!-- Tanggal -->
       <div>
-        <label class="block text-sm font-medium text-gray-700">Tanggal Kegiatan</label>
-        <input type="date" name="tanggal" value="<%= kegiatan.tanggal.toISOString().slice(0,10) %>" required 
-               class="mt-1 w-full p-2 border rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+        <label class="block text-sm font-medium text-gray-700">Tanggal Pelaksanaan</label>
+        <input type="date" name="tanggal" value="<%= new Date(kegiatan.tanggal).toISOString().split('T')[0] %>" required  class="w-full mt-1 p-2 border rounded" 
+/>
+      </div>
+
+      <!-- Lokasi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Lokasi</label>
+        <input type="text" name="lokasi" value="<%= kegiatan.lokasi %>" class="w-full mt-1 p-2 border rounded" />
       </div>
 
       <!-- Tombol -->
-      <div class="pt-4 flex justify-end gap-3">
-        <a href="/adminukm/kegiatan" class="text-gray-600 hover:underline">Batal</a>
-        <button type="submit" class="bg-emerald-600 text-white px-5 py-2 rounded-md hover:bg-emerald-700 transition">
-          Update Kegiatan
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+          Simpan Perubahan
         </button>
       </div>
     </form>

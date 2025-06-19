@@ -38,13 +38,15 @@ router.get("/tambah", isAuthenticated, isAdminUKM, async (req, res) => {
 // PROSES TAMBAH
 router.post("/tambah", isAuthenticated, isAdminUKM, async (req, res) => {
   try {
-    const { nama, deskripsi, tanggal } = req.body;
-    await Kegiatan.create({
-      nama,
-      deskripsi,
-      tanggal,
-      ukm_id: req.session.user.ukm_id,
-    });
+    const { judul, deskripsi, tanggal, lokasi } = req.body;
+        await Kegiatan.create({
+        judul,
+        deskripsi,
+        tanggal,
+        lokasi,
+        ukm_id: req.session.user.ukm_id
+        });
+
     res.redirect("/adminukm/kegiatan");
   } catch (error) {
     console.error("Gagal menambahkan kegiatan:", error);
