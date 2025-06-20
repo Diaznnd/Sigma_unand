@@ -1,0 +1,29 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 p-8 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white">
+  <h1 class="text-2xl font-bold text-indigo-700 mb-6">Tambah Pengurus</h1>
+
+  <form action="/adminukm/pengurus/tambah" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Nama</label>
+      <input type="text" name="nama" required class="w-full p-2 border rounded" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Jabatan</label>
+      <input type="text" name="jabatan" required class="w-full p-2 border rounded" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Periode</label>
+      <input type="text" name="periode" placeholder="Contoh: 2024-2025" required class="w-full p-2 border rounded" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Foto (opsional)</label>
+      <input type="file" name="foto" class="w-full p-2 border rounded" />
+    </div>
+
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Simpan</button>
+  </form>
+</main>

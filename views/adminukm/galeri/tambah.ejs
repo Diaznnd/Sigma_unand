@@ -1,0 +1,49 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-white to-slate-100 p-8">
+  <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow border border-gray-200">
+    <h1 class="text-2xl font-bold text-indigo-700 mb-6">Tambah Galeri Baru</h1>
+
+    <form action="/adminukm/galeri/tambah" method="POST" enctype="multipart/form-data" class="space-y-5">
+      
+      <!-- Judul -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Judul Galeri</label>
+        <input type="text" name="judul" required class="w-full mt-1 p-2 border rounded" placeholder="Contoh: Dokumentasi Kegiatan Baksos" />
+      </div>
+
+      <!-- Deskripsi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+        <textarea name="deskripsi" rows="4" required class="w-full mt-1 p-2 border rounded" placeholder="Deskripsikan galeri ini..."></textarea>
+      </div>
+
+      <!-- Jenis -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Jenis Galeri</label>
+        <select name="jenis" required class="w-full mt-1 p-2 border rounded">
+          <option value="">-- Pilih Jenis --</option>
+          <option value="berita">Berita</option>
+          <option value="kegiatan">Kegiatan</option>
+        </select>
+      </div>
+
+      <!-- Referensi ID -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">ID Referensi (Opsional)</label>
+        <input type="number" name="referensi_id" class="w-full mt-1 p-2 border rounded" placeholder="ID berita atau kegiatan terkait" />
+      </div>
+
+      <!-- Upload Banyak Gambar -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Unggah Gambar (bisa lebih dari satu)</label>
+        <input type="file" name="gambar" multiple required accept="image/*" class="w-full mt-1 border p-2 rounded bg-white" />
+        <p class="text-sm text-gray-500 mt-1">Pilih beberapa gambar dengan Ctrl / Shift atau tahan klik.</p>
+      </div>
+
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">Simpan Galeri</button>
+      </div>
+    </form>
+  </div>
+</main>

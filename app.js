@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts'); 
+const flash = require('connect-flash');
 const authRoutes = require('./routes/authRoutes');
 const path = require('path');
 const app = express();
@@ -10,8 +11,22 @@ const adminBeritaRoutes = require('./routes/adminBeritaRoutes');
 const adminKegiatanRoutes = require('./routes/adminKegiatanRoutes');
 const setUKM = require('./middleware/setUKM');
 const penggunaRoutes = require('./routes/userdashboard');
+const adminGaleriRoutes = require('./routes/adminGaleriRoutes');
+const adminPengurusRoutes = require('./routes/adminPengurusRoutes');
 
 
+
+app.use(session({
+  secret: 'sigma-unand-secret',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -31,6 +46,8 @@ app.use('/adminukm', adminUkmRoutes);
 app.use('/adminukm/berita', adminBeritaRoutes);
 app.use('/adminukm/kegiatan', adminKegiatanRoutes);
 app.use('/pengguna', penggunaRoutes);
+app.use("/adminukm/galeri", adminGaleriRoutes);
+app.use('/adminukm/pengurus', adminPengurusRoutes);
 
 app.get('/', (req, res) => {
   res.redirect('/auth/login');
