@@ -34,7 +34,8 @@ router.post('/tambah', isAuthenticated, isAdminUKM, upload.single('gambar'), asy
       isi,
       tanggal,
       gambar,
-      ukm_id: req.session.user.ukm_id
+      ukm_id: req.session.user.ukm_id,
+      penulis: req.session.user.nama
     });
     res.redirect('/adminukm/berita');
   } catch (err) {
