@@ -27,7 +27,7 @@ const userberita = require('./routes/userberita');
 const userKegiatan = require('./routes/userkegiatan');
 const userDetailBeritaRoutes = require('./routes/userdetailberita');
 const forumRouter = require('./routes/forumRouter');
-const ukmRouter = require('./routes/ukmRouter');
+const ukmRouter = require('./routes/ukmrouter');
 
 // Setup pdfMake
 pdfMake.vfs = vfsFonts.vfs;
@@ -37,7 +37,7 @@ const app = express();
 // Setup view engine dan layout
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layouts/layout');
+app.set('layout', 'layouts/layout'); // Matikan sementara jika layout.ejs tidak tersedia
 
 // Setup middleware
 app.use(express.static(path.join(__dirname, 'public')));
@@ -115,6 +115,19 @@ app.get('/adminukm', isAuthenticated, isAdminUKM, (req, res) => {
 
 app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
   res.render('user/dashboard', { user: req.session.user });
+});
+
+// Global error handler dengan fallback jika render error.ejs gagal
+app.use((err, req, res, next) => {
+  console.error('Global Error Handler:', err);
+  try {
+    res.status(500).render('user/error', {
+      message: 'Terjadi kesalahan pada server',
+      backUrl: req.get('Referrer') || '/'
+    });
+  } catch (renderErr) {
+    res.status(500).send('<h1>500 - Internal Server Error</h1><p>Gagal merender halaman error.</p>');
+  }
 });
 
 const port = process.env.PORT || 3000;
