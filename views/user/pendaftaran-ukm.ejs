@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran UKM - <%= ukm.nama %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-university text-2xl text-blue-600"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">SIGMA UNAND</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="/ukm" class="text-gray-600 hover:text-blue-600 transition duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Kembali ke Daftar UKM
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- UKM Info Card -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex items-center mb-4">
+                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                    <i class="fas fa-users text-blue-600 text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800"><%= ukm.nama %></h2>
+                    <div class="flex items-center space-x-4 mt-2">
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+                            <i class="fas fa-tag mr-1"></i><%= ukm.kategori %>
+                        </span>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                            <i class="fas fa-circle mr-1"></i><%= ukm.status %>
+                        </span>
+                        <span class="<%= ukm.pendaftaran === 'Dibuka' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800' %> text-sm font-medium px-3 py-1 rounded-full">
+                            <i class="fas fa-door-open mr-1"></i><%= ukm.pendaftaran %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-gray-600 mb-4"><%= ukm.deskripsi %></p>
+            
+            <!-- Kegiatan -->
+            <div class="mb-4">
+                <h3 class="font-semibold text-gray-800 mb-2">Kegiatan UKM:</h3>
+                <div class="flex flex-wrap gap-2">
+                    <% ukm.kegiatan.forEach(function(kegiatan) { %>
+                        <span class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">
+                            <i class="fas fa-check mr-1"></i><%= kegiatan %>
+                        </span>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <!-- Kontak -->
+            <div class="flex items-center text-gray-600">
+                <i class="fas fa-envelope mr-2"></i>
+                <span><%= ukm.kontak %></span>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">Form Pendaftaran</h3>
+                <p class="text-gray-600">Isi data diri Anda dengan lengkap dan benar</p>
+            </div>
+
+            <form id="registrationForm" action="/ukm/<%= ukm.id %>/daftar" method="POST" class="space-y-6">
+                <!-- Personal Information Section -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-user mr-2 text-blue-600"></i>
+                        Data Pribadi
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-2">
+                                Nama Lengkap <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="nama_lengkap" 
+                                   id="nama_lengkap" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                   placeholder="Masukkan nama lengkap Anda"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nim" class="block text-sm font-medium text-gray-700 mb-2">
+                                NIM <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="nim" 
+                                   id="nim" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                   placeholder="Contoh: 2101234567"
+                                   pattern="[0-9]{10}"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Email <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" 
+                                   name="email" 
+                                   id="email" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                   placeholder="nama@student.unand.ac.id"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_telepon" class="block text-sm font-medium text-gray-700 mb-2">
+                                Nomor Telepon <span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" 
+                                   name="no_telepon" 
+                                   id="no_telepon" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                   placeholder="08xxxxxxxxxx"
+                                   pattern="[0-9]{10,13}"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Information Section -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-graduation-cap mr-2 text-blue-600"></i>
+                        Data Akademik
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="fakultas" class="block text-sm font-medium text-gray-700 mb-2">
+                                Fakultas <span class="text-red-500">*</span>
+                            </label>
+                            <select name="fakultas" 
+                                    id="fakultas" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                    required>
+                                <option value="">Pilih Fakultas</option>
+                                <option value="Fakultas Teknik">Fakultas Teknik</option>
+                                <option value="Fakultas MIPA">Fakultas MIPA</option>
+                                <option value="Fakultas Ekonomi">Fakultas Ekonomi</option>
+                                <option value="Fakultas Hukum">Fakultas Hukum</option>
+                                <option value="Fakultas Ilmu Sosial dan Politik">Fakultas Ilmu Sosial dan Politik</option>
+                                <option value="Fakultas Ilmu Budaya">Fakultas Ilmu Budaya</option>
+                                <option value="Fakultas Kedokteran">Fakultas Kedokteran</option>
+                                <option value="Fakultas Keperawatan">Fakultas Keperawatan</option>
+                                <option value="Fakultas Kesehatan Masyarakat">Fakultas Kesehatan Masyarakat</option>
+                                <option value="Fakultas Pertanian">Fakultas Pertanian</option>
+                                <option value="Fakultas Peternakan">Fakultas Peternakan</option>
+                                <option value="Fakultas Farmasi">Fakultas Farmasi</option>
+                                <option value="Fakultas Kedokteran Gigi">Fakultas Kedokteran Gigi</option>
+                                <option value="Fakultas Teknologi Pertanian">Fakultas Teknologi Pertanian</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jurusan" class="block text-sm font-medium text-gray-700 mb-2">
+                                Program Studi <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="jurusan" 
+                                   id="jurusan" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                   placeholder="Masukkan program studi Anda"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="angkatan" class="block text-sm font-medium text-gray-700 mb-2">
+                                Angkatan <span class="text-red-500">*</span>
+                            </label>
+                            <select name="angkatan" 
+                                    id="angkatan" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                    required>
+                                <option value="">Pilih Angkatan</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="semester" class="block text-sm font-medium text-gray-700 mb-2">
+                                Semester <span class="text-red-500">*</span>
+                            </label>
+                            <select name="semester" 
+                                    id="semester" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                    required>
+                                <option value="">Pilih Semester</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information Section -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-info-circle mr-2 text-blue-600"></i>
+                        Informasi Tambahan
+                    </h4>
+                    
+                    <div class="space-y-6">
+                        <div class="form-group">
+                            <label for="motivasi" class="block text-sm font-medium text-gray-700 mb-2">
+                                Motivasi Bergabung <span class="text-red-500">*</span>
+                            </label>
+                            <textarea name="motivasi" 
+                                      id="motivasi" 
+                                      rows="4" 
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                      placeholder="Jelaskan motivasi Anda bergabung dengan UKM ini..."
+                                      required></textarea>
+                            <p class="text-sm text-gray-500 mt-1">Minimal 50 karakter</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pengalaman" class="block text-sm font-medium text-gray-700 mb-2">
+                                Pengalaman Organisasi
+                            </label>
+                            <textarea name="pengalaman" 
+                                      id="pengalaman" 
+                                      rows="3" 
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                      placeholder="Ceritakan pengalaman organisasi yang pernah Anda ikuti (opsional)"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="keahlian" class="block text-sm font-medium text-gray-700 mb-2">
+                                Keahlian Khusus
+                            </label>
+                            <input type="text" 
+                                   name="keahlian" 
+                                   id="keahlian" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" 
+                                   placeholder="Contoh: Desain Grafis, Public Speaking, Programming (opsional)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agreement Section -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                    <div class="flex items-start space-x-3">
+                        <input type="checkbox" 
+                               name="agreement" 
+                               id="agreement" 
+                               class="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+                               required>
+                        <div>
+                            <label for="agreement" class="text-sm text-gray-700">
+                                <span class="font-medium">Persetujuan dan Ketentuan</span>
+                                <p class="mt-1">
+                                    Saya menyatakan bahwa data yang saya berikan adalah benar dan dapat dipertanggungjawabkan. 
+                                    Saya bersedia mengikuti seluruh kegiatan dan mematuhi peraturan yang berlaku di UKM <%= ukm.nama %>.
+                                </p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-center pt-6">
+                    <button type="submit" 
+                            id="submitBtn"
+                            class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 flex items-center space-x-2">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Daftar Sekarang</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12">
+        <div class="container mx-auto px-6 py-8">
+            <div class="text-center text-gray-600">
+                <p>&copy; 2024 SIGMA UNAND. Semua hak cipta dilindungi.</p>
+                <p class="mt-2">Sistem Informasi Manajemen Aktivitas - Universitas Andalas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-sm mx-4">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Memproses Pendaftaran</h3>
+                <p class="text-gray-600">Sedang menyimpan data dan menyiapkan PDF...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form validation and submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            const loadingModal = document.getElementById('loadingModal');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Show loading modal
+            loadingModal.classList.remove('hidden');
+            loadingModal.classList.add('flex');
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...';
+        });
+
+        // Real-time validation
+        document.getElementById('nim').addEventListener('input', function(e) {
+            const nim = e.target.value;
+            if (nim.length > 0 && !/^[0-9]+$/.test(nim)) {
+                e.target.setCustomValidity('NIM hanya boleh berisi angka');
+            } else if (nim.length > 0 && nim.length !== 10) {
+                e.target.setCustomValidity('NIM harus terdiri dari 10 digit');
+            } else {
+                e.target.setCustomValidity('');
+            }
+        });
+
+        document.getElementById('no_telepon').addEventListener('input', function(e) {
+            const phone = e.target.value;
+            if (phone.length > 0 && !/^[0-9]+$/.test(phone)) {
+                e.target.setCustomValidity('Nomor telepon hanya boleh berisi angka');
+            } else if (phone.length > 0 && (phone.length < 10 || phone.length > 13)) {
+                e.target.setCustomValidity('Nomor telepon harus 10-13 digit');
+            } else {
+                e.target.setCustomValidity('');
+            }
+        });
+
+        document.getElementById('motivasi').addEventListener('input', function(e) {
+            const motivasi = e.target.value;
+            if (motivasi.length > 0 && motivasi.length < 50) {
+                e.target.setCustomValidity('Motivasi minimal 50 karakter');
+            } else {
+                e.target.setCustomValidity('');
+            }
+        });
+
+        // Auto-hide loading modal if there's an error
+        window.addEventListener('pageshow', function() {
+            const loadingModal = document.getElementById('loadingModal');
+            loadingModal.classList.add('hidden');
+            loadingModal.classList.remove('flex');
+        });
+    </script>
+</body>
+</html>
