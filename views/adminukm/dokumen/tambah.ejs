@@ -1,0 +1,41 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="max-w-3xl mx-auto bg-white p-8 shadow-md rounded-xl">
+    <h1 class="text-2xl font-bold mb-6 text-indigo-800">Unggah Dokumen Kegiatan</h1>
+
+    <form action="/adminukm/dokumen/tambah" method="POST" enctype="multipart/form-data" class="space-y-6">
+
+      <!-- Judul -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Judul Dokumen</label>
+        <input type="text" name="judul" required class="w-full p-2 border rounded mt-1" placeholder="Contoh: Proposal Kegiatan Bakti Sosial">
+      </div>
+
+      <!-- Deskripsi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+        <textarea name="deskripsi" rows="4" class="w-full p-2 border rounded mt-1" placeholder="Tuliskan informasi ringkas tentang dokumen ini..."></textarea>
+      </div>
+
+      <!-- Kegiatan -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Terkait Kegiatan</label>
+        <input type="number" name="kegiatan_id" required class="w-full p-2 border rounded mt-1" placeholder="ID berita atau kegiatan terkait">
+      </div>
+
+      <!-- Upload File -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">File Dokumen (PDF)</label>
+        <input type="file" name="file" accept=".pdf" required class="w-full p-2 border rounded mt-1">
+      </div>
+
+      <!-- Tombol -->
+      <div>
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">Unggah</button>
+        <a href="/adminukm/dokumen" class="ml-4 text-gray-600 hover:underline">Kembali</a>
+      </div>
+
+    </form>
+  </div>
+</main>
