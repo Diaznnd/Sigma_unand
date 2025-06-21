@@ -98,6 +98,13 @@ app.use('/berita', userDetailBeritaRoutes);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//kalender
+const userKalenderRoutes = require('./routes/userkalender');
+app.use('/user', userKalenderRoutes);
+
+
+
+
 
 
 // DB
