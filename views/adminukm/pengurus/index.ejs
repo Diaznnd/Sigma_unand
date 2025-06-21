@@ -1,0 +1,31 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 p-8 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-white to-gray-50">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Struktur Kepengurusan</h1>
+    <a href="/adminukm/pengurus/tambah" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">+ Tambah Pengurus</a>
+  </div>
+
+  <% if (pengurusList.length === 0) { %>
+    <div class="bg-white p-6 text-center text-gray-600 rounded shadow">Belum ada data pengurus.</div>
+  <% } else { %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% pengurusList.forEach(p => { %>
+        <div class="bg-white p-4 rounded shadow border border-gray-200">
+          <% if (p.foto) { %>
+            <img src="<%= p.foto %>" class="w-full h-40 object-cover rounded mb-3" alt="Foto <%= p.nama %>">
+          <% } %>
+          <h2 class="text-lg font-semibold text-gray-800"><%= p.nama %></h2>
+          <p class="text-sm text-gray-600"><%= p.jabatan %> - <%= p.periode %></p>
+
+          <div class="mt-3 flex gap-2">
+            <a href="/adminukm/pengurus/edit/<%= p.id %>" class="text-blue-600 text-sm hover:underline">Edit</a>
+            <form action="/adminukm/pengurus/hapus/<%= p.id %>" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
+              <button type="submit" class="text-red-600 text-sm hover:underline">Hapus</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>

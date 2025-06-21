@@ -1,0 +1,73 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow">
+    <h1 class="text-2xl font-bold text-indigo-800 mb-4">Edit Galeri</h1>
+
+    <!-- FORM UTAMA -->
+    <form action="/adminukm/galeri/edit/<%= galeri.id %>" method="POST" enctype="multipart/form-data" class="space-y-6">
+      <!-- Judul -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Judul Galeri</label>
+        <input type="text" name="judul" value="<%= galeri.judul %>" required class="w-full p-2 border rounded mt-1" />
+      </div>
+
+      <!-- Deskripsi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+        <textarea name="deskripsi" rows="3" class="w-full p-2 border rounded mt-1"><%= galeri.deskripsi %></textarea>
+      </div>
+
+      <!-- Jenis Galeri -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Jenis</label>
+        <select name="jenis" required class="w-full p-2 border rounded mt-1">
+          <option value="kegiatan" <%= galeri.jenis === 'kegiatan' ? 'selected' : '' %>>Kegiatan</option>
+          <option value="berita" <%= galeri.jenis === 'berita' ? 'selected' : '' %>>Berita</option>
+        </select>
+      </div>
+
+      <!-- Referensi ID -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">ID Referensi (opsional)</label>
+        <input type="text" name="referensi_id" value="<%= galeri.referensi_id || '' %>" class="w-full p-2 border rounded mt-1" />
+      </div>
+
+
+      <!-- Upload Gambar Baru -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Tambah Gambar Baru</label>
+        <input type="file" name="gambar[]" multiple class="w-full border p-2 rounded mt-1" />
+        <p class="text-xs text-gray-500 mt-1">Bisa pilih lebih dari satu file</p>
+      </div>
+
+      <!-- Gambar yang Sudah Ada -->
+      <div>
+        <p class="text-sm font-medium text-gray-700 mb-2">Gambar Saat Ini</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <% galeri.items.forEach(item => { %>
+            <div class="relative group border rounded overflow-hidden">
+              <img src="<%= item.gambar %>" alt="Gambar" class="w-full h-32 object-cover">
+
+              <!-- Form hapus gambar (di luar form utama) -->
+              <div class="absolute top-1 right-1">
+                <form action="/adminukm/galeri/<%= galeri.id %>/hapus-gambar/<%= item.id %>" method="POST">
+                  <button type="submit" onclick="return confirm('Yakin hapus gambar ini?')" class="text-white bg-red-600 bg-opacity-80 hover:bg-opacity-100 rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                    &times;
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Tombol Simpan -->
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+          Simpan Perubahan
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

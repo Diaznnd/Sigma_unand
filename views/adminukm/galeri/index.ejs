@@ -1,0 +1,37 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-white to-slate-100 p-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-indigo-800">Galeri Kegiatan & Berita</h1>
+    <a href="/adminukm/galeri/tambah" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">+ Tambah Galeri</a>
+  </div>
+
+  <% if (galeriList.length === 0) { %>
+    <div class="bg-white p-6 rounded shadow text-gray-600 text-center">Belum ada galeri.</div>
+  <% } else { %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% galeriList.forEach(galeri => { %>
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+          <a href="/adminukm/galeri/detail/<%= galeri.id %>">
+            <img src="<%= galeri.items[0] ? galeri.items[0].gambar : '/images/default-thumbnail.jpg' %>" alt="Thumbnail"
+              class="w-full h-48 object-cover cursor-pointer hover:opacity-80 transition" />
+          </a>
+          <div class="p-4">
+            <h2 class="text-lg font-semibold mb-1 text-gray-800"><%= galeri.judul %></h2>
+            <p class="text-sm text-gray-500 mb-2"><%= galeri.deskripsi.substring(0, 100) %>...</p>
+            <p class="text-xs bg-gray-100 inline-block px-2 py-1 rounded text-gray-600 mb-3">Jenis: <%= galeri.jenis %></p>
+            <div class="flex justify-between items-center text-sm">
+              <a href="/adminukm/galeri/edit/<%= galeri.id %>" class="text-blue-600 hover:underline">Edit</a>
+              <form action="/adminukm/galeri/hapus/<%= galeri.id %>" method="POST" onsubmit="return confirm('Hapus galeri ini?')">
+                <button type="submit" class="text-red-600 hover:underline">Hapus</button>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+

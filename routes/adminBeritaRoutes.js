@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { isAuthenticated, isAdminUKM } = require('../middleware/auth');
-const { Berita } = require('../models');
+const { Berita, Organisasi } = require('../models');
 
 // Konfigurasi upload untuk gambar
 const upload = multer({ dest: 'public/uploads/' });
@@ -25,22 +25,31 @@ router.get('/tambah', isAuthenticated, isAdminUKM, (req, res) => {
 
 /* === Proses Tambah Berita === */
 router.post('/tambah', isAuthenticated, isAdminUKM, upload.single('gambar'), async (req, res) => {
-  const { judul, isi, tanggal } = req.body;
-  const gambar = req.file ? `/uploads/${req.file.filename}` : null;
-
   try {
+    const ukmId = req.session.user.ukm_id;
+
+    // Ambil info UKM terlebih dahulu
+    const organisasi = await Organisasi.findByPk(ukmId);
+    if (!organisasi) return res.status(404).send("Organisasi tidak ditemukan");
+
+    const penulis = organisasi.namaOrg;
+
+    const gambar = req.file ? `/uploads/${req.file.filename}` : null;
+    const { judul, isi, tanggal } = req.body;
+
     await Berita.create({
       judul,
       isi,
-      tanggal,
       gambar,
-      ukm_id: req.session.user.ukm_id,
-      penulis: req.session.user.nama
+      tanggal,
+      ukm_id: ukmId,
+      penulis // otomatis diisi nama UKM
     });
+
     res.redirect('/adminukm/berita');
-  } catch (err) {
-    console.error('Gagal menambahkan berita:', err);
-    res.status(500).send('Terjadi kesalahan saat menambahkan berita.');
+  } catch (error) {
+    console.error("Gagal menyimpan berita:", error);
+    res.status(500).send("Terjadi kesalahan saat menyimpan berita.");
   }
 });
 
