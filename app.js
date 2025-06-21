@@ -13,9 +13,10 @@ const setUKM = require('./middleware/setUKM');
 const penggunaRoutes = require('./routes/userdashboard');
 const adminGaleriRoutes = require('./routes/adminGaleriRoutes');
 const adminPengurusRoutes = require('./routes/adminPengurusRoutes');
+const adminDokumenRoutes = require('./routes/adminDokumenRoutes');
+const adminFormFieldRoutes = require('./routes/adminFormFieldRoutes');
 const userberita = require('./routes/userberita');
 const userKegiatan = require('./routes/userkegiatan');
-
 
 
 app.use(session({
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
+app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -50,6 +52,8 @@ app.use('/adminukm/kegiatan', adminKegiatanRoutes);
 app.use('/pengguna', penggunaRoutes);
 app.use("/adminukm/galeri", adminGaleriRoutes);
 app.use('/adminukm/pengurus', adminPengurusRoutes);
+app.use('/adminukm/dokumen', adminDokumenRoutes);
+app.use('/adminukm/form', adminFormFieldRoutes);
 app.use('/user', userberita); // misalnya kamu akses via /pengguna/berita
 app.use('/user', userKegiatan); // cukup ini saja
 
