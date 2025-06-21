@@ -117,7 +117,40 @@ app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
   res.render('user/dashboard', { user: req.session.user });
 });
 
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`✅ Server berjalan di http://localhost:${port}`);
+});
+app.use('/uploads', express.static('uploads'));
+
+//deatil berita
+// Aktifkan folder public untuk file statis (CSS, JS, dll)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Spesifik untuk folder uploads
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+// Routing halaman detail berita
+const userDetailBeritaRoutes = require('./routes/userdetailberita');
+app.use('/berita', userDetailBeritaRoutes);
+
+
+//kegiatan
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+//kalender
+const userKalenderRoutes = require('./routes/userkalender');
+app.use('/user', userKalenderRoutes);
+
+
+
+// DB
+// DB
+const db = require('./models');
+const sequelize = db.sequelize;
+
+sequelize.sync().then(() => {
+  app.listen(3000, () => console.log('Server running di http://localhost:3000'));
 });
