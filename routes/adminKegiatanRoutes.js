@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const { isAuthenticated, isAdminUKM } = require("../middleware/auth");
-const { Kegiatan, Organisasi } = require("../models");
+const { Kegiatan, Organisasi, DokumenKegiatan } = require("../models");
 
 // INDEX: Tampilkan daftar kegiatan
 router.get("/", isAuthenticated, isAdminUKM, async (req, res) => {
@@ -60,11 +60,15 @@ router.get("/edit/:id", isAuthenticated, isAdminUKM, async (req, res) => {
   const ukm = await Organisasi.findByPk(req.session.user.ukm_id);
   if (!kegiatan) return res.status(404).send("Kegiatan tidak ditemukan");
 
+  include: [DokumenKegiatan]
   res.render("adminukm/kegiatan/edit", {
     user: req.session.user,
     ukm,
     kegiatan,
   });
+  if (!kegiatan) return res.status(404).send("Kegiatan tidak ditemukan");
+
+  res.render('adminukm/kegiatan/edit', { kegiatan, user: req.session.user, ukm });
 });
 
 // PROSES EDIT
@@ -94,3 +98,32 @@ router.post("/hapus/:id", isAuthenticated, isAdminUKM, async (req, res) => {
 });
 
 module.exports = router;
+
+router.get('/detail/:id', isAuthenticated, isAdminUKM, async (req, res) => {
+ try {
+    const kegiatan = await Kegiatan.findByPk(req.params.id, {
+      include: [
+        {
+          model: DokumenKegiatan,
+          as: 'dokumen',
+        },
+      ],
+    });
+
+    if (!kegiatan) {
+      return res.status(404).send("Kegiatan tidak ditemukan");
+    }
+
+    const ukm = await Organisasi.findByPk(req.session.user.ukm_id);
+
+    res.render('adminukm/kegiatan/detail', {
+      kegiatan,
+      dokumen: kegiatan.dokumen,
+      user: req.session.user,
+      ukm,
+    });
+  } catch (err) {
+    console.error('Gagal menampilkan detail kegiatan:', err);
+    res.status(500).send("Terjadi kesalahan saat mengambil data kegiatan");
+  }
+});

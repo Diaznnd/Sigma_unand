@@ -1,0 +1,42 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow border">
+    <h1 class="text-xl font-bold mb-4 text-gray-800">Tambah Field Formulir</h1>
+
+    <form action="/adminukm/form/tambah" method="POST" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Label</label>
+        <input type="text" name="label" required class="w-full p-2 border rounded mt-1" placeholder="Contoh: Nama Lengkap" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Tipe Input</label>
+        <select name="type" required class="w-full p-2 border rounded mt-1">
+            <option value="text">Teks</option>
+            <option value="number">Angka</option>
+            <option value="email">Email</option>
+            <option value="textarea">Textarea</option>
+            <option value="select">Dropdown (Pilihan)</option>
+            <option value="checkbox">Checkbox</option>
+            <option value="file">Dokumen (Upload File)</option> <!-- Tambahan -->
+        </select>
+      </div>
+
+      <div>
+        <label class="inline-flex items-center">
+          <input type="checkbox" name="required" class="mr-2"> Wajib diisi
+        </label>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Opsi (jika tipe select/checkbox)</label>
+        <textarea name="options" rows="3" class="w-full p-2 border rounded mt-1" placeholder="Pisahkan dengan koma, contoh: Laki-laki, Perempuan"></textarea>
+      </div>
+
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Simpan</button>
+      </div>
+    </form>
+  </div>
+</main>

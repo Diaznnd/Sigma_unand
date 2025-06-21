@@ -97,14 +97,12 @@ router.get("/profil/detail", isAuthenticated, isAdminUKM, async (req, res) => {
     const ukm = await Organisasi.findByPk(ukmId);
     if (!ukm) return res.redirect("/adminukm/profil");
 
-    const totalAnggota = await Anggota.count({ where: { ukm_id: ukmId } });
     const totalKegiatan = await Kegiatan.count({ where: { ukm_id: ukmId } });
 
     res.render("adminukm/detailProfil", {
       user: req.session.user,
       ukm,
       stats: {
-        totalAnggota,
         totalKegiatan
       }
     });

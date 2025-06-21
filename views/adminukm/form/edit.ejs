@@ -1,0 +1,43 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow border">
+    <h1 class="text-xl font-bold mb-4 text-gray-800">Edit Field Formulir</h1>
+
+    <form action="/adminukm/form/edit/<%= field.id %>" method="POST" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Label</label>
+        <input type="text" name="label" required class="w-full p-2 border rounded mt-1" value="<%= field.label %>" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Tipe Input</label>
+        <select name="type" required class="w-full p-2 border rounded mt-1">
+            <option value="text" <%= field.type === 'text' ? 'selected' : '' %>>Teks</option>
+            <option value="number" <%= field.type === 'number' ? 'selected' : '' %>>Angka</option>
+            <option value="email" <%= field.type === 'email' ? 'selected' : '' %>>Email</option>
+            <option value="textarea" <%= field.type === 'textarea' ? 'selected' : '' %>>Textarea</option>
+            <option value="select" <%= field.type === 'select' ? 'selected' : '' %>>Dropdown</option>
+            <option value="checkbox" <%= field.type === 'checkbox' ? 'selected' : '' %>>Checkbox</option>
+            <option value="file" <%= field.type === 'file' ? 'selected' : '' %>>Dokumen</option> <!-- Tambahan -->
+        </select>
+
+      </div>
+
+      <div>
+        <label class="inline-flex items-center">
+          <input type="checkbox" name="required" class="mr-2" <%= field.required ? 'checked' : '' %>> Wajib diisi
+        </label>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Opsi (jika tipe select/checkbox)</label>
+        <textarea name="options" rows="3" class="w-full p-2 border rounded mt-1"><%= field.options || '' %></textarea>
+      </div>
+
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Update</button>
+      </div>
+    </form>
+  </div>
+</main>
