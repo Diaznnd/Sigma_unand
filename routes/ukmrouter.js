@@ -5,21 +5,29 @@ const router = express.Router();
 module.exports = (pool, pdfMake) => {
   router.get('/ukm', async (req, res) => {
     const [rows] = await pool.execute('SELECT * FROM ukm_master WHERE status = "Aktif"');
-    res.render('ukm', { ukm: rows, layout: false });
+    res.render('user/ukm', { ukm: rows, layout: false });
   });
 
   router.get('/ukm/:id', async (req, res) => {
     const [rows] = await pool.execute('SELECT * FROM ukm_master WHERE id = ?', [req.params.id]);
     const ukm = rows[0];
     if (!ukm) return res.status(404).send('UKM tidak ditemukan');
-    res.render('ukm-detail', { ukm, layout: false });
+    res.render('user/ukm-detail', { ukm, layout: false });
   });
 
   router.get('/ukm/:id/daftar', async (req, res) => {
     const [rows] = await pool.execute('SELECT * FROM ukm_master WHERE id = ?', [req.params.id]);
     const ukm = rows[0];
     if (!ukm) return res.status(404).send('UKM tidak ditemukan');
-    res.render('pendaftaran-ukm', { ukm, layout: false });
+
+    // Konversi kegiatan menjadi array jika berupa string
+    if (ukm.kegiatan && typeof ukm.kegiatan === 'string') {
+      ukm.kegiatan = ukm.kegiatan.split(',').map(k => k.trim());
+    } else if (!Array.isArray(ukm.kegiatan)) {
+      ukm.kegiatan = [];
+    }
+
+    res.render('user/pendaftaran-ukm', { ukm, layout: false });
   });
 
   router.post('/ukm/:id/daftar', async (req, res) => {
@@ -56,7 +64,7 @@ module.exports = (pool, pdfMake) => {
     const pdfDoc = pdfMake.createPdf(docDefinition);
     pdfDoc.getBuffer((buffer) => {
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename=\"Bukti-Pendaftaran-${nim}.pdf\"`);
+      res.setHeader('Content-Disposition', `attachment; filename="Bukti-Pendaftaran-${nim}.pdf"`);
       res.send(buffer);
     });
   });

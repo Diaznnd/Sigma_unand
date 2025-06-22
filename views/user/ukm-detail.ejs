@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail <%= ukm.nama %></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         body {
             background: linear-gradient(135deg, #8BC34A 0%, #689F38 100%);
@@ -13,22 +14,69 @@
     </style>
 </head>
 <body>
+
+    <!-- Navbar -->
+    <nav class="bg-green-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="/" class="text-2xl font-bold">UKM Finder</a>
+
+                <!-- Menu Desktop -->
+                <div class="space-x-6 hidden md:flex">
+                    <a href="/dashboard" class="hover:text-gray-300">
+                        <i class="fas fa-home mr-2"></i> Beranda
+                    </a>
+                    <a href="/ukm" class="hover:text-gray-300">
+                        <i class="fas fa-warehouse mr-2"></i> Daftar UKM
+                    </a>
+                    <a href="/about" class="hover:text-gray-300">
+                        <i class="fas fa-info-circle mr-2"></i> Tentang
+                    </a>
+                    <a href="/contact" class="hover:text-gray-300">
+                        <i class="fas fa-phone-alt mr-2"></i> Kontak
+                    </a>
+                </div>
+
+                <!-- Hamburger Mobile -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-green-700 text-white space-y-4 py-4 px-6 hidden">
+            <a href="/dashboard" class="block">
+                <i class="fas fa-home mr-2"></i> Beranda
+            </a>
+            <a href="/ukm" class="block">
+                <i class="fas fa-warehouse mr-2"></i> Daftar UKM
+            </a>
+            <a href="/about" class="block">
+                <i class="fas fa-info-circle mr-2"></i> Tentang
+            </a>
+            <a href="/contact" class="block">
+                <i class="fas fa-phone-alt mr-2"></i> Kontak
+            </a>
+        </div>
+    </nav>
+
     <!-- Header -->
     <div class="bg-gradient-to-r from-green-400 to-green-600 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
-                <!-- Tombol Kembali -->
-                <a href="/ukm" class="text-white hover:text-green-100 transition-colors flex items-center">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    Kembali
-                </a>
-
-                <!-- Judul Halaman -->
+                <div class="flex items-center space-x-6">
+                    <a href="/ukm" class="text-white hover:text-green-100 transition-colors flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Kembali
+                    </a>
+                </div>
                 <h1 class="text-xl font-bold text-white">Detail UKM</h1>
-
-                <!-- Ikon Profil -->
                 <button class="bg-yellow-400 hover:bg-yellow-300 rounded-full p-2 transition-colors">
                     <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -44,14 +92,11 @@
         <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden mb-8">
             <div class="p-8">
                 <div class="flex items-center mb-6">
-                    <!-- Logo UKM -->
                     <div class="bg-yellow-300 rounded-2xl p-6 mr-6 flex-shrink-0">
                         <div class="w-20 h-20 flex items-center justify-center">
                             <span class="text-gray-800 font-bold text-sm text-center">Logo UKM</span>
                         </div>
                     </div>
-                    
-                    <!-- Info Dasar UKM -->
                     <div class="flex-1">
                         <h1 class="text-3xl font-bold text-gray-800 mb-2"><%= ukm.nama %></h1>
                         <div class="grid grid-cols-2 gap-4 mb-4">
@@ -71,8 +116,6 @@
                             </span>
                         </div>
                     </div>
-                    
-                    <!-- Tombol Daftar -->
                     <div class="flex-shrink-0 mt-6">
                         <% if (ukm.pendaftaran === 'Dibuka') { %>
                             <a href="/ukm/<%= ukm.id %>/daftar" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
@@ -101,8 +144,20 @@
             <div class="p-8">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Kegiatan</h2>
                 <ul class="space-y-2">
-                    <% if (ukm.kegiatan && ukm.kegiatan.length > 0) { %>
-                        <% ukm.kegiatan.forEach(function(kegiatan) { %>
+                    <% 
+                        let kegiatanList = [];
+                        if (typeof ukm.kegiatan === 'string') {
+                            try {
+                                kegiatanList = JSON.parse(ukm.kegiatan);
+                            } catch (e) {
+                                kegiatanList = ukm.kegiatan.split(',').map(k => k.trim());
+                            }
+                        } else if (Array.isArray(ukm.kegiatan)) {
+                            kegiatanList = ukm.kegiatan;
+                        }
+                    %>
+                    <% if (kegiatanList.length > 0) { %>
+                        <% kegiatanList.forEach(function(kegiatan) { %>
                             <li class="flex items-start">
                                 <span class="text-green-600 mr-2">•</span>
                                 <span class="text-gray-700"><%= kegiatan %></span>
@@ -128,5 +183,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Script Toggle Menu Mobile -->
+    <script>
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

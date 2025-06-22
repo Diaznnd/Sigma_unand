@@ -13,7 +13,6 @@ const pool = mysql.createPool({
   database: 'ukm_registration'
 });
 
-
 async function getNestedReplies(parentId) {
   const [replies] = await pool.execute(
     'SELECT * FROM forum_replies WHERE parent_reply_id = ? ORDER BY created_at ASC',
@@ -41,16 +40,16 @@ router.get('/', async (req, res) => {
       }
       discussion.replies = replies;
     }
-    res.render('forum', { discussions, layout: false });
+    res.render('user/forum', { discussions, layout: false });
   } catch (err) {
     console.error('❌ Error load forum:', err);
     res.status(500).send('Gagal memuat forum');
   }
 });
 
-// Implementasi baru: Search di diskusi & balasan
+// Search diskusi & balasan
 router.get('/search', async (req, res) => {
-  const keyword = req.query.q;
+  const keyword = req.query.q?.trim();
   if (!keyword) return res.redirect('/forum');
   const likePattern = `%${keyword}%`;
 
@@ -92,7 +91,7 @@ router.get('/search', async (req, res) => {
       discussion.replies = replies;
     }
 
-    res.render('forum', { discussions, layout: false, search: keyword });
+    res.render('user/forum', { discussions, layout: false, search: keyword });
   } catch (err) {
     console.error('❌ Error saat pencarian diskusi+balasan:', err);
     res.status(500).send('Terjadi kesalahan saat mencari komentar & balasan');
@@ -101,8 +100,10 @@ router.get('/search', async (req, res) => {
 
 // Post komentar baru
 router.post('/message', async (req, res) => {
-  const { user, text } = req.body;
+  const user = req.body.user?.trim();
+  const text = req.body.text?.trim();
   if (!user || !text) return res.status(400).send('Nama dan pesan tidak boleh kosong');
+
   try {
     await pool.execute(
       `INSERT INTO forum_discussions (title, content, author, category, likes, replies_count)
@@ -120,6 +121,9 @@ router.post('/message', async (req, res) => {
 router.post('/discussion/:id/like', async (req, res) => {
   const discussionId = parseInt(req.params.id);
   const ip = req.ip;
+
+  if (!Number.isInteger(discussionId)) return res.status(400).send('ID tidak valid');
+
   try {
     const [[existing]] = await pool.execute(
       `SELECT 1 FROM discussion_likes WHERE discussion_id = ? AND ip_address = ?`,
@@ -131,7 +135,7 @@ router.post('/discussion/:id/like', async (req, res) => {
         [discussionId, ip]
       );
       await pool.execute(
-        `UPDATE forum_discussions SET likes = likes - 1 WHERE id = ? AND likes > 0`,
+        `UPDATE forum_discussions SET likes = GREATEST(likes - 1, 0) WHERE id = ?`,
         [discussionId]
       );
     } else {
@@ -167,7 +171,9 @@ router.delete('/discussion/:id', async (req, res) => {
 // Balas komentar
 router.post('/discussion/:id/reply', async (req, res) => {
   const discussionId = parseInt(req.params.id);
-  const { author, content } = req.body;
+  const author = req.body.author?.trim();
+  const content = req.body.content?.trim();
+
   if (!author || !content) return res.status(400).send('Nama dan isi balasan tidak boleh kosong');
   try {
     await pool.execute(
@@ -189,6 +195,9 @@ router.post('/discussion/:id/reply', async (req, res) => {
 router.post('/reply/:id/like', async (req, res) => {
   const replyId = parseInt(req.params.id);
   const ip = req.ip;
+
+  if (!Number.isInteger(replyId)) return res.status(400).send('ID tidak valid');
+
   try {
     const [[existing]] = await pool.execute(
       `SELECT 1 FROM reply_likes WHERE reply_id = ? AND ip_address = ?`,
@@ -200,7 +209,7 @@ router.post('/reply/:id/like', async (req, res) => {
         [replyId, ip]
       );
       await pool.execute(
-        `UPDATE forum_replies SET likes = likes - 1 WHERE id = ? AND likes > 0`,
+        `UPDATE forum_replies SET likes = GREATEST(likes - 1, 0) WHERE id = ?`,
         [replyId]
       );
     } else {
@@ -235,8 +244,12 @@ router.delete('/reply/:id', async (req, res) => {
 // Balas ke reply (nested)
 router.post('/reply/:id/reply', async (req, res) => {
   const parentReplyId = parseInt(req.params.id);
-  const { author, content, discussionId } = req.body;
-  if (!author || !content) return res.status(400).send('Nama dan isi balasan tidak boleh kosong');
+  const author = req.body.author?.trim();
+  const content = req.body.content?.trim();
+  const discussionId = parseInt(req.body.discussionId);
+
+  if (!author || !content || !discussionId)
+    return res.status(400).send('Data balasan tidak lengkap');
   try {
     await pool.execute(
       `INSERT INTO forum_replies (discussion_id, parent_reply_id, author, content) VALUES (?, ?, ?, ?)`,
