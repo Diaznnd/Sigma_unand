@@ -9,5 +9,7 @@ router.post('/tambah', isAuthenticated, isAdminUKM, controller.simpanField);
 router.get('/edit/:id', isAuthenticated, isAdminUKM, controller.formEdit);
 router.post('/edit/:id', isAuthenticated, isAdminUKM, controller.updateField);
 router.post('/hapus/:id', isAuthenticated, isAdminUKM, controller.hapusField);
+router.get('/export/pdf', isAuthenticated, isAdminUKM, controller.generatePDFForm);
+
 
 module.exports = router;
