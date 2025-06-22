@@ -1,0 +1,15 @@
+<form action="/admin/galeri/upload" method="POST" enctype="multipart/form-data">
+  <div>
+    <label>Judul</label>
+    <input type="text" name="judul" required>
+  </div>
+  <div>
+    <label>Deskripsi</label>
+    <textarea name="deskripsi"></textarea>
+  </div>
+  <div>
+    <label>Foto</label>
+    <input type="file" name="gambar" accept="image/*" required>
+  </div>
+  <button type="submit">Upload Foto</button>
+</form>

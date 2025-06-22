@@ -1,0 +1,38 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold">Daftar Pendaftar UKM</h2>
+    <a href="/user/pendaftaran/hasil/download" class="bg-emerald-700 text-white px-4 py-2 rounded hover:bg-emerald-800">
+      Download CSV
+    </a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead class="bg-emerald-100 text-emerald-800">
+        <tr>
+          <th class="py-2 px-4 border">Nama</th>
+          <th class="py-2 px-4 border">NIM</th>
+          <th class="py-2 px-4 border">UKM</th>
+          <th class="py-2 px-4 border">Fakultas</th>
+          <th class="py-2 px-4 border">Jurusan</th>
+          <th class="py-2 px-4 border">Angkatan</th>
+          <th class="py-2 px-4 border">Semester</th>
+          <th class="py-2 px-4 border">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% pendaftar.forEach(p => { %>
+          <tr class="border-b">
+            <td class="py-2 px-4 border"><%= p.nama_lengkap %></td>
+            <td class="py-2 px-4 border"><%= p.nim %></td>
+            <td class="py-2 px-4 border"><%= p.ukm_nama %></td>
+            <td class="py-2 px-4 border"><%= p.fakultas %></td>
+            <td class="py-2 px-4 border"><%= p.jurusan %></td>
+            <td class="py-2 px-4 border"><%= p.angkatan %></td>
+            <td class="py-2 px-4 border"><%= p.semester %></td>
+            <td class="py-2 px-4 border capitalize"><%= p.status_pendaftaran %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

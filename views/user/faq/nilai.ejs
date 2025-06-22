@@ -1,0 +1,504 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<!-- Header -->
+
+<div class="bg-emerald-50 shadow-lg sticky top-0 z-50 container-fluid w-screen">
+    <div class="container mx-auto px-2">
+        <div class="flex items-center justify-between py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-university text-emerald-700 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-emerald-700 text-xl font-bold">Sigma Unand</h1>
+                    <p class="text-emerald-700 text-sm">Universitas Andalas</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Beranda</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">UKM</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Kegiatan</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Berita</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">FAQ</a>
+            </nav>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- Mobile Menu -->
+        <div class="w-screen px-0"> 
+        <div id="mobileMenu" class="hidden md:hidden bg-emerald-800">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Beranda</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">UKM</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kegiatan</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Berita</a>
+                <a href="#" class="block text-emerald-200 font-semibold py-2">FAQ</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kontak</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="bg-white border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="/auth/dashboard" class="text-emerald-700 hover:text-emerald-800">Beranda</a>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+                <span class="text-gray-600">FAQ Sistem & Organisasi</span>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Penilaian Kegiatan</h2>
+                <p class="text-xl text-emerald-100">Berikan penilaian Anda terhadap kegiatan yang telah diikuti</p>
+            </div>
+        </div>
+    </section>
+
+   <!-- FAQ Categories -->
+    <section class="py-8 bg-white border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4">
+                  <a href="/user/faq/faq">
+                    <button class=" category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="all">
+                      Bantuan
+                </button>
+                </a>
+               <a href="/user/faq/qna">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="membership">
+        Questions
+    </button>
+</a>
+<a href="/user/faq/usulan">
+     <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="membership">
+                    Usulan
+                </button>
+ <a href="/user/faq/kolaborasi">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="membership">
+                    Kolaborasi
+                </button>
+ </a>               
+  <a href="/user/faq/nilai">
+<button class="category-btn active bg-emerald-700 text-white px-6 py-2 rounded-full font-semibold transition duration-300" data-category="organization">                    Penilaian
+                </button>
+  </a> 
+                
+            
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header Section -->
+            <div class="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white rounded-lg p-6 mb-8">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-star text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">Form Penilaian Kegiatan</h1>
+                        <p class="text-emerald-100">Berikan penilaian Anda terhadap kegiatan yang telah diikuti</p>
+                    </div>
+                </div>
+            </div>
+
+<!-- Informasi Kegiatan -->
+<form id="PenilaianForm" class="space-y-6" action="/user/faq/nilai/add" method="POST">
+<div class="bg-emerald-50 rounded-lg p-6 mb-10 shadow-sm">
+    <h2 class="text-xl font-bold text-emerald-700 mb-6">Informasi Kegiatan</h2>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Penyelenggara -->
+        <div>
+            <label for="penyelenggara"  class="block text-sm font-medium text-gray-700 mb-2">Penyelenggara</label>
+            <select id="penyelenggara" name="penyelenggara"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="">-- Pilih UKM --</option>
+                                <% organisasi.forEach(org => { %>
+                                    <option value="<%= org.id %>|<%= org.namaOrg %>"><%= org.namaOrg %></option>
+                                <% }) %>
+            </select>
+        </div>
+
+        <!-- Nama Kegiatan -->
+        <div>
+            <label for="kegiatan" class="block text-sm font-medium text-gray-700 mb-2">Nama Kegiatan</label>
+            <select id="kegiatan" name="kegiatan"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    disabled>
+                <option value="">Pilih Penyelenggara Terlebih Dahulu</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Detail Kegiatan -->
+<div id="keteranganKegiatan" name="keteranganKegiatan" class="mt-4 hidden p-5 bg-white border border-gray-200 rounded-lg shadow">
+    <h3 class="text-base font-semibold text-gray-800 mb-2">Detail Kegiatan</h3>
+    <p id="deskripsiKegiatan" class="text-gray-700 text-sm leading-relaxed"></p>
+</div>
+
+<!-- Informasi Peserta -->
+<div class="mt-10 mb-8">
+    <h2 class="text-xl font-bold text-gray-800 mb-6">Informasi Peserta</h2>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Nama Lengkap -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap <span class="text-red-500">*</span></label>
+            <input type="text" name="nama" required
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+        </div>
+
+        <!-- NIM -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">NIM <span class="text-red-500">*</span></label>
+            <input type="text" name="nim" required
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+        </div>
+    </div>
+
+</div> 
+
+                    <!-- Rating Sections -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Penilaian Kegiatan</h2>
+                        
+                        <!-- Overall Rating -->
+                        <div class="mb-6 p-4 border border-gray-200 rounded-lg">
+                            <label class="block text-lg font-semibold text-gray-700 mb-3">Penilaian Keseluruhan <span class="text-red-500">*</span></label>
+                            <div class="flex items-center space-x-2 rating-group">
+                                <input type="radio" id="overall-1" name="overall" value="1" class="hidden rating-input">
+                                <label for="overall-1" class="text-2xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="overall-2" name="overall" value="2" class="hidden rating-input">
+                                <label for="overall-2" class="text-2xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="overall-3" name="overall" value="3" class="hidden rating-input">
+                                <label for="overall-3" class="text-2xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="overall-4" name="overall" value="4" class="hidden rating-input">
+                                <label for="overall-4" class="text-2xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="overall-5" name="overall" value="5" class="hidden rating-input">
+                                <label for="overall-5" class="text-2xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                <span class="ml-3 text-sm text-gray-600">(1 = Sangat Buruk, 5 = Sangat Baik)</span>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Ratings -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Content Quality -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">Kualitas Materi <span class="text-red-500">*</span></label>
+                                <div class="flex items-center space-x-1 rating-group">
+                                    <input type="radio" id="content-1" name="content" value="1" class="hidden rating-input">
+                                    <label for="content-1" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="content-2" name="`" value="2" class="hidden rating-input">
+                                    <label for="content-2" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="content-3" name="content" value="3" class="hidden rating-input">
+                                    <label for="content-3" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="content-4" name="content" value="4" class="hidden rating-input">
+                                    <label for="content-4" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="content-5" name="content" value="5" class="hidden rating-input">
+                                    <label for="content-5" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+
+                            <!-- Speaker Quality -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">Kualitas Pembicara <span class="text-red-500">*</span></label>
+                                <div class="flex items-center space-x-1 rating-group">
+                                    <input type="radio" id="speaker-1" name="speaker" value="1" class="hidden rating-input">
+                                    <label for="speaker-1" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="speaker-2" name="speaker" value="2" class="hidden rating-input">
+                                    <label for="speaker-2" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="speaker-3" name="speaker" value="3" class="hidden rating-input">
+                                    <label for="speaker-3" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="speaker-4" name="speaker" value="4" class="hidden rating-input">
+                                    <label for="speaker-4" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="speaker-5" name="speaker" value="5" class="hidden rating-input">
+                                    <label for="speaker-5" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+
+                            <!-- Organization -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">Organisasi Acara <span class="text-red-500">*</span></label>
+                                <div class="flex items-center space-x-1 rating-group">
+                                    <input type="radio" id="organization-1" name="organization" value="1" class="hidden rating-input">
+                                    <label for="organization-1" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="organization-2" name="organization" value="2" class="hidden rating-input">
+                                    <label for="organization-2" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="organization-3" name="organization" value="3" class="hidden rating-input">
+                                    <label for="organization-3" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="organization-4" name="organization" value="4" class="hidden rating-input">
+                                    <label for="organization-4" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="organization-5" name="organization" value="5" class="hidden rating-input">
+                                    <label for="organization-5" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+
+                            <!-- Facilities -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">Fasilitas & Venue <span class="text-red-500">*</span></label>
+                                <div class="flex items-center space-x-1 rating-group">
+                                    <input type="radio" id="facilities-1" name="facilities" value="1" class="hidden rating-input">
+                                    <label for="facilities-1" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="facilities-2" name="facilities" value="2" class="hidden rating-input">
+                                    <label for="facilities-2" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="facilities-3" name="facilities" value="3" class="hidden rating-input">
+                                    <label for="facilities-3" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="facilities-4" name="facilities" value="4" class="hidden rating-input">
+                                    <label for="facilities-4" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="facilities-5" name="facilities" value="5" class="hidden rating-input">
+                                    <label for="facilities-5" class="text-xl cursor-pointer rating-star text-gray-300"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Section -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Masukan dan Saran</h2>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Hal yang paling disukai dari kegiatan ini</label>
+                                <textarea name="liked" rows="4" 
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                          placeholder="Tuliskan hal-hal yang Anda sukai dari kegiatan ini..."></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Saran untuk perbaikan</label>
+                                <textarea name="suggestions" rows="4" 
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                          placeholder="Berikan saran untuk perbaikan kegiatan selanjutnya..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Rekomendasi</h2>
+                        <div class="p-4 border border-gray-200 rounded-lg">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Apakah Anda akan merekomendasikan kegiatan ini kepada mahasiswa lain? <span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="radio" name="recommend" value="sangat_direkomendasikan" class="text-emerald-600 focus:ring-emerald-500">
+                                    <span class="ml-2">Sangat Direkomendasikan</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="recommend" value="direkomendasikan" class="text-emerald-600 focus:ring-emerald-500">
+                                    <span class="ml-2">Direkomendasikan</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="recommend" value="netral" class="text-emerald-600 focus:ring-emerald-500">
+                                    <span class="ml-2">Netral</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="recommend" value="tidak_direkomendasikan" class="text-emerald-600 focus:ring-emerald-500">
+                                    <span class="ml-2">Tidak Direkomendasikan</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Comments -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Komentar Tambahan</label>
+                        <textarea name="additional_comments" rows="4" 
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                  placeholder="Tuliskan komentar atau masukan tambahan Anda..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" onclick="resetForm()" 
+                                class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition duration-300">
+                            Reset Form
+                        </button>
+                        <button type="submit" 
+                                class="px-8 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-800 transition duration-300">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Kirim Penilaian
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                    <i class="fas fa-check text-green-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mt-4">Penilaian Berhasil Dikirim!</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        Terima kasih atas penilaian Anda. Masukan ini akan membantu kami meningkatkan kualitas kegiatan selanjutnya.
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="closeModal" class="px-4 py-2 bg-emerald-600 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-300">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+  
+
+  <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center">
+                            <i class="fas fa-university text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold">Sigma Unand</h4>
+                            <p class="text-gray-400 text-sm">Universitas Andalas</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Platform terpadu untuk pengelolaan Unit Kegiatan Mahasiswa di Universitas Andalas.</p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="https://www.instagram.com/bemkmunand" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Menu Utama</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Beranda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Daftar UKM</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Kegiatan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Berita</a></li>
+        
+    </footer>
+
+
+    <script>
+  // Aktifkan semua rating group (umum untuk semua penilaian)
+  document.querySelectorAll('.rating-group').forEach(group => {
+    const stars = group.querySelectorAll('.rating-star');
+    const inputs = group.querySelectorAll('input[type="radio"]');
+
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        // Set input radio yang sesuai sebagai checked
+        inputs[index].checked = true;
+
+        // Reset semua warna ke abu
+        stars.forEach((s, i) => {
+          if (i <= index) {
+            s.classList.remove('text-gray-300');
+            s.classList.add('text-yellow-400');
+          } else {
+            s.classList.remove('text-yellow-400');
+            s.classList.add('text-gray-300');
+          }
+        });
+      });
+    });
+  });
+
+// penyelenggara kegiatan
+
+
+    const kegiatanData = {
+        "ukm-manajemen": [
+            "Workshop Manajemen Organisasi",
+            "Pelatihan Kepemimpinan Dasar",
+            "Rapat Kerja UKM Manajemen"
+        ],
+        "bem-fti": [
+            "Seminar Teknologi Inovatif",
+            "Diskusi Publik Energi Terbarukan",
+            "FTI Bersinergi"
+        ],
+        "ukm-komputer": [
+            "Pelatihan Web Development",
+            "Lomba Desain UI/UX",
+            "Workshop Cyber Security Dasar"
+        ]
+    };
+
+    const kegiatanDeskripsiData = {
+        "Workshop Manajemen Organisasi": "Workshop ini bertujuan untuk meningkatkan kemampuan dasar dalam mengelola organisasi, termasuk perencanaan program, struktur tim, dan evaluasi kinerja organisasi.",
+        "Pelatihan Kepemimpinan Dasar": "Pelatihan ini membahas gaya kepemimpinan efektif, komunikasi organisasi, dan pengambilan keputusan strategis untuk kader muda.",
+        "Rapat Kerja UKM Manajemen": "Rapat kerja tahunan yang membahas program kerja, evaluasi kegiatan sebelumnya, dan strategi organisasi ke depan.",
+        "Seminar Teknologi Inovatif": "Seminar ini membahas perkembangan teknologi terkini, seperti AI, IoT, dan dampaknya terhadap industri dan pendidikan.",
+        "Diskusi Publik Energi Terbarukan": "Diskusi ini mengundang ahli energi untuk membahas potensi dan tantangan energi terbarukan di Indonesia.",
+        "FTI Bersinergi": "Kegiatan kolaboratif antar organisasi FTI dalam rangka penguatan relasi dan pengembangan program kerja lintas bidang.",
+        "Pelatihan Web Development": "Pelatihan ini mengajarkan pembuatan website dari dasar menggunakan HTML, CSS, JavaScript, dan framework modern.",
+        "Lomba Desain UI/UX": "Kompetisi untuk mendesain antarmuka dan pengalaman pengguna dari aplikasi digital dengan prinsip usability dan kreativitas.",
+        "Workshop Cyber Security Dasar": "Workshop ini membahas ancaman siber umum, teknik pertahanan dasar, dan simulasi serangan serta mitigasinya."
+    };
+
+    const penyelenggaraSelect = document.getElementById('penyelenggara');
+    const kegiatanSelect = document.getElementById('kegiatan');
+    const keteranganDiv = document.getElementById('keteranganKegiatan');
+    const deskripsiText = document.getElementById('deskripsiKegiatan');
+
+    penyelenggaraSelect.addEventListener('change', () => {
+        const selected = penyelenggaraSelect.value;
+        const kegiatanList = kegiatanData[selected];
+
+        // Kosongkan dan aktifkan dropdown kegiatan
+        kegiatanSelect.innerHTML = '';
+        kegiatanSelect.disabled = false;
+
+        // Sembunyikan deskripsi
+        keteranganDiv.classList.add('hidden');
+
+        // Tambahkan opsi default
+        kegiatanSelect.innerHTML += `<option value="">Pilih Kegiatan</option>`;
+
+        // Tambahkan opsi kegiatan sesuai penyelenggara
+        kegiatanList.forEach(kegiatan => {
+            kegiatanSelect.innerHTML += `<option value="${kegiatan}">${kegiatan}</option>`;
+        });
+    });
+
+    kegiatanSelect.addEventListener('change', () => {
+        const selectedKegiatan = kegiatanSelect.value;
+
+        if (selectedKegiatan && kegiatanDeskripsiData[selectedKegiatan]) {
+            deskripsiText.textContent = kegiatanDeskripsiData[selectedKegiatan];
+            keteranganDiv.classList.remove('hidden');
+        } else {
+            deskripsiText.textContent = '';
+            keteranganDiv.classList.add('hidden');
+        }
+    });
+
+
+
+
+
+
+</script>

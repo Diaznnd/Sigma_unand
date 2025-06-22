@@ -1,0 +1,443 @@
+<!-- Header -->
+
+<div class="bg-emerald-50 shadow-lg sticky top-0 z-50 container-fluid w-screen">
+    <div class="container mx-auto px-2">
+        <div class="flex items-center justify-between py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-university text-emerald-700 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-emerald-700 text-xl font-bold">Sigma Unand</h1>
+                    <p class="text-emerald-700 text-sm">Universitas Andalas</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="/beranda" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Beranda</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">UKM</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Kegiatan</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Berita</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">FAQ</a>
+            </nav>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- Mobile Menu -->
+        <div class="w-screen px-0"> 
+        <div id="mobileMenu" class="hidden md:hidden bg-emerald-800">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Beranda</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">UKM</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kegiatan</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Berita</a>
+                <a href="#" class="block text-emerald-200 font-semibold py-2">FAQ</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="bg-white border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="/user/dashboard" class="text-emerald-700 hover:text-emerald-800">Beranda</a>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+                <span class="text-gray-600">FAQ Sistem & Organisasi</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <i class="fas fa-question-circle text-6xl mb-6 text-emerald-200"></i>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">FAQ Sistem & Organisasi</h1>
+                <p class="text-xl text-emerald-100 mb-8">
+                    Temukan jawaban untuk pertanyaan yang sering ditanyakan seputar sistem portal UKM dan pengelolaan organisasi kemahasiswaan
+                </p>
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" placeholder="Cari pertanyaan..." class="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-300" id="searchFAQ">
+                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Categories -->
+    <section class="py-8 bg-white border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="category-btn active bg-emerald-700 text-white px-6 py-2 rounded-full font-semibold transition duration-300" data-category="all">
+                    Bantuan
+                </button>
+               <a href="/user/faq/qna">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="system">
+        Questions
+    </button>
+</a>
+<a href="/user/faq/usulan">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="organization">
+                    Usulan
+                </button>
+</a>
+ <a href="/user/faq/kolaborasi">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="membership">
+                    Kolaborasi
+                </button>
+ </a>               
+  <a href="/user/faq/nilai">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="activities">
+                    Penilaian
+                </button>
+  </a>  
+  
+  <a href="/user/pendaftaran/hasil">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="activities">
+                    cetak
+                </button>
+  </a>  
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                
+                <!-- System Portal FAQ -->
+                <div class="faq-section" data-category="system">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-desktop text-emerald-700 mr-3"></i>
+                            Sistem Portal
+                        </h2>
+                        <p class="text-gray-600">Pertanyaan seputar penggunaan sistem portal UKM</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara login ke sistem portal UKM?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Untuk login ke sistem portal UKM, gunakan akun mahasiswa Universitas Andalas (username dan password yang sama dengan akun akademik). Jika mengalami kendala, hubungi admin sistem atau bagian kemahasiswaan.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Apakah bisa mengakses portal dari smartphone?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Ya, portal UKM telah dioptimalkan untuk perangkat mobile. Anda dapat mengakses semua fitur melalui browser smartphone dengan tampilan yang responsif dan user-friendly.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara reset password akun?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Klik "Lupa Password" di halaman login, masukkan email atau username Anda. Link reset password akan dikirim ke email. Jika tidak menerima email, periksa folder spam atau hubungi admin sistem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organization FAQ -->
+                <div class="faq-section mt-12" data-category="organization">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-sitemap text-emerald-700 mr-3"></i>
+                            Organisasi & Struktur
+                        </h2>
+                        <p class="text-gray-600">Pertanyaan tentang struktur organisasi dan pengelolaan UKM</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara mendaftarkan UKM baru?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Untuk mendaftarkan UKM baru, siapkan proposal lengkap, struktur organisasi, dan minimal 20 anggota. Ajukan permohonan melalui bagian kemahasiswaan dengan melengkapi formulir pendaftaran yang tersedia di portal.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Siapa yang berhak menjadi pengurus UKM?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Pengurus UKM harus mahasiswa aktif Universitas Andalas, memiliki IPK minimal 2.75, tidak sedang dalam masa sanksi akademik, dan telah menjadi anggota UKM minimal 1 semester.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara mengganti struktur pengurus?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Pergantian pengurus dilakukan melalui musyawarah anggota, kemudian hasil keputusan diajukan ke bagian kemahasiswaan untuk pengesahan. Update struktur dapat dilakukan melalui portal dengan upload dokumen pendukung.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Membership FAQ -->
+                <div class="faq-section mt-12" data-category="membership">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-users text-emerald-700 mr-3"></i>
+                            Keanggotaan
+                        </h2>
+                        <p class="text-gray-600">Informasi seputar keanggotaan UKM</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara bergabung dengan UKM?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Pilih UKM yang diminati melalui portal, isi formulir pendaftaran online, ikuti proses seleksi jika ada, dan tunggu konfirmasi penerimaan dari pengurus UKM. Proses pendaftaran biasanya dibuka di awal semester.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Apakah bisa bergabung dengan lebih dari satu UKM?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Ya, mahasiswa diperbolehkan bergabung dengan maksimal 3 UKM dengan catatan dapat memenuhi kewajiban di setiap UKM dan tidak ada konflik jadwal kegiatan.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara keluar dari UKM?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Ajukan surat pengunduran diri kepada pengurus UKM, selesaikan kewajiban yang masih tersisa, dan konfirmasi pengunduran diri akan diproses melalui portal untuk update status keanggotaan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activities FAQ -->
+                <div class="faq-section mt-12" data-category="activities">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-calendar-alt text-emerald-700 mr-3"></i>
+                            Kegiatan & Events
+                        </h2>
+                        <p class="text-gray-600">Pertanyaan tentang kegiatan dan event UKM</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara mengajukan proposal kegiatan?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Login ke portal, pilih menu "Ajukan Kegiatan", isi form proposal lengkap dengan budget dan timeline, upload dokumen pendukung, lalu submit untuk review oleh bagian kemahasiswaan.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Berapa lama proses persetujuan kegiatan?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Proses persetujuan kegiatan membutuhkan waktu 7-14 hari kerja tergantung kompleksitas kegiatan. Untuk kegiatan besar atau menggunakan fasilitas kampus, proses bisa membutuhkan waktu hingga 21 hari kerja.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara booking fasilitas kampus?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Booking fasilitas dapat dilakukan melalui portal dengan memilih tanggal dan fasilitas yang dibutuhkan. Pastikan mengajukan minimal 2 minggu sebelum kegiatan dan melengkapi surat permohonan resmi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical FAQ -->
+                <div class="faq-section mt-12" data-category="technical">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+                            <i class="fas fa-cog text-emerald-700 mr-3"></i>
+                            Bantuan Teknis
+                        </h2>
+                        <p class="text-gray-600">Solusi untuk masalah teknis portal</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Portal lambat atau tidak bisa diakses, apa yang harus dilakukan?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Coba refresh halaman, clear cache browser, atau gunakan browser lain. Jika masih bermasalah, cek koneksi internet atau hubungi tim IT untuk informasi maintenance sistem.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Bagaimana cara upload dokumen yang ukurannya besar?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Maksimal ukuran file adalah 10MB per dokumen. Untuk file besar, kompres terlebih dahulu atau pisah menjadi beberapa file. Format yang didukung: PDF, DOC, DOCX, JPG, PNG.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-lg shadow-md">
+                            <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800 pr-4">Data saya hilang atau tidak tersimpan, bagaimana solusinya?</h3>
+                                    <i class="fas fa-chevron-down text-emerald-700 transform transition-transform duration-300"></i>
+                                </div>
+                            </button>
+                            <div class="faq-answer hidden p-6 pt-0 text-gray-600">
+                                <p>Sistem melakukan backup otomatis setiap hari. Hubungi admin sistem dengan detail masalah dan waktu kejadian untuk proses pemulihan data. Selalu simpan draft secara berkala saat mengisi form panjang.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+   <!-- Contact Support -->
+<section class="py-16 bg-emerald-50">
+    <div class="container mx-auto px-4 text-center">
+        <div class="max-w-2xl mx-auto">
+            <i class="fas fa-headset text-5xl text-emerald-700 mb-6"></i>
+            <h3 class="text-3xl font-bold text-gray-800 mb-4">Masih Butuh Bantuan?</h3>
+            <p class="text-gray-600 mb-8">
+                Jika pertanyaan Anda belum terjawab di FAQ ini, jangan ragu untuk menghubungi tim support kami. 
+                Kami siap membantu Anda 24/7.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="mailto:alyanaananta.t@gmail.com" class="bg-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-emerald-800 transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Email Support
+                </a>
+                <a href="tel:+6282268498466" class="border-2 border-emerald-700 text-emerald-700 px-8 py-3 rounded-lg font-semibold hover:bg-emerald-700 hover:text-white transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-phone mr-2"></i>
+                    Hubungi Kami
+                </a>
+            </div>
+
+            <div class="mt-8 grid md:grid-cols-3 gap-6 text-sm">
+                <div>
+                    <i class="fas fa-clock text-emerald-700 text-xl mb-2"></i>
+                    <div class="font-semibold text-gray-800">Jam Operasional</div>
+                    <div class="text-gray-600">Senin - Jumat<br>08:00 - 17:00 WIB</div>
+                </div>
+                <div>
+                    <i class="fas fa-envelope text-emerald-700 text-xl mb-2"></i>
+                    <div class="font-semibold text-gray-800">Email</div>
+                    <div class="text-gray-600">support@portalukm.unand.ac.id</div>
+                </div>
+                <div>
+                    <i class="fas fa-phone text-emerald-700 text-xl mb-2"></i>
+                    <div class="font-semibold text-gray-800">Telepon</div>
+                    <div class="text-gray-600">(0751) 71181<br>Ext. 205</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center">
+                            <i class="fas fa-university text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold">Portal UKM</h4>
+                            <p class="text-gray-400 text-sm">Universitas Andalas</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Platform terpadu untuk pengelolaan Unit Kegiatan Mahasiswa di Universitas Andalas.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Menu Utama</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Beranda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Daftar UKM</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Kegiatan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Berita</a></li>
+                    </ul>
+                
+
+
+<script>
+  function toggleFAQ(button) {
+    const answer = button.nextElementSibling;
+    answer.classList.toggle('hidden');
+
+    const icon = button.querySelector('i');
+    icon.classList.toggle('rotate-180');
+  }
+</script>

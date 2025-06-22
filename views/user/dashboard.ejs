@@ -15,9 +15,9 @@
             <nav class="hidden md:flex space-x-6">
                 <a href="/auth/dashboard" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Beranda</a>
                 <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">UKM</a>
-                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Kegiatan</a>
+<a href="/user/pendaftaran/hasil" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Kegiatan</a>
                 <a href="/user/berita" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Berita</a>
-                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">FAQ</a>
+                <a href="/user/faq/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">FAQ</a>
 
             </nav>
             <button class="md:hidden text-white" onclick="toggleMobileMenu()">
@@ -268,40 +268,23 @@
     </section>
 
     <!-- Photo Gallery -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-gray-800 mb-4">Galeri Kegiatan</h3>
-                <p class="text-gray-600">Dokumentasi kegiatan-kegiatan menarik dari berbagai UKM</p>
-            </div>
-            <div class="grid md:grid-cols-4 gap-4">
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-                <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
-                    <i class="fas fa-camera text-emerald-600 text-3xl"></i>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-8">
+      <h3 class="text-3xl font-bold text-gray-800 mb-4">Galeri Kegiatan</h3>
+      <p class="text-gray-600">Dokumentasi kegiatan-kegiatan menarik dari berbagai UKM</p>
+    </div>
+    <div class="grid md:grid-cols-4 gap-4">
+      <% for (let i = 0; i < 8; i++) { %>
+        <a href="/user/faq/galeri">
+          <div class="bg-emerald-100 aspect-square rounded-lg flex items-center justify-center hover:bg-emerald-200 transition duration-300 cursor-pointer">
+            <i class="fas fa-camera text-emerald-600 text-3xl"></i>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  </div>
+</section>
 
     <!-- Statistics Section -->
     <section class="py-16 bg-emerald-700 text-white">

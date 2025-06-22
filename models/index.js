@@ -43,7 +43,11 @@ db.Organisasi.hasMany(db.Anggota, { foreignKey: 'ukm_id', as: 'anggota' });
 db.Kegiatan.belongsTo(db.Organisasi, { foreignKey: 'ukm_id', as: 'ukm' });
 db.Organisasi.hasMany(db.Kegiatan, { foreignKey: 'ukm_id', as: 'kegiatan' });
 
+const qna = require('./qna')(sequelize, Sequelize.DataTypes);
+db.qna = qna;
 
+const Penilaian = require('./nilai')(sequelize, Sequelize.DataTypes);
+db.Penilaian = Penilaian;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

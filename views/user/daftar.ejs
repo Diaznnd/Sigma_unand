@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran & Seleksi Pendaftar - Organisasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'emerald': {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <div class="bg-emerald-700 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                            <div class="w-6 h-6 bg-emerald-700 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-xl font-bold text-white">Dashboard Organisasi</div>
+                        <div class="text-emerald-100 text-sm">Form Pendaftaran & Seleksi</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-emerald-100 text-sm">Admin Panel</div>
+                    <div class="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
+                        <div class="w-5 h-5 bg-white rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <div class="mb-8">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+                <div>Dashboard</div>
+                <div>/</div>
+                <div class="text-emerald-700 font-medium">Form Pendaftaran & Seleksi</div>
+            </div>
+        </div>
+
+        <!-- Page Title -->
+        <div class="mb-8">
+            <div class="text-3xl font-bold text-gray-900 mb-2">Form Pendaftaran & Seleksi Pendaftar</div>
+            <div class="text-gray-600">Kelola proses pendaftaran dan seleksi anggota baru organisasi</div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <div class="w-6 h-6 bg-emerald-700 rounded"></div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">245</div>
+                        <div class="text-sm text-gray-600">Total Pendaftar</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <div class="w-6 h-6 bg-blue-600 rounded"></div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">128</div>
+                        <div class="text-sm text-gray-600">Menunggu Review</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <div class="w-6 h-6 bg-green-600 rounded"></div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">89</div>
+                        <div class="text-sm text-gray-600">Diterima</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                        <div class="w-6 h-6 bg-red-600 rounded"></div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-2xl font-bold text-gray-900">28</div>
+                        <div class="text-sm text-gray-600">Ditolak</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form Pendaftaran -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="text-xl font-semibold text-gray-900">Form Pendaftaran Baru</div>
+                        <div class="text-sm text-gray-600">Isi data lengkap untuk mendaftar sebagai anggota</div>
+                    </div>
+                    <div class="p-6">
+                        <form id="registrationForm">
+                            <!-- Data Pribadi -->
+                            <div class="mb-6">
+                                <div class="text-lg font-medium text-gray-900 mb-4">Data Pribadi</div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</div>
+                                        <div class="relative">
+                                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Masukkan nama lengkap">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">NIM/NIS *</div>
+                                        <div class="relative">
+                                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Masukkan NIM/NIS">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Email *</div>
+                                        <div class="relative">
+                                            <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="nama@email.com">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">No. Telepon *</div>
+                                        <div class="relative">
+                                            <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="08xx-xxxx-xxxx">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Jurusan/Program Studi *</div>
+                                        <div class="relative">
+                                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                <option value="">Pilih Jurusan</option>
+                                                <option value="teknik-informatika">Teknik Informatika</option>
+                                                <option value="sistem-informasi">Sistem Informasi</option>
+                                                <option value="manajemen">Manajemen</option>
+                                                <option value="akuntansi">Akuntansi</option>
+                                                <option value="lainnya">Lainnya</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Semester *</div>
+                                        <div class="relative">
+                                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                <option value="">Pilih Semester</option>
+                                                <option value="1">Semester 1</option>
+                                                <option value="2">Semester 2</option>
+                                                <option value="3">Semester 3</option>
+                                                <option value="4">Semester 4</option>
+                                                <option value="5">Semester 5</option>
+                                                <option value="6">Semester 6</option>
+                                                <option value="7">Semester 7</option>
+                                                <option value="8">Semester 8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Minat & Motivasi -->
+                            <div class="mb-6">
+                                <div class="text-lg font-medium text-gray-900 mb-4">Minat & Motivasi</div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Divisi yang Diminati *</div>
+                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
+                                                <div class="ml-2 text-sm text-gray-700">Humas</div>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
+                                                <div class="ml-2 text-sm text-gray-700">IT</div>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
+                                                <div class="ml-2 text-sm text-gray-700">Acara</div>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
+                                                <div class="ml-2 text-sm text-gray-700">Keuangan</div>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
+                                                <div class="ml-2 text-sm text-gray-700">Kreatif</div>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
+                                                <div class="ml-2 text-sm text-gray-700">Sekretaris</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Motivasi Bergabung *</div>
+                                        <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Jelaskan motivasi Anda bergabung dengan organisasi ini..."></textarea>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Pengalaman Organisasi</div>
+                                        <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ceritakan pengalaman berorganisasi sebelumnya (opsional)..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Dokumen -->
+                            <div class="mb-6">
+                                <div class="text-lg font-medium text-gray-900 mb-4">Upload Dokumen</div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">Foto Profil *</div>
+                                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-emerald-500 transition-colors cursor-pointer">
+                                            <div class="w-12 h-12 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                                <div class="w-6 h-6 bg-gray-400 rounded"></div>
+                                            </div>
+                                            <div class="text-sm text-gray-600">Klik untuk upload foto atau drag & drop</div>
+                                            <div class="text-xs text-gray-500 mt-1">PNG, JPG hingga 2MB</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-700 mb-2">CV/Resume *</div>
+                                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-emerald-500 transition-colors cursor-pointer">
+                                            <div class="w-12 h-12 bg-gray-100 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                                                <div class="w-6 h-6 bg-gray-400 rounded"></div>
+                                            </div>
+                                            <div class="text-sm text-gray-600">Upload CV/Resume Anda</div>
+                                            <div class="text-xs text-gray-500 mt-1">PDF hingga 5MB</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="flex justify-end space-x-3">
+                                <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit" class="px-6 py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 transition-colors">
+                                    Kirim Pendaftaran
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar - Seleksi Pendaftar -->
+            <div class="lg:col-span-1">
+                <!-- Status Timeline -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="text-lg font-semibold text-gray-900">Tahapan Seleksi</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">Pendaftaran</div>
+                                    <div class="text-xs text-gray-600">Isi form dan upload dokumen</div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-500">Seleksi Berkas</div>
+                                    <div class="text-xs text-gray-500">Review dokumen dan data</div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-500">Wawancara</div>
+                                    <div class="text-xs text-gray-500">Interview dengan pengurus</div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-500">Pengumuman</div>
+                                    <div class="text-xs text-gray-500">Hasil seleksi final</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daftar Pendaftar Terbaru -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="text-lg font-semibold text-gray-900">Pendaftar Terbaru</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-emerald-600 rounded-full"></div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium text-gray-900">Ahmad Rifki</div>
+                                        <div class="text-xs text-gray-600">Teknik Informatika</div>
+                                    </div>
+                                </div>
+                                <div class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
+                                    Review
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-emerald-600 rounded-full"></div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium text-gray-900">Sari Dewi</div>
+                                        <div class="text-xs text-gray-600">Sistem Informasi</div>
+                                    </div>
+                                </div>
+                                <div class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                                    Diterima
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                        <div class="w-4 h-4 bg-emerald-600 rounded-full"></div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium text-gray-900">Budi Santoso</div>
+                                        <div class="text-xs text-gray-600">Manajemen</div>
+                                    </div>
+                                </div>
+                                <div class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                                    Interview
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="text-center">
+                                <button class="text-emerald-700 hover:text-emerald-800 text-sm font-medium">
+                                    Lihat Semua Pendaftar →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form handling
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Mengirim...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Pendaftaran berhasil dikirim! Kami akan menghubungi Anda dalam 2-3 hari kerja.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                this.reset();
+            }, 2000);
+        });
+
+        // File upload simulation
+        document.querySelectorAll('.border-dashed').forEach(uploadArea => {
+            uploadArea.addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = this.textContent.includes('foto') ? 'image/*' : '.pdf';
+                input.click();
+                
+                input.addEventListener('change', function() {
+                    if (this.files[0]) {
+                        const fileName = this.files[0].name;
+                        uploadArea.innerHTML = `
+                            <div class="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                                <div class="w-6 h-6 bg-emerald-600 rounded"></div>
+                            </div>
+                            <div class="text-sm text-emerald-700 font-medium">${fileName}</div>
+                            <div class="text-xs text-gray-500 mt-1">File berhasil dipilih</div>
+                        `;
+                        uploadArea.classList.remove('border-gray-300');
+                        uploadArea.classList.add('border-emerald-500', 'bg-emerald-50');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

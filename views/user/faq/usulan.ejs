@@ -1,0 +1,467 @@
+<!-- Header -->
+
+<div class="bg-emerald-50 shadow-lg sticky top-0 z-50 container-fluid w-screen">
+    <div class="container mx-auto px-2">
+        <div class="flex items-center justify-between py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-university text-emerald-700 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-emerald-700 text-xl font-bold">Sigma Unand</h1>
+                    <p class="text-emerald-700 text-sm">Universitas Andalas</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Beranda</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">UKM</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Kegiatan</a>
+                <a href="#" class="text-emerald-700 hover:text-emerald-200 transition duration-300">Berita</a>
+                <a href="/auth/faq" class="text-emerald-700 hover:text-emerald-200 transition duration-300">FAQ</a>
+            </nav>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- Mobile Menu -->
+        <div class="w-screen px-0"> 
+        <div id="mobileMenu" class="hidden md:hidden bg-emerald-800">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Beranda</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">UKM</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kegiatan</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Berita</a>
+                <a href="#" class="block text-emerald-200 font-semibold py-2">FAQ</a>
+                <a href="#" class="block text-white hover:text-emerald-200 py-2">Kontak</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="bg-white border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="/auth/dashboard" class="text-emerald-700 hover:text-emerald-800">Beranda</a>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+                <span class="text-gray-600">FAQ Sistem & Organisasi</span>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Usulan Kegiatan Mahasiswa</h2>
+                <p class="text-xl text-emerald-100">Sampaikan ide kreatif dan inovatif untuk kegiatan UKM Anda</p>
+            </div>
+        </div>
+    </section>
+
+     <!-- FAQ Categories -->
+    <section class="py-8 bg-white border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4">
+                  <a href="/user/faq/faq">
+                    <button class=" category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="all">
+                      Bantuan
+                </button>
+                </a>
+               <a href="/user/faq/qna">
+ <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="membership">
+        Questions
+    </button>
+</a>
+<a href="/user/faq/usulan">
+   <button class="category-btn active bg-emerald-700 text-white px-6 py-2 rounded-full font-semibold transition duration-300" data-category="organization">
+                    Usulan
+                </button>
+ <a href="/user/faq/kolaborasi">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="membership">
+                    Kolaborasi
+                </button>
+</a>               
+  <a href="/user/faq/nilai">
+    <button class="category-btn bg-gray-200 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 px-6 py-2 rounded-full font-semibold transition duration-300" data-category="activities">
+                    Penilaian
+                </button>
+  </a> 
+                
+           
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Form Usulan Kegiatan -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-lightbulb text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Ajukan Usulan Kegiatan</h3>
+                            <p class="text-gray-600">Isi form di bawah ini untuk mengajukan kegiatan baru</p>
+                        </div>
+                    </div>
+
+                    <form id="usulanForm" class="space-y-6" action="/user/faq/usulan/add" method="POST">
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Pengusul *</label>
+                                <input type="text" id="namaPengusul" name="namaPengusul" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Masukkan nama lengkap" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">NIM *</label>
+                                <input type="text" id="nim" name="nim"  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Masukkan NIM" required>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                
+                                <!-- ini untuk ngambil id ukm dari db -->
+
+                            <!-- Dropdown gabungan id dan nama -->
+                            <label for="ukm_info" class="block text-sm font-medium text-gray-700">Pilih UKM</label>
+                            <select id="ukm_info" onchange="isiUkm()" class="...">
+                            <option value="">-- Pilih UKM --</option>
+                                <% organisasi.forEach(org => { %>
+                                    <option value="<%= org.id %>|<%= org.namaOrg %>"><%= org.namaOrg %></option>
+                                <% }) %>
+                            </select>
+
+                            <!-- Hidden inputs -->
+                                <input type="hidden" name="ukm_id" id="ukm_id">
+                                <input type="hidden" name="ukm" id="ukm">
+
+
+
+
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Kategori Kegiatan *</label>
+                                <select id="kategori" name="kategori" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Workshop/Pelatihan">Workshop/Pelatihan</option>
+                                    <option value="Seminar">Seminar</option>
+                                    <option value="Kompetisi">Kompetisi</option>
+                                    <option value="Festival/Pameran">Festival/Pameran</option>
+                                    <option value="Bakti Sosial">Bakti Sosial</option>
+                                    <option value="Olahraga">Olahraga</option>
+                                    <option value="Seni & Budaya">Seni & Budaya</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Judul Kegiatan *</label>
+                            <input type="text" id="judulKegiatan" name="judulKegiatan" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Masukkan judul kegiatan yang menarik" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi Kegiatan *</label>
+                            <textarea id="deskripsi" name="deskripsi" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Jelaskan detail kegiatan, tujuan, dan manfaat yang diharapkan..." required></textarea>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Pelaksanaan *</label>
+                                <input type="date" id="tanggal" name="tanggal" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Waktu Mulai *</label>
+                                <input type="time" id="waktuMulai" name="waktuMulai" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Waktu Selesai *</label>
+                                <input type="time" id="waktuSelesai" name="waktuSelesai" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Lokasi/Tempat *</label>
+                                <input type="text" id="lokasi" name="lokasi" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Contoh: Aula Fakultas Teknik" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Estimasi Peserta</label>
+                                <input type="number" id="estimasiPeserta" name="estimasiPeserta"  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Jumlah peserta yang diharapkan" min="1">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Estimasi Anggaran (Rp)</label>
+                            <input type="number" id="anggaran" name="anggaran" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Masukkan estimasi biaya kegiatan" min="0">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan Tambahan</label>
+                            <textarea id="catatan" name="catatan" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Informasi tambahan yang perlu disampaikan..."></textarea>
+                        </div>
+
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" id="setuju" name="setuju" class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded focus:ring-emerald-500" required>
+                            <label for="setuju" class="text-sm text-gray-700">Saya menyetujui <a href="#" class="text-emerald-700 hover:text-emerald-800 font-semibold">syarat dan ketentuan</a> yang berlaku</label>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button type="submit" class="flex-1 bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-800 transition duration-300">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Kirim Usulan
+                            </button>
+                            <button type="reset" class="flex-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition duration-300">
+                                <i class="fas fa-undo mr-2"></i>
+                                Reset Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Info Panel -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-info-circle text-emerald-700 text-xl mr-3"></i>
+                        <h4 class="text-lg font-semibold text-emerald-800">Informasi Penting</h4>
+                    </div>
+                    <ul class="space-y-2 text-sm text-emerald-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-emerald-600"></i>
+                            Usulan akan diproses maksimal 7 hari kerja
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-emerald-600"></i>
+                            Pastikan semua data yang diisi sudah benar
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-emerald-600"></i>
+                            Usulan yang disetujui akan mendapat notifikasi
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-emerald-600"></i>
+                            Hubungi admin jika ada pertanyaan
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kontak -->
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Butuh Bantuan?</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-emerald-700 mr-3"></i>
+                            <span class="text-sm text-gray-600">(0751) 71181</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-emerald-700 mr-3"></i>
+                            <span class="text-sm text-gray-600">kemahasiswaan@unand.ac.id</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-emerald-700 mr-3"></i>
+                            <span class="text-sm text-gray-600">Senin-Jumat, 08:00-16:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Terbaru -->
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Status Usulan Terbaru</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                            <div>
+                                <div class="text-sm font-semibold text-gray-800">Workshop Digital Marketing</div>
+                                <div class="text-xs text-gray-600">15 Juni 2025</div>
+                            </div>
+                            <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Disetujui</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                            <div>
+                                <div class="text-sm font-semibold text-gray-800">Festival Seni Budaya</div>
+                                <div class="text-xs text-gray-600">12 Juni 2025</div>
+                            </div>
+                            <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">Diproses</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daftar Usulan -->
+        <div class="mt-12">
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-list text-emerald-700 text-xl mr-3"></i>
+                            <h3 class="text-xl font-bold text-gray-800">Daftar Usulan Kegiatan</h3>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <select id="filterStatus" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+    <option value="all">Semua Status</option>
+    <option value="menunggu">Menunggu</option>
+    <option value="diproses">Diproses</option>
+    <option value="disetujui">Disetujui</option>
+    <option value="ditolak">Ditolak</option>
+</select>
+                            <button class="px-4 py-2 text-sm bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 transition duration-300">
+                                <i class="fas fa-filter mr-1"></i>
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+     
+                
+<!-- Judul Kolom -->
+<div class="grid grid-cols-6 px-6 py-3 bg-gray-50 font-semibold text-sm text-gray-600 uppercase tracking-wider">
+  <div>Kegiatan</div>
+  <div>Pengusul</div>
+  <div>UKM</div>
+  <div>Tanggal</div>
+  <div>Status</div>
+  <div>Aksi</div>
+</div>
+
+<!-- tampilan hasil -->
+
+<div id="usulanList" class="divide-y divide-gray-200 bg-white">
+  <% usulan.forEach((u, index) => { %>
+    <div class="grid grid-cols-6 px-6 py-4 items-center">
+      <!-- Kegiatan -->
+      <div>
+        <div class="text-sm font-medium text-gray-900"><%= u.judulKegiatan %></div>
+        <div class="text-sm text-gray-500"><%= u.kategori %></div>
+      </div>
+      <!-- Pengusul -->
+      <div>
+        <div class="text-sm font-medium text-gray-900"><%= u.namaPengusul %></div>
+        <div class="text-sm text-gray-500"><%= u.nim %></div>
+      </div>
+      <!-- UKM (dari relasi Organisasi) -->
+      <div class="text-sm text-gray-900">
+        <%= u.ukm %>
+      </div>
+      <!-- Tanggal -->
+      <div class="text-sm text-gray-900">
+        <%= new Date(u.tanggal).toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }) %>
+      </div>
+      <!-- Status -->
+      <div>
+        <% if (u.status === 'Disetujui') { %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Disetujui</span>
+        <% } else if (u.status === 'Ditolak') { %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Ditolak</span>
+        <% } else { %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Diproses</span>
+        <% } %>
+      </div>
+      <!-- Aksi -->
+      <div class="text-sm font-medium space-x-2">
+        <button class="text-emerald-600 hover:text-emerald-900">Detail</button>
+        <button class="text-gray-600 hover:text-gray-900">Edit</button>
+      </div>
+    </div>
+  <% }) %>
+
+</div>
+</div>
+</div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-700 rounded-full flex items-center justify-center">
+                            <i class="fas fa-university text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold">Sigma Unand</h4>
+                            <p class="text-gray-400 text-sm">Universitas Andalas</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Platform terpadu untuk pengelolaan Unit Kegiatan Mahasiswa di Universitas Andalas.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Menu Utama</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Beranda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Daftar UKM</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Kegiatan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Usulan Kegiatan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Kontak</h5>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">(0751) 71181</li>
+                        <li class="text-gray-400">kemahasiswaan@unand.ac.id</li>
+                        <li class="text-gray-400">Jl. Perintis Kemerdekaan No.77</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Ikuti Kami</h5>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-emerald-700 rounded-full flex items-center justify-center hover:bg-emerald-600 transition duration-300">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Sigma Unand - Universitas Andalas. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+function filterUsulan() {
+    const selectedStatus = document.getElementById('filterStatus').value;
+    const items = document.querySelectorAll('.usulan-item');
+
+    items.forEach(item => {
+        const status = item.getAttribute('data-status');
+        if (selectedStatus === 'all' || status === selectedStatus) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>
+
+
+ <!-- pemisah value -->
+<script>
+  function isiUkm() {
+    const value = document.getElementById('ukm_info').value;
+    const [id, nama] = value.split('|');
+    document.getElementById('ukm_id').value = id || '';
+    document.getElementById('ukm').value = nama || '';
+  }
+</script>

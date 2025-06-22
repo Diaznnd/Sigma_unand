@@ -9,17 +9,20 @@ module.exports = (sequelize, DataTypes) => {
     logo: DataTypes.STRING,
     instagram: DataTypes.STRING,
     website: DataTypes.STRING,
-    visi: DataTypes.TEXT,        // ditambahkan
-    misi: DataTypes.TEXT,        // ditambahkan
-    alamat: DataTypes.STRING,    // ditambahkan
-    kontak: DataTypes.STRING,    // ditambahkan
-    jenis: DataTypes.STRING, // Jenis UKM seperti: Olahraga, Seni, Akademik, dll
+    visi: DataTypes.TEXT,
+    misi: DataTypes.TEXT,
+    alamat: DataTypes.STRING,
+    kontak: DataTypes.STRING,
+    jenis: DataTypes.STRING,
     userId: DataTypes.INTEGER
   }, {});
 
+
   Organisasi.associate = function(models) {
-    Organisasi.hasMany(models.Berita, { foreignKey: 'ukm_id' });
-    Organisasi.belongsTo(models.User, { foreignKey: 'userId' });
+    Organisasi.hasMany(models.Usulan, {
+      foreignKey: 'ukm_id',
+      as: 'usulans'
+    });
   };
 
   return Organisasi;
