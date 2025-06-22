@@ -25,9 +25,10 @@ const adminDokumenRoutes = require('./routes/adminDokumenRoutes');
 const adminFormFieldRoutes = require('./routes/adminFormFieldRoutes');
 const userberita = require('./routes/userberita');
 const userKegiatan = require('./routes/userkegiatan');
-const userDetailBeritaRoutes = require('./routes/userdetailberita');
 const forumRouter = require('./routes/forumRouter');
-const ukmRouter = require('./routes/ukmRouter');
+const ukmRouter = require('./routes/ukmrouter');
+const userKalenderRoutes = require('./routes/userkalender');
+const userDetailBeritaRoutes = require('./routes/userdetailberita');
 
 // Setup pdfMake
 pdfMake.vfs = vfsFonts.vfs;
@@ -39,7 +40,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layouts/layout');
 
-// Setup middleware
+// Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
@@ -49,7 +50,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(expressLayouts);
-app.use(session({ secret: 'sigma_unand_rahasia', resave: false, saveUninitialized: true }));
+app.use(session({
+  secret: 'sigma_unand_rahasia',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -61,18 +66,17 @@ app.use((req, res, next) => {
 
 app.use(setUKM);
 
-// Setup database pool
+// DB Connection Pool for direct queries
 const dbConfig = {
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'ukm_registration',
+  database: 'sigma_unand',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
   multipleStatements: true
 };
-
 const pool = mysql.createPool(dbConfig);
 app.use((req, res, next) => {
   req.db = pool;
@@ -92,12 +96,15 @@ app.use('/adminukm/dokumen', adminDokumenRoutes);
 app.use('/adminukm/form', adminFormFieldRoutes);
 app.use('/user', userberita);
 app.use('/user', userKegiatan);
+app.use('/user', userKalenderRoutes);
 app.use('/berita', userDetailBeritaRoutes);
 app.use('/forum', forumRouter);
 app.use('/', ukmRouter(pool, pdfMake));
 
+// Redirect root
 app.get('/', (req, res) => res.redirect('/auth/login'));
 
+// Dashboard by role
 app.get('/dashboard', isAuthenticated, (req, res) => {
   const role = req.session.user.role;
   if (role === 'super_admin') return res.redirect('/superadmin');
@@ -132,6 +139,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Routing halaman detail berita
+const userDetailBeritaRoutes = require('./routes/userdetailberita');
+app.use('/berita', userDetailBeritaRoutes);
+
 
 //kegiatan
 app.set('views', path.join(__dirname, 'views'));
@@ -141,6 +151,18 @@ app.set('view engine', 'ejs');
 const userKalenderRoutes = require('./routes/userkalender');
 app.use('/user', userKalenderRoutes);
 
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Global Error Handler:', err);
+  try {
+    res.status(500).render('user/error', {
+      message: 'Terjadi kesalahan pada server',
+      backUrl: req.get('Referrer') || '/'
+    });
+  } catch (renderErr) {
+    res.status(500).send('<h1>500 - Internal Server Error</h1><p>Gagal merender halaman error.</p>');
+  }
+});
 
 
 // DB
@@ -149,5 +171,8 @@ const db = require('./models');
 const sequelize = db.sequelize;
 
 sequelize.sync().then(() => {
-  app.listen(3000, () => console.log('Server running di http://localhost:3000'));
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`✅ Server berjalan di http://localhost:${port}`);
+  });
 });
