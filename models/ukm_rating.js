@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const UkmRating = sequelize.define('ukm_rating', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     ukm_id: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -21,8 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     }
   }, {
+    tableName: 'ukm_ratings',
     timestamps: true,
-    tableName: 'ukm_ratings'
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
   });
 
   return UkmRating;
