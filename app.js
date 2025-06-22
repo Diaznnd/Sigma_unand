@@ -26,12 +26,11 @@ const adminDokumenRoutes = require('./routes/adminDokumenRoutes');
 const adminFormFieldRoutes = require('./routes/adminFormFieldRoutes');
 const userberita = require('./routes/userberita');
 const userKegiatan = require('./routes/userkegiatan');
+const adminPendaftaranRoutes = require('./routes/adminPendaftaranRoutes');
 const forumRouter = require('./routes/forumRouter');
 const ukmRouter = require('./routes/ukmrouter');
 const userKalenderRoutes = require('./routes/userkalender');
 const userDetailBeritaRoutes = require('./routes/userdetailberita');
-
-// Setup pdfMake
 pdfMake.vfs = vfsFonts.vfs;
 
 const app = express();
@@ -68,6 +67,15 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressLayouts);
+app.use(express.json());
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(session({ secret: 'sigma_unand_rahasia', resave: false, saveUninitialized: true }));
+// Middleware yang inject ukm ke semua view EJS
 app.use(setUKM);
 
 // DB Connection Pool for direct queries
@@ -98,6 +106,17 @@ app.use('/adminukm/galeri', adminGaleriRoutes);
 app.use('/adminukm/pengurus', adminPengurusRoutes);
 app.use('/adminukm/dokumen', adminDokumenRoutes);
 app.use('/adminukm/form', adminFormFieldRoutes);
+app.use('/user', userberita); // misalnya kamu akses via /pengguna/berita
+app.use('/user', userKegiatan); // cukup ini saja
+app.use('/adminukm/pendaftaran', adminPendaftaranRoutes);
+
+app.get('/', (req, res) => {
+  res.redirect('/auth/login');
+});
+
+app.set('layout', 'layouts/layout');
+
+const { isAuthenticated, isSuperAdmin, isAdminUKM, isPenggunaUmum } = require('./middleware/auth');
 app.use('/user', userberita);
 app.use('/user', userKegiatan);
 app.use('/user', userKalenderRoutes);

@@ -1,0 +1,90 @@
+<%- include('../partials/sidebar') %>
+
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
+  <div class="max-w-4xl mx-auto">
+
+    <!-- Flash Message -->
+    <% if (typeof messages !== 'undefined' && messages.success) { %>
+      <div class="bg-green-100 text-green-800 px-4 py-2 mb-4 rounded border border-green-300">
+        <%= messages.success %>
+      </div>
+    <% } %>
+    <% if (typeof messages !== 'undefined' && messages.error) { %>
+      <div class="bg-red-100 text-red-800 px-4 py-2 mb-4 rounded border border-red-300">
+        <%= messages.error %>
+      </div>
+    <% } %>
+
+    <!-- Tombol Aktifkan/Nonaktifkan -->
+    <div class="flex items-center justify-between mb-6">
+      <form action="/adminukm/pendaftaran/info/toggle" method="POST">
+        <button type="submit"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700 transition">
+          <% if (info && info.aktif) { %>
+            🔴 Nonaktifkan Pendaftaran
+          <% } else { %>
+            🟢 Aktifkan Pendaftaran
+          <% } %>
+        </button>
+      </form>
+
+      <a href="/adminukm/pendaftaran/edit"
+        class="text-sm text-blue-600 hover:underline flex items-center gap-1">✏️ Edit Informasi</a>
+    </div>
+
+    <!-- Preview Informasi Pendaftaran -->
+    <% if (info) { %>
+      <div class="bg-white p-6 rounded shadow mb-6 border border-gray-200">
+        <h2 class="text-lg font-semibold mb-2 text-gray-700">Deskripsi:</h2>
+        <p class="text-gray-700 whitespace-pre-line"><%= info.deskripsi %></p>
+
+        <% if (info.file1 || info.file2) { %>
+          <div class="mt-4">
+            <h3 class="font-semibold text-gray-700 mb-1">Dokumen Terkait:</h3>
+            <% if (info.file1) { %>
+              <a href="<%= info.file1 %>" target="_blank" class="text-blue-600 hover:underline block">📎 File 1</a>
+            <% } %>
+            <% if (info.file2) { %>
+              <a href="<%= info.file2 %>" target="_blank" class="text-blue-600 hover:underline block">📎 File 2</a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="text-gray-600 mb-6">
+        Belum ada informasi pendaftaran yang diatur. Silakan klik tombol edit di atas untuk mengisi informasi.
+      </div>
+    <% } %>
+
+    <!-- Tempat untuk Form Builder Dinamis -->
+    <div class="bg-white p-6 rounded shadow border">
+      <h2 class="text-lg font-bold text-gray-800 mb-4">Field Formulir Pendaftaran</h2>
+
+      <a href="/adminukm/form/"
+        class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition mb-4 inline-block">
+        + Tambah Field
+      </a>
+
+      <% if (fields && fields.length > 0) { %>
+        <ul class="space-y-2">
+          <% fields.forEach(field => { %>
+            <li class="p-3 border rounded flex justify-between items-center">
+              <div>
+                <p class="font-semibold text-gray-800"><%= field.label %> 
+                  <% if (field.required) { %><span class="text-red-500">*</span><% } %>
+                </p>
+                <p class="text-sm text-gray-500">Tipe: <%= field.type %></p>
+              </div>
+              <form action="/adminukm/form/hapus/<%= field.id %>" method="POST" onsubmit="return confirm('Hapus field ini?')">
+                <button class="text-red-500 hover:underline text-sm">Hapus</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-500">Belum ada field pendaftaran ditambahkan.</p>
+      <% } %>
+    </div>
+
+  </div>
+</main>

@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     last_name:{
+
       type: DataTypes.STRING,
       unique: true
     },
