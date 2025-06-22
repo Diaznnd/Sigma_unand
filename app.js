@@ -37,7 +37,7 @@ const app = express();
 // Setup view engine dan layout
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layouts/layout'); // Matikan sementara jika layout.ejs tidak tersedia
+app.set('layout', 'layouts/layout'); 
 
 // Setup middleware
 app.use(express.static(path.join(__dirname, 'public')));
@@ -61,23 +61,7 @@ app.use((req, res, next) => {
 
 app.use(setUKM);
 
-// Setup database pool
-const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'ukm_registration',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  multipleStatements: true
-};
 
-const pool = mysql.createPool(dbConfig);
-app.use((req, res, next) => {
-  req.db = pool;
-  next();
-});
 
 // Routing
 app.use('/auth', authRoutes);
@@ -133,4 +117,38 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`✅ Server berjalan di http://localhost:${port}`);
+
+});
+
+app.use('/uploads', express.static('uploads'));
+
+//deatil berita
+// Aktifkan folder public untuk file statis (CSS, JS, dll)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Spesifik untuk folder uploads
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+// Routing halaman detail berita
+const userDetailBeritaRoutes = require('./routes/userdetailberita');
+app.use('/berita', userDetailBeritaRoutes);
+
+
+//kegiatan
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+//kalender
+const userKalenderRoutes = require('./routes/userkalender');
+app.use('/user', userKalenderRoutes);
+
+
+
+// DB
+// DB
+const db = require('./models');
+const sequelize = db.sequelize;
+
+sequelize.sync().then(() => {
+  app.listen(3000, () => console.log('Server running di http://localhost:3000'));
 });
