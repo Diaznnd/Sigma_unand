@@ -21,8 +21,11 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      password: {
+      major: {
         type: Sequelize.STRING
+      },
+      password_hash: {
+        type: Sequelize.TEXT
       },
       role: {
       type: Sequelize.ENUM('pengguna', 'admin_ukm', 'super_admin'),

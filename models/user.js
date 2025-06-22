@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
+    last_name:{
 
-    last_name: {
       type: DataTypes.STRING,
       unique: true
     },
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
-    major: DataTypes.STRING,
+    major:DataTypes.STRING,
     password_hash: {
       type: DataTypes.TEXT,
       allowNull: false

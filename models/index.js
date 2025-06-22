@@ -37,6 +37,7 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+db.ukm_rating = require('./ukm_rating')(sequelize, Sequelize.DataTypes);
 
 
 db.Kegiatan.belongsTo(db.Organisasi, { foreignKey: 'ukm_id', as: 'ukm' });
