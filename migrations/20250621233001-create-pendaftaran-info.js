@@ -2,34 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('PendaftaranInfos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
-        type: Sequelize.STRING
-      },
-      last_name: {
-        type: Sequelize.STRING
-      },
-      nim: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-      },
-      role: {
-      type: Sequelize.ENUM('pengguna', 'admin_ukm', 'super_admin'),
-        allowNull: false
-      },
-      refresh_token: {
+      deskripsi: {
         type: Sequelize.TEXT
+      },
+      aktif: {
+        type: Sequelize.BOOLEAN
+      },
+      file1: {
+        type: Sequelize.STRING
+      },
+      file2: {
+        type: Sequelize.STRING
+      },
+      ukm_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('PendaftaranInfos');
   }
 };

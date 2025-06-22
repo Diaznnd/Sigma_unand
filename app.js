@@ -17,6 +17,7 @@ const adminDokumenRoutes = require('./routes/adminDokumenRoutes');
 const adminFormFieldRoutes = require('./routes/adminFormFieldRoutes');
 const userberita = require('./routes/userberita');
 const userKegiatan = require('./routes/userkegiatan');
+const adminPendaftaranRoutes = require('./routes/adminPendaftaranRoutes');
 
 
 app.use(session({
@@ -56,6 +57,7 @@ app.use('/adminukm/dokumen', adminDokumenRoutes);
 app.use('/adminukm/form', adminFormFieldRoutes);
 app.use('/user', userberita); // misalnya kamu akses via /pengguna/berita
 app.use('/user', userKegiatan); // cukup ini saja
+app.use('/adminukm/pendaftaran', adminPendaftaranRoutes);
 
 app.get('/', (req, res) => {
   res.redirect('/auth/login');
