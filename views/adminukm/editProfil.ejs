@@ -1,8 +1,8 @@
 <%- include('partials/sidebar') %>
 
-<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-slate-50 to-indigo-100">
+<main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-slate-50 to-emerald-100">
   <div class="p-8 max-w-4xl mx-auto">
-    <h1 class="text-2xl font-bold mb-6 text-indigo-800">Edit Profil UKM</h1>
+    <h1 class="text-2xl font-bold mb-6 text-emerald-800">Edit Profil UKM</h1>
 
     <!-- Profil Preview -->
     <div class="bg-white p-6 rounded-xl shadow border border-gray-200 mb-8">
@@ -10,7 +10,7 @@
         <img src="<%= ukm.logo %>" alt="Logo UKM" class="w-20 h-20 object-cover rounded-full mb-3">
       <% } %>
 
-      <p class="text-xl font-semibold text-indigo-700"><%= ukm.namaOrg %></p>
+      <p class="text-xl font-semibold text-emerald-700"><%= ukm.namaOrg %></p>
       <p class="text-sm text-gray-600 mb-2"><%= ukm.deskripsi %></p>
 
       <% if (ukm.instagram) { %>

@@ -2,8 +2,8 @@
 
 <main class="ml-64 w-[calc(100%-16rem)] min-h-screen bg-gradient-to-br from-gray-50 to-white p-8">
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold text-indigo-800">Daftar Berita UKM</h1>
-    <a href="/adminukm/berita/tambah" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+    <h1 class="text-2xl font-bold text-emerald-800">Daftar Berita UKM</h1>
+    <a href="/adminukm/berita/tambah" class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">
       + Tambah Berita
     </a>
   </div>
@@ -30,7 +30,7 @@
             <p class="text-sm text-gray-600 line-clamp-3 mb-4"><%= berita.isi.length > 150 ? berita.isi.substring(0, 150) + '...' : berita.isi %></p>
 
             <div class="flex justify-between items-center">
-              <a href="/adminukm/berita/edit/<%= berita.id %>" class="text-sm text-indigo-600 hover:underline">Edit</a>
+              <a href="/adminukm/berita/edit/<%= berita.id %>" class="text-sm text-emerald-600 hover:underline">Edit</a>
               <form action="/adminukm/berita/hapus/<%= berita.id %>" method="POST" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
                 <button type="submit" class="text-sm text-red-600 hover:underline">Hapus</button>
               </form>

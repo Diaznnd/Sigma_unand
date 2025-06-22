@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const { isAuthenticated, isAdminUKM } = require("../middleware/auth");
-const { User, Organisasi, Anggota, Kegiatan, Berita } = require("../models");
+const { User, Organisasi, Pengurus, Kegiatan, Berita } = require("../models");
 
 const upload = multer({ dest: "public/uploads/" });
 
@@ -21,19 +21,18 @@ router.get("/", isAuthenticated, isAdminUKM, async (req, res) => {
   const showReminder = !ukmId && now > skipUntil;
   const ukm = ukmId ? await Organisasi.findByPk(ukmId) : null;
 
-  let totalAnggota = 0;
-  let totalKegiatan = 0;
 
   if (ukmId) {
     totalKegiatan = await Kegiatan.count({ where: { ukm_id: ukmId } });
     totalBerita = await Berita.count({ where: { ukm_id: ukmId } });
+    totalPengurus = await Pengurus.count({ where: { ukm_id: ukmId } });
   }
 
   res.render("adminukm/dashboard", {
     user: req.session.user,
     ukm,
     showReminder,
-    stats: { totalAnggota, totalKegiatan, totalBerita },
+    stats: { totalPengurus, totalKegiatan, totalBerita },
   });
 });
 

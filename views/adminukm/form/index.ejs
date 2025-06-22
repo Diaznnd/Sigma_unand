@@ -15,7 +15,7 @@
   <% } else { %>
     <div class="bg-white rounded-xl shadow overflow-hidden border">
       <table class="w-full table-auto">
-        <thead class="bg-indigo-100 text-indigo-700">
+        <thead class="bg-emerald-100 text-emerald-700">
           <tr>
             <th class="px-4 py-2 text-left">Label</th>
             <th class="px-4 py-2 text-left">Tipe</th>
@@ -32,7 +32,7 @@
               <td class="px-4 py-2"><%= field.required ? 'Ya' : 'Tidak' %></td>
               <td class="px-4 py-2"><%= field.options || '-' %></td>
               <td class="px-4 py-2">
-                <a href="/adminukm/form/edit/<%= field.id %>" class="text-indigo-600 hover:underline text-sm">Edit</a>
+                <a href="/adminukm/form/edit/<%= field.id %>" class="text-emerald-600 hover:underline text-sm">Edit</a>
                 <form action="/adminukm/form/hapus/<%= field.id %>" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus field ini?')">
                   <button type="submit" class="text-red-600 hover:underline text-sm ml-2">Hapus</button>
                 </form>

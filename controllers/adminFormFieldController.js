@@ -1,4 +1,17 @@
 const { FormField } = require('../models');
+const PdfPrinter = require('pdfmake');
+const path = require('path');
+
+const fonts = {
+  Roboto: {
+    normal: path.join(__dirname, '../fonts/Roboto-Regular.ttf'),
+    bold: path.join(__dirname, '../fonts/Roboto-Bold.ttf'),
+    italics: path.join(__dirname, '../fonts/Roboto-Italic.ttf'),
+    bolditalics: path.join(__dirname, '../fonts/Roboto-BoldItalic.ttf')
+  }
+};
+
+const printer = new PdfPrinter(fonts);
 
 exports.index = async (req, res) => {
   const ukmId = req.session.user.ukm_id;
@@ -69,5 +82,55 @@ exports.hapusField = async (req, res) => {
   } catch (err) {
     console.error('Gagal hapus field:', err);
     res.status(500).send('Gagal hapus field');
+  }
+};
+
+
+exports.generatePDFForm = async (req, res) => {
+  try {
+    const ukmId = req.session.user.ukm_id;
+    const fields = await FormField.findAll({
+      where: { ukm_id: ukmId },
+      order: [['createdAt', 'ASC']]
+    });
+
+    const content = [
+      { text: 'Formulir Pendaftaran UKM', style: 'header' },
+      { text: '\n' }
+    ];
+
+    fields.forEach((field, index) => {
+      content.push({
+        text: `${index + 1}. ${field.label} ${field.required ? '(Wajib)' : '(Opsional)'}`,
+        margin: [0, 5]
+      });
+    });
+
+    const docDefinition = {
+      content,
+      styles: {
+        header: {
+          fontSize: 16,
+          bold: true,
+          alignment: 'center'
+        }
+      }
+    };
+
+    const pdfDoc = printer.createPdfKitDocument(docDefinition);
+    const chunks = [];
+
+    pdfDoc.on('data', chunk => chunks.push(chunk));
+    pdfDoc.on('end', () => {
+      const result = Buffer.concat(chunks);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=formulir-pendaftaran.pdf');
+      res.send(result);
+    });
+
+    pdfDoc.end();
+  } catch (err) {
+    console.error('Gagal generate PDF:', err);
+    res.status(500).send('Gagal membuat PDF.');
   }
 };

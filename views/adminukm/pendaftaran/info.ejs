@@ -19,7 +19,7 @@
     <div class="flex items-center justify-between mb-6">
       <form action="/adminukm/pendaftaran/info/toggle" method="POST">
         <button type="submit"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700 transition">
+          class="inline-flex items-center gap-2 px-4 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition">
           <% if (info && info.aktif) { %>
             🔴 Nonaktifkan Pendaftaran
           <% } else { %>
@@ -85,6 +85,11 @@
         <p class="text-gray-500">Belum ada field pendaftaran ditambahkan.</p>
       <% } %>
     </div>
+    <a href="/adminukm/form/export/pdf" target="_blank"
+   class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+   <i class="fas fa-file-pdf mr-2"></i> Download PDF Formulir
+    </a>
+
 
   </div>
 </main>
