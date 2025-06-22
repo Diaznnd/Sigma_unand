@@ -11,9 +11,112 @@
             background: linear-gradient(135deg, #8BC34A 0%, #689F38 100%);
             min-height: 100vh;
         }
+        
+        .star-rating {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .star {
+            cursor: pointer;
+            color: #d1d5db;
+            font-size: 1.5rem;
+            transition: color 0.2s;
+        }
+        
+        .star:hover,
+        .star.active {
+            color: #fbbf24;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .rating-stars {
+            color: #fbbf24;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Notifications -->
+    <% if (messages.success) { %>
+        <div class="notification bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+            <div class="flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <%= messages.success %>
+            </div>
+        </div>
+    <% } %>
+    
+    <% if (messages.error) { %>
+        <div class="notification bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <%= messages.error %>
+            </div>
+        </div>
+    <% } %>
 
     <!-- Navbar -->
     <nav class="bg-green-600 text-white shadow-lg">
@@ -93,12 +196,37 @@
             <div class="p-8">
                 <div class="flex items-center mb-6">
                     <div class="bg-yellow-300 rounded-2xl p-6 mr-6 flex-shrink-0">
-                        <div class="w-20 h-20 flex items-center justify-center">
-                            <span class="text-gray-800 font-bold text-sm text-center">Logo UKM</span>
+                        <div class="w-20 h-20 flex items-center justify-center overflow-hidden rounded-full bg-white">
+                        <% if (ukm.logo) { %>
+
+                            <img src="<%= ukm.logo.startsWith('/uploads/') ? ukm.logo : '/uploads/' + ukm.logo %>" alt="Logo UKM" class="object-cover w-full h-full">
+
+
+
+
+                        <% } else { %>
+                            <span class="text-gray-500 text-sm">Tidak ada logo</span>
+                        <% } %>
                         </div>
+
                     </div>
                     <div class="flex-1">
                         <h1 class="text-3xl font-bold text-gray-800 mb-2"><%= ukm.nama %></h1>
+                        
+                        <!-- Rating Display -->
+                        <% if (totalRatings > 0) { %>
+                            <div class="rating-display mb-4">
+                                <div class="rating-stars">
+                                    <% for (let i = 1; i <= 5; i++) { %>
+                                        <i class="fas fa-star <%= i <= Math.round(averageRating) ? 'text-yellow-400' : 'text-gray-300' %>"></i>
+                                    <% } %>
+                                </div>
+                                <span class="text-gray-600 ml-2">
+                                    <%= averageRating %>/5 (<%= totalRatings %> ulasan)
+                                </span>
+                            </div>
+                        <% } %>
+                        
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
                                 <span class="text-sm font-medium text-gray-600">Kategori:</span>
@@ -116,7 +244,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 mt-6">
+                    <div class="flex-shrink-0 mt-6 space-x-3">
                         <% if (ukm.pendaftaran === 'Dibuka') { %>
                             <a href="/ukm/<%= ukm.id %>/daftar" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
                                 Daftar Sekarang
@@ -126,6 +254,11 @@
                                 Pendaftaran Ditutup
                             </button>
                         <% } %>
+                        
+                        <!-- Button Beri Rating -->
+                        <button onclick="openRatingModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-full font-medium transition-colors">
+                            <i class="fas fa-star mr-2"></i>Beri Rating
+                        </button>
                     </div>
                 </div>
             </div>
@@ -171,7 +304,7 @@
         </div>
 
         <!-- Kontak UKM -->
-        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden mb-8">
             <div class="p-8">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Kontak</h2>
                 <div class="flex items-center">
@@ -182,14 +315,245 @@
                 </div>
             </div>
         </div>
+
+        <!-- Ulasan Pengguna -->
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+            <div class="p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Ulasan Pengguna</h2>
+                
+                <% if (ratings.length === 0) { %>
+                    <div class="text-center py-8">
+                        <i class="fas fa-comments text-gray-300 text-6xl mb-4"></i>
+                        <p class="text-gray-500 text-lg">Belum ada ulasan untuk UKM ini.</p>
+                        <p class="text-gray-400">Jadilah yang pertama memberikan ulasan!</p>
+                    </div>
+                <% } else { %>
+                    <div class="space-y-4">
+                        <% ratings.forEach(function(rating, index) { %>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
+                                            <%= rating.nama_user.charAt(0).toUpperCase() %>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800"><%= rating.nama_user %></h4>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="rating-stars">
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                        <i class="fas fa-star <%= i <= rating.rating ? 'text-yellow-400' : 'text-gray-300' %>"></i>
+                                                    <% } %>
+                                                </div>
+                                                <span class="text-sm text-gray-500">
+                                                    <%= new Date(rating.createdAt).toLocaleDateString('id-ID', { 
+                                                        year: 'numeric', 
+                                                        month: 'long', 
+                                                        day: 'numeric' 
+                                                    }) %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button onclick="openEditModal(<%= rating.id %>, <%= rating.rating %>, '<%= rating.ulasan ? rating.ulasan.replace(/'/g, "\\'") : '' %>')" 
+                                                class="text-blue-500 hover:text-blue-700 text-sm">
+                                            <i class="fas fa-edit mr-1"></i>Edit
+                                        </button>
+                                        <form method="POST" action="/user/ukm/rating/<%= rating.id  %>/delete" style="display: inline;" 
+                                              onsubmit="return confirm('Yakin ingin menghapus ulasan ini?')">
+                                            <button type="submit" class="text-red-500 hover:text-red-700 text-sm">
+                                                <i class="fas fa-trash mr-1"></i>Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                <% if (rating.ulasan && rating.ulasan.trim()) { %>
+                                    <p class="text-gray-700 leading-relaxed"><%= rating.ulasan %></p>
+                                <% } else { %>
+                                    <p class="text-gray-400 italic">Tidak ada komentar</p>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
     </div>
 
-    <!-- Script Toggle Menu Mobile -->
-    <script>
-        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
+    <!-- Modal Rating -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <div class="bg-green-600 text-white p-6 rounded-t-lg">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">
+                        <i class="fas fa-star mr-2"></i>Beri Rating UKM
+                    </h3>
+                    <button onclick="closeRatingModal()" class="text-white hover:text-gray-200 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <form method="POST" action="/user/ukm/rating/<%= ukm.id %>" class="p-6">
+                <div class="mb-4">
+                    <label for="nama_user" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nama Anda *
+                    </label>
+                    <input type="text" 
+                           id="nama_user" 
+                           name="nama_user" 
+                           required 
+                           placeholder="Masukkan nama Anda" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Rating *
+                    </label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                    <input type="hidden" id="rating" name="rating" required>
+                    <p class="text-sm text-gray-500 mt-1">Klik bintang untuk memberikan rating</p>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="ulasan" class="block text-sm font-medium text-gray-700 mb-2">
+                        Ulasan
+                    </label>
+                    <textarea id="ulasan" 
+                              name="ulasan" 
+                              rows="4" 
+                              placeholder="Tulis ulasan Anda tentang UKM ini..." 
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <button type="button" 
+                            onclick="closeRatingModal()" 
+                            class="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        Batal
+                    </button>
+                    <button type="submit" 
+                            class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>Kirim Rating
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Edit Rating -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="bg-blue-600 text-white p-6 rounded-t-lg">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold">
+                    <i class="fas fa-edit mr-2"></i>Edit Rating
+                </h3>
+                <button onclick="closeEditModal()" class="text-white hover:text-gray-200 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <form method="POST" action="" id="editRatingForm" class="p-6">
+            <div class="mb-4">
+                <label for="editRating" class="block text-sm font-medium text-gray-700 mb-2">
+                    Rating *
+                </label>
+                <div class="star-rating" id="editStarRating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
+                </div>
+                <input type="hidden" id="editRating" name="rating" required>
+            </div>
+
+            <div class="mb-6">
+                <label for="editUlasan" class="block text-sm font-medium text-gray-700 mb-2">
+                    Ulasan
+                </label>
+                <textarea id="editUlasan" name="ulasan" rows="4" 
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <button type="button" onclick="closeEditModal()" 
+                        class="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    Batal
+                </button>
+                <button type="submit" 
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-save mr-2"></i>Simpan Perubahan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Script Bintang dan Modal -->
+<script>
+    function openRatingModal() {
+        document.getElementById('ratingModal').style.display = 'block';
+    }
+    function closeRatingModal() {
+        document.getElementById('ratingModal').style.display = 'none';
+    }
+
+    function openEditModal(id, rating, ulasan) {
+        const modal = document.getElementById('editModal');
+        modal.style.display = 'block';
+
+        const stars = modal.querySelectorAll('.star');
+        stars.forEach(s => s.classList.remove('active'));
+        for (let i = 0; i < rating; i++) {
+            stars[i].classList.add('active');
+        }
+
+        document.getElementById('editRating').value = rating;
+        document.getElementById('editUlasan').value = ulasan;
+        document.getElementById('editRatingForm').action = `/rating/${id}/edit`;
+    }
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    // Untuk rating baru
+    document.querySelectorAll('#starRating .star').forEach(star => {
+        star.addEventListener('click', function () {
+            const rating = this.dataset.rating;
+            document.getElementById('rating').value = rating;
+
+            document.querySelectorAll('#starRating .star').forEach(s => s.classList.remove('active'));
+            for (let i = 0; i < rating; i++) {
+                document.querySelectorAll('#starRating .star')[i].classList.add('active');
+            }
         });
-    </script>
+    });
+
+    // Untuk rating edit
+    document.querySelectorAll('#editStarRating .star').forEach(star => {
+        star.addEventListener('click', function () {
+            const rating = this.dataset.rating;
+            document.getElementById('editRating').value = rating;
+
+            document.querySelectorAll('#editStarRating .star').forEach(s => s.classList.remove('active'));
+            for (let i = 0; i < rating; i++) {
+                document.querySelectorAll('#editStarRating .star')[i].classList.add('active');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -9,7 +9,8 @@ const mysql = require('mysql2/promise');
 const pdfMake = require('pdfmake/build/pdfmake');
 const vfsFonts = require('pdfmake/build/vfs_fonts');
 const fs = require('fs');
-
+const db = require('./models');
+const sequelize = db.sequelize
 // Import middleware dan routes
 const setUKM = require('./middleware/setUKM');
 const { isAuthenticated, isSuperAdmin, isAdminUKM, isPenggunaUmum } = require('./middleware/auth');
@@ -57,6 +58,9 @@ app.use(session({
 }));
 app.use(flash());
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
@@ -99,8 +103,7 @@ app.use('/user', userKegiatan);
 app.use('/user', userKalenderRoutes);
 app.use('/berita', userDetailBeritaRoutes);
 app.use('/forum', forumRouter);
-app.use('/', ukmRouter(pool, pdfMake));
-
+app.use('/user', ukmRouter(pool, pdfMake, db));
 // Redirect root
 app.get('/', (req, res) => res.redirect('/auth/login'));
 
@@ -124,6 +127,24 @@ app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
   res.render('user/dashboard', { user: req.session.user });
 });
 
+
+
+app.use('/uploads', express.static('uploads'));
+
+//deatil berita
+// Aktifkan folder public untuk file statis (CSS, JS, dll)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Spesifik untuk folder uploads
+
+// Routing halaman detail berita
+
+
+//kegiatan
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
 // Global error handler
 app.use((err, req, res, next) => {
   console.error('Global Error Handler:', err);
@@ -137,13 +158,17 @@ app.use((err, req, res, next) => {
   }
 });
 
-// Sequelize connection for models
-const db = require('./models');
-const sequelize = db.sequelize;
+
+//rating dan ukm ijon edit
+
+
+
+
+// DB
+// DB
+;
 
 sequelize.sync().then(() => {
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    console.log(`✅ Server berjalan di http://localhost:${port}`);
-  });
+  app.listen(3000, () => console.log('Server running di http://localhost:3000'));
 });
+
