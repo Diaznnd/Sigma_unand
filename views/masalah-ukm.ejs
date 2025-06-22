@@ -4,7 +4,7 @@
 
     <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-10">Pelaporan Masalah</h1>
 
-    <form action="/masalah/kirim" method="POST" class="space-y-6">
+    <form action="/auth/masalah-ukm/kirim" method="POST" class="space-y-6">
       
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
         <label for="nama-ukm" class="md:text-right text-lg font-semibold text-[#5a704a]">Nama UKM</label>
@@ -19,16 +19,16 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-        <label for="masalah" class="md:text-right text-lg font-semibold text-[#5a704a]">Masalah</label>
+        <label for="tanggal" class="md:text-right text-lg font-semibold text-[#5a704a]">Tanggal</label>
         <div class="md:col-span-3">
-          <input type="text" id="masalah" name="masalah" placeholder="Masalah" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
+            <input type="datetime-local" id="tanggal" name="tanggal" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-        <label for="tanggal" class="md:text-right text-lg font-semibold text-[#5a704a]">Tanggal</label>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+        <label for="masalah" class="md:text-right pt-2 text-lg font-semibold text-[#5a704a]">Masalah</label>
         <div class="md:col-span-3">
-            <input type="text" id="tanggal" name="tanggal" placeholder="dd/mm/yyyy" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
+          <textarea id="masalah" name="masalah" rows="4" placeholder="Jelaskan masalah yang terjadi" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]"></textarea>
         </div>
       </div>
 

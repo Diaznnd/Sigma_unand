@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
-const { Op } = require('sequelize'); // Pastikan Op di-import dari sequelize
+const { Op } = require('sequelize');
+const { User, Masalah, LaporanAktivitas, Faq, Kerjasama } = require('../models'); 
+const puppeteer = require('puppeteer');
+const path = require('path'); 
+const ejs = require('ejs');
 
 exports.showLogin = (req, res) => {
   res.render('auth/login');
@@ -15,222 +18,325 @@ exports.register = async (req, res) => {
   try {
     const existing = await User.findOne({ where: { email } });
     if (existing) return res.send("Email sudah terdaftar.");
-
     const hash = await bcrypt.hash(password, 10);
-    await User.create({ first_name, last_name, email, nim, major, password_hash: hash });
+    await User.create({ first_name, last_name, email, nim, major, password_hash: hash, role: 'user' });
     res.redirect('/auth/login');
   } catch (e) {
     res.send("Gagal register: " + e.message);
   }
 };
 
-// --- FUNGSI LOGIN YANG DIMODIFIKASI ---
 exports.login = async (req, res) => {
   const { identifier, password } = req.body;
-
-  // --- AWAL PERUBAHAN: Logika Khusus Super Admin ---
-  const superAdminEmail = 'superadmin@gmail.com';
-  const superAdminPassword = 'superadmin123';
-
-  if (identifier === superAdminEmail && password === superAdminPassword) {
-    console.log('Login sebagai Super Admin terdeteksi.');
-    // DIUBAH: Ganti username dan hapus email karena tidak diperlukan lagi
-    req.session.user = {
-      username: 'Super Admin', 
-      role: 'superadmin' 
-    };
-    // Simpan session lalu redirect untuk menghindari race condition
-    return req.session.save(err => {
-      if (err) {
-        return res.send("Gagal membuat session: " + err.message);
-      }
-      return res.redirect('/auth/profil-super-admin');
-    });
-  }
-  // --- AKHIR PERUBAHAN ---
-
-
-  // Jika bukan super admin, lanjutkan ke logika login untuk pengguna biasa
-  try {
-    const user = await User.findOne({
-      // Menggunakan Op dari sequelize
-      where: { [Op.or]: [{ email: identifier }, { nim: identifier }] }
+  const superAdminEmail = 'superadmin@gmail.com';
+  const superAdminPassword = 'superadmin123';
+  if (identifier === superAdminEmail && password === superAdminPassword) {
+    req.session.user = { username: 'Super Admin', role: 'superadmin' };
+    return req.session.save(err => {
+      if (err) { return res.send("Gagal membuat session: " + err.message); }
+      return res.redirect('/auth/profil-super-admin');
     });
-
+  }
+  try {
+    const user = await User.findOne({ where: { [Op.or]: [{ email: identifier }, { nim: identifier }] } });
     if (!user) return res.send("User tidak ditemukan");
-
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) return res.send("Password salah");
-
-    // Buat session untuk pengguna biasa
-    req.session.user = { 
-        id: user.id,
-        first_name: user.first_name,
-        email: user.email,
-        role: user.role // Asumsikan ada kolom 'role' di tabel User Anda
-    };
-
-    // Simpan session lalu redirect
-    return req.session.save(err => {
-        if(err) {
-            return res.send("Gagal membuat session: " + err.message);
-        }
-        return res.redirect('/auth/dashboard'); // Redirect ke dashboard pengguna biasa
-    });
-
+    req.session.user = { id: user.id, first_name: user.first_name, email: user.email, role: user.role };
+    return req.session.save(err => {
+        if(err) { return res.send("Gagal membuat session: " + err.message); }
+        return res.redirect('/auth/dashboard');
+    });
   } catch (e) {
     res.send("Gagal login: " + e.message);
   }
 };
 
 exports.logout = (req, res) => {
-  // Gunakan callback untuk memastikan session hancur sebelum redirect
   req.session.destroy((err) => {
-    if (err) {
-        return res.send("Gagal logout.");
-    }
-    res.clearCookie('connect.sid'); // Hapus cookie session
-    res.redirect('/auth/login');
-  });
+    if (err) { return res.send("Gagal logout."); }
+    res.clearCookie('connect.sid');
+    res.redirect('/auth/login');
+  });
 };
 
-// --- FUNGSI BARU UNTUK MENAMPILKAN HALAMAN ADMIN ---
 exports.showSuperAdminProfile = (req, res) => {
-  if (req.session.user && req.session.user.role === 'superadmin') {
-    res.render('profil-super-admin', { 
-        layout: 'layouts/app-layout', 
-        admin: req.session.user 
-    });
-  } else {
-    res.redirect('/auth/login');
-  }
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    res.render('profil-super-admin', { layout: 'layouts/app-layout', admin: req.session.user });
+  } else {
+    res.redirect('/auth/login');
+  }
 };
 
-exports.showLaporanAktivitas = (req, res) => {
-  // Pengaman: Pastikan hanya admin yang bisa akses
-  if (req.session.user && req.session.user.role === 'superadmin') {
-    res.render('laporan-aktivitas', {
-      layout: 'layouts/app-layout', // Gunakan layout aplikasi kita
-      user: req.session.user // Kirim data user jika perlu
-    });
-  } else {
-    res.redirect('/auth/login');
-  }
+exports.showLaporanAktivitas = async (req, res) => {
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    try {
+      const semuaLaporan = await LaporanAktivitas.findAll({ order: [['createdAt', 'DESC']] });
+      res.render('laporan-aktivitas', { layout: 'layouts/app-layout', user: req.session.user, laporanList: semuaLaporan });
+    } catch (error) {
+      console.error("Gagal mengambil daftar laporan:", error);
+      res.status(500).send("Gagal memuat halaman laporan.");
+    }
+  } else {
+    res.redirect('/auth/login');
+  }
+};
+
+exports.kirimLaporanAktivitas = async (req, res) => {
+  try {
+    const { judul, tanggal, detail } = req.body;
+    if (!judul || !tanggal || !detail) { return res.status(400).send('Semua field harus diisi.'); }
+    await LaporanAktivitas.create({ judul, tanggal, detail });
+    res.redirect('/auth/laporan-aktivitas');
+  } catch (error) {
+    console.error('Gagal menyimpan data laporan aktivitas:', error);
+    res.status(500).send('Gagal menyimpan laporan. Cek konsol server.');
+  }
+};
+
+exports.cetakLaporanPdf = async (req, res) => {
+  try {
+    const laporanId = req.params.id;
+    const laporan = await LaporanAktivitas.findOne({ where: { id: laporanId } });
+    if (!laporan) { return res.status(404).send("Laporan tidak ditemukan."); }
+    const templatePath = path.join(__dirname, '../views/cetak-laporan.ejs');
+    const html = await ejs.renderFile(templatePath, { laporan: laporan.toJSON() });
+    const browser = await puppeteer.launch({ executablePath: puppeteer.executablePath(), timeout: 0, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+    await browser.close();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="laporan-${laporan.id}.pdf"`);
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error("Gagal membuat PDF:", error);
+    res.status(500).send("Gagal membuat PDF. Cek konsol server.");
+  }
 };
 
 exports.showStatistikKegiatan = (req, res) => {
-  // Pengaman: Pastikan hanya admin yang bisa akses
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    res.render('statistik-kegiatan', { layout: 'layouts/app-layout', user: req.session.user });
+  } else {
+    res.redirect('/auth/login');
+  }
+};
+
+exports.showKerjaSama = async (req, res) => {
   if (req.session.user && req.session.user.role === 'superadmin') {
-    res.render('statistik-kegiatan', {
-      layout: 'layouts/app-layout', // Gunakan layout aplikasi utama
-      user: req.session.user
-    });
+    try {
+      const dummyData = [
+        { nama: 'Event Organizer Lokal', tanggal: new Date(), ukm: 'UKM Musik', tentang: 'Sponsorship untuk Festival Musik Kampus', detail: 'Mengajukan kerjasama sponsorship dengan nilai Rp 5.000.000 untuk acara puncak Dies Natalis.', status: 'pending'},
+        { nama: 'Percetakan ABC', tanggal: new Date(), ukm: 'UKM Jurnalistik', tentang: 'Cetak Majalah Kampus Edisi Spesial', detail: 'Penawaran diskon 30% untuk pencetakan 500 eksemplar majalah kampus edisi spesial wisuda.', status: 'pending'},
+      ];
+      for (const item of dummyData) {
+        await Kerjasama.findOrCreate({ where: { nama: item.nama, tentang: item.tentang }, defaults: item });
+      }
+      const kerjasamaPending = await Kerjasama.findAll({ where: { status: 'pending' }, order: [['createdAt', 'DESC']] });
+      res.render('kerja-sama', { layout: 'layouts/app-layout', user: req.session.user, kerjasamaList: kerjasamaPending });
+    } catch (error) {
+      console.error("Gagal mengambil data kerjasama:", error);
+      res.status(500).send("Gagal memuat halaman kerjasama.");
+    }
   } else {
     res.redirect('/auth/login');
   }
 };
 
-exports.showKerjaSama = (req, res) => {
-  // Pengaman: Pastikan hanya admin yang bisa akses
-  if (req.session.user && req.session.user.role === 'superadmin') {
-    
-    // Nanti, data ini akan diambil dari database.
-    // Untuk sekarang, kita gunakan data dummy agar tabel bisa terbentuk.
-    const dummyKerjasama = [
-      { no: 1, nama: '', tanggal: '', ukm: '', tentang: '', status: '' },
-      { no: 2, nama: '', tanggal: '', ukm: '', tentang: '', status: '' },
-      { no: 3, nama: '', tanggal: '', ukm: '', tentang: '', status: '' },
-      { no: 4, nama: '', tanggal: '', ukm: '', tentang: '', status: '' },
-    ];
-
-    res.render('kerja-sama', {
-      layout: 'layouts/app-layout',
-      user: req.session.user,
-      kerjasamaList: dummyKerjasama // Kirim data ke view
-    });
-  } else {
-    res.redirect('/auth/login');
+exports.showDetailKerjasama = async (req, res) => {
+  try {
+    const kerjasama = await Kerjasama.findByPk(req.params.id);
+    if (!kerjasama) { return res.status(404).send("Data kerjasama tidak ditemukan."); }
+    res.render('detail-kerjasama', { layout: 'layouts/app-layout', user: req.session.user, kerjasama: kerjasama });
+  } catch (error) {
+    res.status(500).send("Gagal memuat halaman detail.");
   }
 };
 
-exports.showManajemenAdmin = (req, res) => {
-  // Pengaman: Pastikan hanya admin yang bisa akses
-  if (req.session.user && req.session.user.role === 'superadmin') {
-
-    // Nanti, data ini akan diambil dari database pengguna yang memiliki role 'admin'
-    const dummyAdmins = [
-      { id: 1, nama: 'Admin 1' },
-      { id: 2, nama: 'Admin 2' },
-      { id: 3, nama: 'Admin 3' },
-    ];
-
-    res.render('manajemen-admin', {
-      layout: 'layouts/app-layout',
-      user: req.session.user,
-      adminList: dummyAdmins // Kirim data admin ke view
-    });
-  } else {
-    res.redirect('/auth/login');
+exports.updateStatusKerjasama = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+    await Kerjasama.update({ status: status }, { where: { id: id } });
+    res.redirect('/auth/kerja-sama');
+  } catch (error) {
+    console.error("Gagal update status kerjasama:", error);
+    res.status(500).send("Gagal update status.");
   }
 };
 
 exports.showUkmPendaftaran = (req, res) => {
-  if (req.session.user && req.session.user.role === 'superadmin') {
-    
-    // Data dummy untuk list pendaftar. Nantinya diambil dari database.
-    const dummyPendaftar = [
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    const dummyPendaftar = [
       { id: 1, nama: '', tanggal: '', ukm: '', divisi: '', berkas: '', status: '' },
       { id: 2, nama: '', tanggal: '', ukm: '', divisi: '', berkas: '', status: '' },
-      { id: 3, nama: '', tanggal: '', ukm: '', divisi: '', berkas: '', status: '' },
-      { id: 4, nama: '', tanggal: '', ukm: '', divisi: '', berkas: '', status: '' },
-      { id: 5, nama: '', tanggal: '', ukm: '', divisi: '', berkas: '', status: '' },
+      { id: 3, nama: '', tanggal: '', ukm: '', divisi: '', berkas: '', status: '' }
     ];
-
-    res.render('ukm-pendaftaran', {
-      layout: 'layouts/app-layout',
-      user: req.session.user,
-      pendaftarList: dummyPendaftar
-    });
-  } else {
-    res.redirect('/auth/login');
-  }
+    res.render('ukm-pendaftaran', { layout: 'layouts/app-layout', user: req.session.user, pendaftarList: dummyPendaftar });
+  } else {
+    res.redirect('/auth/login');
+  }
 };
 
 exports.showMasalahUkm = (req, res) => {
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    res.render('masalah-ukm', { layout: 'layouts/app-layout', user: req.session.user });
+  } else {
+    res.redirect('/auth/login');
+  }
+};
+
+exports.kirimMasalahUkm = async (req, res) => {
+  try {
+    const { nama_ukm, masalah, tanggal } = req.body;
+    if (!nama_ukm || !masalah || !tanggal) { return res.status(400).send('Semua field harus diisi.'); }
+    await Masalah.create({ nama_ukm, masalah, tanggal });
+    res.redirect('/auth/masalah-ukm');
+  } catch (error) {
+    console.error('Gagal menyimpan data masalah:', error);
+    res.status(500).send('Gagal menyimpan data masalah. Cek konsol server.');
+  }
+};
+
+exports.showFaq = async (req, res) => {
   if (req.session.user && req.session.user.role === 'superadmin') {
-    res.render('masalah-ukm', {
-      layout: 'layouts/app-layout',
-      user: req.session.user
-    });
+    try {
+      const answeredFaqs = await Faq.findAll({ where: { status: 'answered' }, order: [['updatedAt', 'DESC']] });
+      res.render('faq', { layout: 'layouts/app-layout', user: req.session.user, faqList: answeredFaqs });
+    } catch (error) {
+      res.status(500).send("Gagal memuat halaman FAQ.");
+    }
+  } else { res.redirect('/auth/login'); }
+};
+
+exports.showKelolaFaq = async (req, res) => {
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    try {
+      const dummyQuestions = [
+        { question: 'Bagaimana cara mendaftar UKM baru jika periode pendaftaran sudah lewat?', status: 'pending' },
+        { question: 'Di mana saya bisa melihat jadwal kegiatan untuk semester ini?', status: 'pending' }
+      ];
+      for (const q of dummyQuestions) {
+        await Faq.findOrCreate({ where: { question: q.question }, defaults: q });
+      }
+      const pendingFaqs = await Faq.findAll({ where: { status: 'pending' } });
+      res.render('kelola-faq', { layout: 'layouts/app-layout', user: req.session.user, faqList: pendingFaqs });
+    } catch (error) {
+      res.status(500).send("Gagal memuat halaman kelola FAQ.");
+    }
+  } else { res.redirect('/auth/login'); }
+};
+
+exports.showJawabFaqForm = async (req, res) => {
+  try {
+    const faq = await Faq.findByPk(req.params.id);
+    if (!faq) { return res.status(404).send("Pertanyaan tidak ditemukan."); }
+    res.render('jawab-faq', { layout: 'layouts/app-layout', user: req.session.user, faq: faq });
+  } catch (error) {
+    res.status(500).send("Gagal memuat halaman.");
+  }
+};
+
+exports.simpanJawabanFaq = async (req, res) => {
+  try {
+    const { answer } = req.body;
+    const { id } = req.params;
+    if (!answer) { return res.status(400).send("Jawaban tidak boleh kosong."); }
+    await Faq.update({ answer: answer, status: 'answered' }, { where: { id: id } });
+    res.redirect('/auth/kelola-faq');
+  } catch (error) {
+    res.status(500).send("Gagal menyimpan jawaban.");
+  }
+};
+
+exports.showManajemenAdmin = async (req, res) => {
+  if (req.session.user && req.session.user.role === 'superadmin') {
+    try {
+      const dummyAdminsData = [
+        { first_name: 'Admin', last_name: 'Satu', email: 'admin1@example.com', password: 'password123', role: 'admin' },
+        { first_name: 'Admin', last_name: 'Dua', email: 'admin2@example.com', password: 'password123', role: 'admin' }
+      ];
+      for (const adminData of dummyAdminsData) {
+        const hash = await bcrypt.hash(adminData.password, 10);
+        await User.findOrCreate({
+          where: { email: adminData.email },
+          defaults: { first_name: adminData.first_name, last_name: adminData.last_name, email: adminData.email, password_hash: hash, role: adminData.role }
+        });
+      }
+      
+      const adminList = await User.findAll({ where: { role: 'admin' }, order: [['createdAt', 'ASC']] });
+      
+      // BARIS DEBUG: Mencetak daftar admin ke konsol terminal
+      console.log("ADMIN DITEMUKAN DI DATABASE:", JSON.stringify(adminList, null, 2));
+
+      res.render('manajemen-admin', { layout: 'layouts/app-layout', user: req.session.user, adminList: adminList });
+    } catch (error) {
+      console.error("Gagal mengambil daftar admin:", error);
+      res.status(500).send("Gagal memuat halaman manajemen admin.");
+    }
   } else {
     res.redirect('/auth/login');
   }
 };
 
-exports.showFaq = (req, res) => {
+exports.showTambahAdminForm = (req, res) => {
   if (req.session.user && req.session.user.role === 'superadmin') {
-
-    const dummyFaq = [
-      {
-        question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?',
-        answer: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-      },
-      {
-        question: 'Duis aute irure dolor in reprehenderit in voluptate velit esse?',
-        answer: 'Cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-      },
-      {
-        question: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet?',
-        answer: 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?'
-      },
-    ];
-
-    res.render('faq', {
-      layout: 'layouts/app-layout',
-      user: req.session.user,
-      faqList: dummyFaq
-    });
+    res.render('tambah-admin', { layout: 'layouts/app-layout', user: req.session.user });
   } else {
     res.redirect('/auth/login');
+  }
+};
+
+exports.tambahAdmin = async (req, res) => {
+  try {
+    const { first_name, last_name, email, password } = req.body;
+    const existing = await User.findOne({ where: { email } });
+    if (existing) { return res.status(400).send("Email sudah digunakan."); }
+    const hash = await bcrypt.hash(password, 10);
+    await User.create({ first_name, last_name, email, password_hash: hash, role: 'admin' });
+    res.redirect('/auth/manajemen-admin');
+  } catch (error) {
+    console.error("Gagal menambah admin:", error);
+    res.status(500).send("Gagal menambah admin baru.");
+  }
+};
+
+exports.showEditAdminForm = async (req, res) => {
+  try {
+    const admin = await User.findByPk(req.params.id);
+    if (!admin || admin.role !== 'admin') { return res.status(404).send("Admin tidak ditemukan."); }
+    res.render('edit-admin', { layout: 'layouts/app-layout', user: req.session.user, admin: admin });
+  } catch (error) {
+    console.error("Gagal memuat halaman edit admin:", error);
+    res.status(500).send("Gagal memuat halaman edit.");
+  }
+};
+
+exports.updateAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const adminId = req.params.id;
+    let updateData = { email: email };
+    if (password && password.trim() !== '') {
+      const hash = await bcrypt.hash(password, 10);
+      updateData.password_hash = hash;
+    }
+    await User.update(updateData, { where: { id: adminId } });
+    res.redirect('/auth/manajemen-admin');
+  } catch (error) {
+    console.error("Gagal update admin:", error);
+    res.status(500).send("Gagal update admin.");
+  }
+};
+
+exports.deleteAdmin = async (req, res) => {
+  try {
+    const adminId = req.params.id;
+    await User.destroy({ where: { id: adminId, role: 'admin' } });
+    res.redirect('/auth/manajemen-admin');
+  } catch (error) {
+    console.error("Gagal menghapus admin:", error);
+    res.status(500).send("Gagal menghapus admin.");
   }
 };

@@ -1,0 +1,21 @@
+<main class="flex-grow w-full flex items-start justify-center p-4 sm:p-6 lg:p-8">
+  <div class="w-full max-w-6xl mx-auto bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
+    <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-8">Pertanyaan Masuk</h1>
+    <p class="text-center text-gray-600 mb-10">Berikut adalah daftar pertanyaan dari pengguna yang menunggu untuk dijawab.</p>
+
+    <div class="space-y-4">
+      <% if (faqList && faqList.length > 0) { %>
+        <% faqList.forEach(faq => { %>
+          <div class="flex justify-between items-center bg-white/80 p-4 rounded-xl shadow">
+            <span class="font-semibold text-gray-800"><%= faq.question %></span>
+            <a href="/auth/faq/jawab/<%= faq.id %>" class="bg-[#4A5C3D] text-white font-bold py-2 px-5 rounded-full hover:bg-[#3a4a31] transition-colors">
+              Jawab
+            </a>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-center text-gray-500 font-semibold text-lg">Tidak ada pertanyaan baru yang perlu dijawab. Kerja bagus!</p>
+      <% } %>
+    </div>
+  </div>
+</main>

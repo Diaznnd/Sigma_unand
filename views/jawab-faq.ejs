@@ -1,0 +1,28 @@
+<main class="flex-grow w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
+  <div class="w-full max-w-4xl mx-auto bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
+    <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-10">Jawab Pertanyaan</h1>
+    <form action="/auth/faq/jawab/<%= faq.id %>" method="POST" class="space-y-6">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <label class="md:text-right text-lg font-semibold text-[#5a704a] pt-2">Pertanyaan</label>
+        <div class="md:col-span-3 bg-white/50 p-3 rounded-lg border border-gray-300">
+          <p class="text-gray-800"><%= faq.question %></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+        <label for="answer" class="md:text-right pt-2 text-lg font-semibold text-[#5a704a]">Jawaban Anda</label>
+        <div class="md:col-span-3">
+          <textarea id="answer" name="answer" rows="6" placeholder="Tulis jawaban Anda di sini..." class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]" required></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-6">
+        <button type="submit" class="bg-[#4A5C3D] text-white font-bold py-2 px-8 rounded-full shadow-lg hover:bg-[#3a4a31] transition-colors">
+          Simpan Jawaban
+        </button>
+      </div>
+
+    </form>
+  </div>
+</main>

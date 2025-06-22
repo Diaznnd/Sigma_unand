@@ -1,38 +1,41 @@
-<main class="flex-grow w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
-
+<main class="flex-grow w-full flex items-start justify-center p-4 sm:p-6 lg:p-8">
   <div class="w-full max-w-7xl mx-auto bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
-
-    <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-8">Daftar Kerjasama</h1>
-
+    <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-8">Daftar Pengajuan Kerjasama</h1>
     <div class="overflow-x-auto">
       <table class="w-full text-sm text-left border-collapse">
         <thead class="bg-[#B9D89A] text-gray-700 uppercase">
           <tr>
             <th class="p-3 font-semibold border border-gray-400">No</th>
-            <th class="p-3 font-semibold border border-gray-400">Nama</th>
-            <th class="p-3 font-semibold border border-gray-400">Tanggal</th>
-            <th class="p-3 font-semibold border border-gray-400">UKM</th>
+            <th class="p-3 font-semibold border border-gray-400">Nama Pengaju</th>
+            <th class="p-3 font-semibold border border-gray-400">Tanggal Masuk</th>
+            <th class="p-3 font-semibold border border-gray-400">Untuk UKM</th>
             <th class="p-3 font-semibold border border-gray-400">Tentang</th>
             <th class="p-3 font-semibold border border-gray-400">Status</th>
             <th class="p-3 font-semibold border border-gray-400 text-center">Detail</th>
           </tr>
         </thead>
         <tbody class="bg-[#D9E9C6]">
-          <% kerjasamaList.forEach((item, index) => { %>
-            <tr class="hover:bg-[#c9d9b6]">
-              <td class="p-3 border border-gray-400"><%= index + 1 %></td>
-              <td class="p-3 border border-gray-400"><%= item.nama %></td>
-              <td class="p-3 border border-gray-400"><%= item.tanggal %></td>
-              <td class="p-3 border border-gray-400"><%= item.ukm %></td>
-              <td class="p-3 border border-gray-400"><%= item.tentang %></td>
-              <td class="p-3 border border-gray-400"><%= item.status %></td>
-              <td class="p-3 border border-gray-400 text-center">
-                <a href="/auth/kerja-sama/<%= item.no %>" class="bg-[#4A5C3D] text-white text-xs font-bold py-1 px-4 rounded-full hover:bg-[#3a4a31] transition-colors">
-                  Lihat
-                </a>
-              </td>
+          <% if (kerjasamaList && kerjasamaList.length > 0) { %>
+            <% kerjasamaList.forEach((item, index) => { %>
+              <tr class="hover:bg-[#c9d9b6]">
+                <td class="p-3 border border-gray-400"><%= index + 1 %></td>
+                <td class="p-3 border border-gray-400"><%= item.nama %></td>
+                <td class="p-3 border border-gray-400"><%= new Date(item.tanggal).toLocaleDateString('id-ID') %></td>
+                <td class="p-3 border border-gray-400"><%= item.ukm %></td>
+                <td class="p-3 border border-gray-400"><%= item.tentang %></td>
+                <td class="p-3 border border-gray-400 capitalize font-medium text-yellow-700"><%= item.status %></td>
+                <td class="p-3 border border-gray-400 text-center">
+                  <a href="/auth/kerja-sama/lihat/<%= item.id %>" class="bg-[#4A5C3D] text-white text-xs font-bold py-1 px-4 rounded-full hover:bg-[#3a4a31] transition-colors">
+                    Lihat
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="7" class="p-4 text-center text-gray-500 font-semibold">Tidak ada pengajuan kerjasama baru.</td>
             </tr>
-          <% }) %>
+          <% } %>
         </tbody>
       </table>
     </div>

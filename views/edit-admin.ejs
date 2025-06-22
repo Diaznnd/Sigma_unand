@@ -1,0 +1,24 @@
+<main class="flex-grow w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
+  <div class="w-full max-w-4xl mx-auto bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
+    <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-10">Edit Akun Admin</h1>
+    <form action="/auth/admin/edit/<%= admin.id %>" method="POST" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+        <label for="email" class="md:text-right text-lg font-semibold text-[#5a704a]">Email</label>
+        <div class="md:col-span-3">
+          <input type="email" id="email" name="email" value="<%= admin.email %>" required class="w-full p-3 bg-white rounded-lg border border-gray-300">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+        <label for="password" class="md:text-right text-lg font-semibold text-[#5a704a]">Password Baru</label>
+        <div class="md:col-span-3">
+          <input type="password" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah" class="w-full p-3 bg-white rounded-lg border border-gray-300">
+        </div>
+      </div>
+      <div class="flex justify-end pt-6">
+        <button type="submit" class="bg-[#4A5C3D] text-white font-bold py-2 px-8 rounded-full shadow-lg hover:bg-[#3a4a31]">
+          Update Akun
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

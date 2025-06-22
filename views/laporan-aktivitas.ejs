@@ -1,38 +1,57 @@
-<main class="flex-grow w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
+<main class="flex-grow w-full flex items-start justify-center p-4 sm:p-6 lg:p-8">
+  <div class="w-full max-w-4xl mx-auto space-y-12">
 
-  <div class="w-full max-w-4xl mx-auto bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
-
-    <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-10">Laporan Aktivitas</h1>
-
-    <form action="/laporan/kirim" method="POST" class="space-y-6">
-      
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-        <label for="judul" class="md:text-right text-lg font-semibold text-[#5a704a]">Judul Laporan</label>
-        <div class="md:col-span-3">
-          <input type="text" id="judul" name="judul" placeholder="Kegiatan A" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
+    <div class="bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
+      <h1 class="text-4xl font-bold text-[#4A5C3D] text-center mb-10">Laporan Aktivitas</h1>
+      <form action="/auth/laporan-aktivitas/kirim" method="POST" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <label for="judul" class="md:text-right text-lg font-semibold text-[#5a704a]">Judul Laporan</label>
+          <div class="md:col-span-3">
+            <input type="text" id="judul" name="judul" placeholder="Kegiatan A" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
+          </div>
         </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-        <label for="tanggal" class="md:text-right text-lg font-semibold text-[#5a704a]">Tanggal</label>
-        <div class="md:col-span-3">
-          <input type="text" id="tanggal" name="tanggal" placeholder="dd/mm/yy" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <label for="tanggal" class="md:text-right text-lg font-semibold text-[#5a704a]">Tanggal</label>
+          <div class="md:col-span-3">
+            <input type="datetime-local" id="tanggal" name="tanggal" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]">
+          </div>
         </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
-        <label for="detail" class="md:text-right pt-2 text-lg font-semibold text-[#5a704a]">Detail</label>
-        <div class="md:col-span-3">
-          <textarea id="detail" name="detail" rows="5" placeholder="Rincian Kegiatan" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]"></textarea>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+          <label for="detail" class="md:text-right pt-2 text-lg font-semibold text-[#5a704a]">Detail</label>
+          <div class="md:col-span-3">
+            <textarea id="detail" name="detail" rows="5" placeholder="Rincian Kegiatan" class="w-full p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8DAA6F]"></textarea>
+          </div>
         </div>
-      </div>
+        <div class="flex justify-end pt-6">
+          <button type="submit" class="bg-[#4A5C3D] text-white font-bold py-2 px-8 rounded-full shadow-lg hover:bg-[#3a4a31] transition-colors">
+            kirimkan
+          </button>
+        </div>
+      </form>
+    </div>
 
-      <div class="flex justify-end pt-6">
-        <button type="submit" class="bg-[#4A5C3D] text-white font-bold py-2 px-8 rounded-full shadow-lg hover:bg-[#3a4a31] transition-colors">
-          kirimkan
-        </button>
+    <div class="bg-[#F5F5DC]/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12">
+      <h2 class="text-3xl font-bold text-[#4A5C3D] text-center mb-8">Daftar Laporan Tersimpan</h2>
+      <div class="space-y-4">
+        <% if (laporanList && laporanList.length > 0) { %>
+          <% laporanList.forEach(laporan => { %>
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow">
+              <div>
+                <span class="font-semibold text-gray-800"><%= laporan.judul %></span>
+                <p class="text-sm text-gray-500">
+                  Tanggal: <%= new Date(laporan.tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }) %>
+                </p>
+              </div>
+              <a href="/auth/laporan-aktivitas/cetak/<%= laporan.id %>" target="_blank" class="bg-blue-600 text-white font-bold py-2 px-5 rounded-full hover:bg-blue-700 transition-colors">
+                Cetak PDF
+              </a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-center text-gray-500">Belum ada laporan yang dibuat.</p>
+        <% } %>
       </div>
+    </div>
 
-    </form>
   </div>
 </main>
