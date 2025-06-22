@@ -4,9 +4,19 @@ const router = express.Router();
 
 module.exports = (pool, pdfMake, db) => {
   router.get('/ukm', async (req, res) => {
-    const [rows] = await pool.execute('SELECT * FROM organisasis WHERE status = "Aktif"');
-    res.render('user/ukm', { ukm: rows, layout: false });
-  });
+  const [rows] = await pool.execute(`
+    SELECT 
+      organisasis.*, 
+      pendaftaraninfos.aktif AS pendaftaran_aktif 
+    FROM organisasis
+    LEFT JOIN pendaftaraninfos 
+      ON organisasis.id = pendaftaraninfos.ukm_id
+    WHERE organisasis.status = "Aktif"
+  `);
+
+  res.render('user/ukm', { ukm: rows, layout: false });
+});
+
 
   // ✅ Detail UKM + ambil rating
   router.get('/ukm/:id', async (req, res) => {

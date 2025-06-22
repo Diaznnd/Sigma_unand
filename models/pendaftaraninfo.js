@@ -23,5 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'PendaftaranInfo',
   });
+
+  PendaftaranInfo.associate = function(models) {
+    PendaftaranInfo.belongsTo(models.Organisasi, {foreignKey: 'ukm_id',as: 'Organisasi'});
+  };
+
+  
+
   return PendaftaranInfo;
 };

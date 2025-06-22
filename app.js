@@ -116,13 +116,15 @@ app.get('/', (req, res) => {
 
 app.set('layout', 'layouts/layout');
 
-const { isAuthenticated, isSuperAdmin, isAdminUKM, isPenggunaUmum } = require('./middleware/auth');
 app.use('/user', userberita);
 app.use('/user', userKegiatan);
 app.use('/user', userKalenderRoutes);
 app.use('/berita', userDetailBeritaRoutes);
 app.use('/forum', forumRouter);
 app.use('/user', ukmRouter(pool, pdfMake, db));
+
+
+
 // Redirect root
 app.get('/', (req, res) => res.redirect('/auth/login'));
 
