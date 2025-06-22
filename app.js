@@ -15,6 +15,8 @@ const adminGaleriRoutes = require('./routes/adminGaleriRoutes');
 const adminPengurusRoutes = require('./routes/adminPengurusRoutes');
 const adminDokumenRoutes = require('./routes/adminDokumenRoutes');
 const adminFormFieldRoutes = require('./routes/adminFormFieldRoutes');
+const userberita = require('./routes/userberita');
+const userKegiatan = require('./routes/userkegiatan');
 
 
 app.use(session({
@@ -52,6 +54,8 @@ app.use("/adminukm/galeri", adminGaleriRoutes);
 app.use('/adminukm/pengurus', adminPengurusRoutes);
 app.use('/adminukm/dokumen', adminDokumenRoutes);
 app.use('/adminukm/form', adminFormFieldRoutes);
+app.use('/user', userberita); // misalnya kamu akses via /pengguna/berita
+app.use('/user', userKegiatan); // cukup ini saja
 
 app.get('/', (req, res) => {
   res.redirect('/auth/login');
@@ -80,9 +84,24 @@ app.get('/pengguna', isAuthenticated, isPenggunaUmum, (req, res) => {
   res.render('user/dashboard', {user: req.session.user});
 });
 
-const userberita = require('./routes/userberita');
-app.use('/user', userberita); // misalnya kamu akses via /pengguna/berita
 app.use('/uploads', express.static('uploads'));
+
+//deatil berita
+// Aktifkan folder public untuk file statis (CSS, JS, dll)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Spesifik untuk folder uploads
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+// Routing halaman detail berita
+const userDetailBeritaRoutes = require('./routes/userdetailberita');
+app.use('/berita', userDetailBeritaRoutes);
+
+
+//kegiatan
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 
 
 // DB
