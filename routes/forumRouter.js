@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'ukm_registration'
+  database: 'sigma_unand'
 });
 
 async function getNestedReplies(parentId) {
