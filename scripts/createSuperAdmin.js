@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
-const sequelize = require('../config/database');
+const User = require("../models").User;
+const db = require('../models'); // atau sesuaikan dengan path ke folder models
+const sequelize = db.sequelize;
+
 
 (async () => {
   await sequelize.sync();

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar UKM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-green-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="/" class="text-2xl font-bold">UKM Finder</a>
+
+                <!-- Navbar Menu (untuk Desktop) -->
+                <div class="space-x-6 hidden md:flex">
+                    <a href="/" class="hover:text-gray-300">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="/ukm" class="hover:text-gray-300">
+                        <i class="fas fa-warehouse mr-2"></i> Daftar UKM
+                    </a>
+                    <a href="/about" class="hover:text-gray-300">
+                        <i class="fas fa-info-circle mr-2"></i> Tentang
+                    </a>
+                    <a href="/contact" class="hover:text-gray-300">
+                        <i class="fas fa-phone-alt mr-2"></i> Kontak
+                    </a>
+                </div>
+
+                <!-- Hamburger Menu (untuk Mobile) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (untuk Mobile) -->
+        <div id="mobile-menu" class="md:hidden bg-green-600 text-white space-y-4 py-4 px-6 hidden">
+            <a href="/" class="block">
+                <i class="fas fa-home mr-2"></i> Home
+            </a>
+            <a href="/ukm" class="block">
+                <i class="fas fa-warehouse mr-2"></i> Daftar UKM
+            </a>
+            <a href="/about" class="block">
+                <i class="fas fa-info-circle mr-2"></i> Tentang
+            </a>
+            <a href="/contact" class="block">
+                <i class="fas fa-phone-alt mr-2"></i> Kontak
+            </a>
+        </div>
+    </nav>
+
+    <!-- Pencarian UKM dan Filter Kategori -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center space-x-4">
+                <!-- Form pencarian -->
+                <input type="text" id="searchInput" placeholder="Cari UKM berdasarkan nama" class="w-full px-4 py-2 rounded-full text-gray-700" onkeyup="filterUKM()">
+                
+                <!-- Filter Kategori -->
+                <select id="categoryFilter" class="px-4 py-2 rounded-full bg-white text-gray-700" onchange="filterUKM()">
+                    <option value="">Pilih Kategori</option>
+                    <option value="Olahraga">Olahraga</option>
+                    <option value="Seni">Seni</option>
+                    <option value="Teknologi">Teknologi</option>
+                    <option value="Kewirausahaan">Kewirausahaan</option>
+                    <option value="Musik">Musik</option>
+                    <!-- Tambahkan kategori lainnya sesuai kebutuhan -->
+                </select>
+                
+                <button class="bg-green-600 text-white px-4 py-2 rounded-full">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Daftar UKM -->
+        <div class="space-y-4" id="ukmList">
+            <% if (ukm && ukm.length > 0) { %>
+                <% ukm.forEach(function(item) { %>
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden ukm-item" data-kategori="<%= item.kategori %>">
+                        <div class="flex items-center p-6">
+                            <div class="bg-yellow-300 rounded-2xl p-6 mr-6 flex-shrink-0">
+                                <div class="w-16 h-16 flex items-center justify-center">
+                                    <span class="text-gray-800 font-bold text-sm text-center">Logo UKM</span>
+                                </div>
+                            </div>
+
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1"><%= item.nama %></h3>
+                                <p class="text-gray-600"><%= item.kategori %></p>
+                                <p class="text-gray-600"><%= item.status %></p>
+
+                                <!-- Tombol Daftar -->
+                                <% if (item.pendaftaran === 'Dibuka') { %>
+                                    <a href="/ukm/<%= item.id %>/daftar" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-center inline-block mb-2">
+                                        Daftar
+                                    </a>
+                                <% } else { %>
+                                    <button class="bg-gray-400 text-white px-6 py-2 rounded-full text-center cursor-not-allowed mb-2" disabled>
+                                        Pendaftaran Ditutup
+                                    </button>
+                                <% } %>
+
+                                <!-- Tombol Detail -->
+                                <a href="/ukm/<%= item.id %>" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-center inline-block">
+                                    Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="text-center py-12">
+                    <p class="text-gray-600">Tidak ada UKM yang tersedia saat ini.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Script untuk filter pencarian dan kategori -->
+    <script>
+        function filterUKM() {
+            let searchInput = document.getElementById('searchInput').value.toLowerCase();
+            let categoryFilter = document.getElementById('categoryFilter').value.toLowerCase();
+            let ukmItems = document.querySelectorAll('.ukm-item');
+
+            ukmItems.forEach(function(item) {
+                let ukmName = item.querySelector('h3').textContent.toLowerCase();
+                let ukmCategory = item.getAttribute('data-kategori').toLowerCase();
+
+                if (ukmName.indexOf(searchInput) > -1 && (categoryFilter === "" || ukmCategory.indexOf(categoryFilter) > -1)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Hamburger Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

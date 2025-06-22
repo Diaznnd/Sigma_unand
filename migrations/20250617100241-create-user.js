@@ -9,14 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      first_name: {
+        type: Sequelize.STRING
+      },
+      last_name: {
+        type: Sequelize.STRING
+      },
       nim: {
         type: Sequelize.STRING
       },
       email: {
         type: Sequelize.STRING
       },
-      password: {
+      major: {
         type: Sequelize.STRING
+      },
+      password_hash: {
+        type: Sequelize.TEXT
       },
       role: {
       type: Sequelize.ENUM('pengguna', 'admin_ukm', 'super_admin'),
