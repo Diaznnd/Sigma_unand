@@ -30,6 +30,8 @@ exports.login = async (req, res) => {
   const { identifier, password } = req.body;
   const superAdminEmail = 'superadmin@gmail.com';
   const superAdminPassword = 'superadmin123';
+
+  // Logika hardcode untuk Super Admin. Ini TIDAK bergantung pada database.
   if (identifier === superAdminEmail && password === superAdminPassword) {
     req.session.user = { username: 'Super Admin', role: 'superadmin' };
     return req.session.save(err => {
@@ -37,15 +39,22 @@ exports.login = async (req, res) => {
       return res.redirect('/auth/profil-super-admin');
     });
   }
+
+  // Logika untuk user biasa dari database
   try {
     const user = await User.findOne({ where: { [Op.or]: [{ email: identifier }, { nim: identifier }] } });
-    if (!user) return res.send("User tidak ditemukan");
+    if (!user) return res.send("User tidak ditemukan atau password salah");
     const valid = await bcrypt.compare(password, user.password_hash);
-    if (!valid) return res.send("Password salah");
+    if (!valid) return res.send("User tidak ditemukan atau password salah");
+
     req.session.user = { id: user.id, first_name: user.first_name, email: user.email, role: user.role };
     return req.session.save(err => {
         if(err) { return res.send("Gagal membuat session: " + err.message); }
-        return res.redirect('/auth/dashboard');
+      // Arahkan ke dasbor yang sesuai berdasarkan role
+      if (user.role === 'admin') {
+        return res.redirect('/auth/manajemen-admin'); // Contoh, admin diarahkan ke manajemen
+      }
+        return res.redirect('/auth/dashboard'); // User biasa ke dasbor biasa
     });
   } catch (e) {
     res.send("Gagal login: " + e.message);
@@ -68,6 +77,7 @@ exports.showSuperAdminProfile = (req, res) => {
   }
 };
 
+// ... dan semua fungsi controller lainnya yang sudah kita buat ...
 exports.showLaporanAktivitas = async (req, res) => {
   if (req.session.user && req.session.user.role === 'superadmin') {
     try {
@@ -250,6 +260,8 @@ exports.simpanJawabanFaq = async (req, res) => {
   }
 };
 
+// --- FUNGSI-FUNGSI MANAJEMEN ADMIN ---
+
 exports.showManajemenAdmin = async (req, res) => {
   if (req.session.user && req.session.user.role === 'superadmin') {
     try {
@@ -261,15 +273,16 @@ exports.showManajemenAdmin = async (req, res) => {
         const hash = await bcrypt.hash(adminData.password, 10);
         await User.findOrCreate({
           where: { email: adminData.email },
-          defaults: { first_name: adminData.first_name, last_name: adminData.last_name, email: adminData.email, password_hash: hash, role: adminData.role }
+          defaults: {
+            first_name: adminData.first_name,
+            last_name: adminData.last_name,
+            email: adminData.email,
+            password_hash: hash,
+            role: adminData.role
+          }
         });
       }
-      
       const adminList = await User.findAll({ where: { role: 'admin' }, order: [['createdAt', 'ASC']] });
-      
-      // BARIS DEBUG: Mencetak daftar admin ke konsol terminal
-      console.log("ADMIN DITEMUKAN DI DATABASE:", JSON.stringify(adminList, null, 2));
-
       res.render('manajemen-admin', { layout: 'layouts/app-layout', user: req.session.user, adminList: adminList });
     } catch (error) {
       console.error("Gagal mengambil daftar admin:", error);
@@ -282,7 +295,10 @@ exports.showManajemenAdmin = async (req, res) => {
 
 exports.showTambahAdminForm = (req, res) => {
   if (req.session.user && req.session.user.role === 'superadmin') {
-    res.render('tambah-admin', { layout: 'layouts/app-layout', user: req.session.user });
+    res.render('tambah-admin', {
+      layout: 'layouts/app-layout',
+      user: req.session.user
+    });
   } else {
     res.redirect('/auth/login');
   }
@@ -292,9 +308,17 @@ exports.tambahAdmin = async (req, res) => {
   try {
     const { first_name, last_name, email, password } = req.body;
     const existing = await User.findOne({ where: { email } });
-    if (existing) { return res.status(400).send("Email sudah digunakan."); }
+    if (existing) {
+      return res.status(400).send("Email sudah digunakan.");
+    }
     const hash = await bcrypt.hash(password, 10);
-    await User.create({ first_name, last_name, email, password_hash: hash, role: 'admin' });
+    await User.create({
+      first_name,
+      last_name,
+      email,
+      password_hash: hash,
+      role: 'admin'
+    });
     res.redirect('/auth/manajemen-admin');
   } catch (error) {
     console.error("Gagal menambah admin:", error);
@@ -306,7 +330,11 @@ exports.showEditAdminForm = async (req, res) => {
   try {
     const admin = await User.findByPk(req.params.id);
     if (!admin || admin.role !== 'admin') { return res.status(404).send("Admin tidak ditemukan."); }
-    res.render('edit-admin', { layout: 'layouts/app-layout', user: req.session.user, admin: admin });
+    res.render('edit-admin', {
+      layout: 'layouts/app-layout',
+      user: req.session.user,
+      admin: admin
+    });
   } catch (error) {
     console.error("Gagal memuat halaman edit admin:", error);
     res.status(500).send("Gagal memuat halaman edit.");
