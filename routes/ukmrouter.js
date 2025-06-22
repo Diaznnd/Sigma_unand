@@ -135,39 +135,43 @@ const docDefinition = {
       });
       
       req.flash('success', 'Rating berhasil ditambahkan!');
-      res.redirect(`/ukm/${ukmId}`);
+      res.redirect(`/user/ukm/${ukmId}`);
+
     } catch (err) {
       console.error(err);
       req.flash('error', 'Gagal memberi rating. Silakan coba lagi.');
-      res.redirect(`/ukm/${ukmId}`);
+      res.redirect(`/user/ukm/${ukmId}`);
+
     }
   });
 
   // ✅ Update rating
   router.post('/ukm/rating/:id/edit', async (req, res) => {
-    const { rating, ulasan } = req.body;
-    const ratingId = req.params.id;
-    
-    try {
-      const ratingData = await db.ukm_rating.findByPk(ratingId);
-      if (!ratingData) {
-        req.flash('error', 'Rating tidak ditemukan!');
-        return res.redirect('/ukm');
-      }
-      
-      await ratingData.update({
-        rating: parseInt(rating),
-        ulasan: ulasan || ''
-      });
-      
-      req.flash('success', 'Rating berhasil diperbarui!');
-      res.redirect(`/ukm/${ratingData.ukm_id}`);
-    } catch (err) {
-      console.error(err);
-      req.flash('error', 'Gagal memperbarui rating.');
-      res.redirect('/ukm');
+  const { rating, ulasan } = req.body;
+  const ratingId = req.params.id;
+
+  try {
+    const ratingData = await db.ukm_rating.findByPk(ratingId);
+    if (!ratingData) {
+      req.flash('error', 'Rating tidak ditemukan!');
+      return res.redirect('/ukm');
     }
-  });
+
+    await ratingData.update({
+      rating: parseInt(rating),
+      ulasan: ulasan || ''
+    });
+
+    req.flash('success', 'Rating berhasil diperbarui!');
+        res.redirect(`/user/ukm/${ratingData.ukm_id}`);
+
+
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Gagal memperbarui rating.');
+    res.redirect('/ukm');
+  }
+});
 
   // ✅ Hapus rating
   router.post('/ukm/rating/:id/delete', async (req, res) => {
@@ -182,7 +186,8 @@ const docDefinition = {
       const ukmId = rating.ukm_id;
       await rating.destroy();
       req.flash('success', 'Rating berhasil dihapus!');
-      res.redirect(`/ukm/${ukmId}`);
+      res.redirect(`/user/ukm/${ukmId}`);
+
     } catch (err) {
       console.error(err);
       req.flash('error', 'Gagal menghapus rating.');
